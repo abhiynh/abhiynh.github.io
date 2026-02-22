@@ -3,34 +3,244 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Y N Hosakote - Home</title>
-<link rel="stylesheet" href="style.css">
+<title>Y N Hosakote</title>
+
+<link rel="icon" type="image/png" href="favicon.png">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI, Arial, sans-serif;
+}
+
+/* Background */
+
+body{
+background:#f1f5f9;
+color:#0f172a;
+}
+
+/* HEADER */
+
+header{
+background:#020617;
+color:white;
+padding:18px 30px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:sticky;
+top:0;
+z-index:10;
+}
+
+header h1{
+font-size:20px;
+letter-spacing:1px;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin-left:25px;
+font-weight:500;
+}
+
+nav a:hover{
+color:#22c55e;
+}
+
+/* HERO */
+
+.hero{
+height:85vh;
+background:linear-gradient(135deg,#0f172a,#020617);
+color:white;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+}
+
+.hero h2{
+font-size:44px;
+margin-bottom:12px;
+}
+
+.hero p{
+font-size:18px;
+max-width:600px;
+margin-bottom:25px;
+color:#cbd5e1;
+}
+
+.cta{
+background:#22c55e;
+padding:15px 28px;
+border-radius:10px;
+color:white;
+text-decoration:none;
+font-weight:600;
+font-size:16px;
+transition:.25s;
+}
+
+.cta:hover{
+background:#16a34a;
+}
+
+/* SECTIONS */
+
+.section{
+padding:70px 20px;
+text-align:center;
+max-width:1000px;
+margin:auto;
+}
+
+.section h3{
+font-size:32px;
+margin-bottom:20px;
+}
+
+.section p{
+font-size:17px;
+line-height:1.7;
+color:#334155;
+}
+
+/* SERVICES */
+
+.services{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:25px;
+margin-top:40px;
+}
+
+.card{
+background:white;
+padding:28px;
+border-radius:14px;
+box-shadow:0 12px 30px rgba(0,0,0,.08);
+transition:.25s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+box-shadow:0 18px 45px rgba(0,0,0,.15);
+}
+
+.card h4{
+margin-bottom:10px;
+font-size:20px;
+}
+
+/* CONTACT STRIP */
+
+.contact-strip{
+background:#0f172a;
+color:white;
+padding:60px 20px;
+text-align:center;
+}
+
+.contact-strip h3{
+font-size:28px;
+margin-bottom:20px;
+}
+
+.contact-btn{
+background:#22c55e;
+padding:14px 26px;
+border-radius:10px;
+color:white;
+text-decoration:none;
+font-weight:600;
+}
+
+/* FOOTER */
+
+footer{
+background:#020617;
+color:#cbd5e1;
+text-align:center;
+padding:18px;
+font-size:14px;
+}
+
+</style>
 </head>
+
 <body>
+
 <header>
 <h1>Y N Hosakote</h1>
 <nav>
 <a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="services.html">Services</a>
-<a href="gallery.html">Gallery</a>
 <a href="contact.html">Contact</a>
 </nav>
 </header>
 
+<!-- HERO -->
+
 <section class="hero">
 <h2>Welcome to Y N Hosakote</h2>
-<p>Your trusted local service in Hosakote</p>
-<a class="btn" href="https://wa.me/918880003326">Chat on WhatsApp</a>
+<p>Serving the community with trust, support and local assistance. We are here to help residents and visitors with reliable service and quick contact.</p>
+
+<a class="cta" href="https://wa.me/918880003326">Chat on WhatsApp</a>
 </section>
 
-<section class="info">
-<h2>Why Choose Us?</h2>
-<p>We provide reliable and affordable services for our local community.</p>
+<!-- ABOUT -->
+
+<section class="section">
+<h3>About Us</h3>
+<p>
+Y N Hosakote is a local service point dedicated to assisting the people of the Hosakote and Pavagada region. 
+We focus on accessibility, quick response and direct communication. Our goal is to make it easy for anyone to contact and reach us without difficulty.
+</p>
+</section>
+
+<!-- SERVICES -->
+
+<section class="section">
+<h3>Our Services</h3>
+
+<div class="services">
+
+<div class="card">
+<h4>Customer Assistance</h4>
+<p>Direct support and help for local residents and visitors.</p>
+</div>
+
+<div class="card">
+<h4>Information Support</h4>
+<p>Providing guidance, contact help and location assistance.</p>
+</div>
+
+<div class="card">
+<h4>Quick Communication</h4>
+<p>Instant response via WhatsApp and phone contact.</p>
+</div>
+
+</div>
+</section>
+
+<!-- CONTACT STRIP -->
+
+<section class="contact-strip">
+<h3>Need Help? Contact Us Now</h3>
+<a class="contact-btn" href="contact.html">Open Contact Page</a>
 </section>
 
 <footer>
-<p>© 2026 Y N Hosakote</p>
+© 2026 Y N Hosakote. All Rights Reserved.
 </footer>
+
 </body>
 </html>
