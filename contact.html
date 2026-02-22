@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Contact | Y N Hosakote</title>
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -13,28 +15,251 @@ box-sizing:border-box;
 }
 
 body{
-font-family:Arial, Helvetica, sans-serif;
-background:#f4f6f9;
-color:#111827;
+font-family: 'Segoe UI', Arial, sans-serif;
+background: linear-gradient(135deg,#0f172a,#020617);
+min-height:100vh;
+display:flex;
+flex-direction:column;
+color:#111;
 }
 
-/* Header */
+/* HEADER */
+
 header{
-background:#0f172a;
-color:white;
-padding:16px 22px;
+position:sticky;
+top:0;
+background:rgba(15,23,42,0.85);
+backdrop-filter: blur(12px);
+padding:18px 30px;
 display:flex;
 justify-content:space-between;
 align-items:center;
+color:white;
+box-shadow:0 6px 20px rgba(0,0,0,0.35);
 }
 
 header h1{
 font-size:22px;
+letter-spacing:1px;
+font-weight:600;
 }
 
 nav a{
 color:white;
-margin-left:18px;
+text-decoration:none;
+margin-left:25px;
+font-weight:500;
+transition:0.3s;
+}
+
+nav a:hover{
+color:#38bdf8;
+}
+
+/* MAIN CENTER */
+
+.main{
+flex:1;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:40px 15px;
+}
+
+/* CONTACT CARD */
+
+.card{
+width:100%;
+max-width:720px;
+background:rgba(255,255,255,0.98);
+padding:45px;
+border-radius:20px;
+box-shadow:
+0 20px 60px rgba(0,0,0,0.35),
+0 0 0 1px rgba(255,255,255,0.1);
+animation:fadeIn 0.6s ease;
+}
+
+/* TITLE */
+
+.card h2{
+text-align:center;
+font-size:30px;
+margin-bottom:35px;
+color:#0f172a;
+letter-spacing:0.5px;
+}
+
+/* INFO BLOCKS */
+
+.info{
+margin-bottom:26px;
+text-align:center;
+font-size:18px;
+line-height:1.8;
+}
+
+.info span{
+display:block;
+font-size:14px;
+color:#6b7280;
+margin-bottom:5px;
+letter-spacing:1px;
+text-transform:uppercase;
+}
+
+.info a{
+color:#2563eb;
+text-decoration:none;
+font-weight:600;
+font-size:19px;
+}
+
+/* BUTTONS */
+
+.buttons{
+margin-top:30px;
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+.btn{
+padding:15px;
+border-radius:14px;
+text-align:center;
+text-decoration:none;
+font-size:16px;
+font-weight:600;
+color:white;
+transition:0.25s;
+}
+
+.call{
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+}
+
+.whatsapp{
+background:linear-gradient(135deg,#22c55e,#16a34a);
+}
+
+.email{
+background:linear-gradient(135deg,#f59e0b,#d97706);
+}
+
+.btn:hover{
+transform:translateY(-2px);
+box-shadow:0 10px 20px rgba(0,0,0,0.25);
+}
+
+/* MAP */
+
+.map{
+margin-top:35px;
+}
+
+iframe{
+width:100%;
+height:380px;
+border:0;
+border-radius:16px;
+}
+
+/* FOOTER */
+
+footer{
+background:#020617;
+color:#cbd5e1;
+text-align:center;
+padding:18px;
+font-size:14px;
+}
+
+/* ANIMATION */
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(25px);}
+to{opacity:1; transform:translateY(0);}
+}
+
+/* MOBILE OPTIMIZATION */
+
+@media(max-width:600px){
+
+.card{
+padding:30px 20px;
+}
+
+.card h2{
+font-size:24px;
+}
+
+.info a{
+font-size:17px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Y N Hosakote</h1>
+<nav>
+<a href="index.html">Home</a>
+<a href="contact.html">Contact</a>
+</nav>
+</header>
+
+<div class="main">
+<div class="card">
+
+<h2>Contact Details</h2>
+
+<div class="info">
+<span>Phone</span>
+<a href="tel:+918880003326">+91 88800 03326</a>
+</div>
+
+<div class="info">
+<span>WhatsApp</span>
+<a href="https://wa.me/918880003326">Message on WhatsApp</a>
+</div>
+
+<div class="info">
+<span>Email</span>
+<a href="mailto:admin@ynhosakote.in">admin@ynhosakote.in</a>
+</div>
+
+<div class="info">
+<span>Address</span>
+No.2503, E2 Block,<br>
+Dwajasthamba Road,<br>
+Y N Hosakote, Pavagada Taluk,<br>
+Tumakuru - 572141
+</div>
+
+<div class="buttons">
+<a class="btn call" href="tel:+918880003326">Call Now</a>
+<a class="btn whatsapp" href="https://wa.me/918880003326">WhatsApp Chat</a>
+<a class="btn email" href="mailto:admin@ynhosakote.in">Send Email</a>
+</div>
+
+<div class="map">
+<iframe src="https://maps.google.com/maps?q=Y%20N%20Hosakote%20Pavagada&t=&z=14&ie=UTF8&iwloc=&output=embed"></iframe>
+</div>
+
+</div>
+</div>
+
+<footer>
+© 2026 Y N Hosakote. All Rights Reserved.
+</footer>
+
+</body>
+</html>margin-left:18px;
 text-decoration:none;
 font-weight:bold;
 }
