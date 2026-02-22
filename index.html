@@ -103,6 +103,146 @@ font-size:20px;
 }
 
 /* CTA */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Y N Hosakote - Official Local Information</title>
+
+<link rel="icon" type="image/png" href="logo.png">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI, Arial, sans-serif;
+}
+
+body{
+background:#f8fafc;
+color:#0f172a;
+}
+
+/* HEADER */
+
+header{
+background:#0f172a;
+color:white;
+padding:15px 25px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.brand img{
+width:45px;
+height:45px;
+border-radius:50%;
+object-fit:cover;
+}
+
+.brand h1{
+font-size:22px;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin-left:20px;
+font-weight:600;
+}
+
+nav a:hover{
+color:#22c55e;
+}
+
+/* HERO */
+
+.hero{
+background:linear-gradient(135deg,#0f172a,#020617);
+color:white;
+padding:100px 20px;
+text-align:center;
+}
+
+.hero h2{
+font-size:42px;
+margin-bottom:12px;
+}
+
+.hero p{
+max-width:750px;
+margin:auto;
+font-size:18px;
+line-height:1.7;
+color:#cbd5e1;
+margin-bottom:25px;
+}
+
+.btn{
+background:#22c55e;
+padding:14px 28px;
+border-radius:10px;
+color:white;
+text-decoration:none;
+font-weight:600;
+display:inline-block;
+}
+
+/* SECTIONS */
+
+.section{
+max-width:1100px;
+margin:auto;
+padding:70px 20px;
+text-align:center;
+}
+
+.section h3{
+font-size:32px;
+margin-bottom:18px;
+}
+
+.section p{
+font-size:17px;
+line-height:1.7;
+color:#334155;
+}
+
+/* INFO GRID */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:25px;
+margin-top:40px;
+}
+
+.card{
+background:white;
+padding:28px;
+border-radius:14px;
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.card h4{
+margin-bottom:10px;
+font-size:20px;
+}
+
+/* CTA */
 
 .cta{
 background:#0f172a;
@@ -129,13 +269,38 @@ text-align:center;
 padding:18px;
 font-size:14px;
 }
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+header{
+flex-direction:column;
+gap:10px;
+text-align:center;
+}
+
+.brand{
+justify-content:center;
+}
+
+.hero h2{
+font-size:30px;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
 <header>
+<div class="brand">
+<img src="logo.png" alt="Y N Hosakote Logo">
 <h1>Y N Hosakote</h1>
+</div>
+
 <nav>
 <a href="index.html">Home</a>
 <a href="contact.html">Contact</a>
@@ -198,4 +363,4 @@ The official language spoken here is Kannada, and the town connects surrounding 
 </footer>
 
 </body>
-  </html>
+</html>
