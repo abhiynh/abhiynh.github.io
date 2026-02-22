@@ -619,12 +619,124 @@ padding:16px 34px;
 border-radius:12px;
 color:white;
 text-decoration:none;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Y N Hosakote - Official Local Information</title>
+
+<link rel="icon" type="image/png" href="logo.png">
+
+<style>
+
+/* ---------- RESET ---------- */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI', Arial, sans-serif;
+}
+
+body{
+background:#f1f5f9;
+color:#0f172a;
+line-height:1.6;
+}
+
+/* ---------- HEADER ---------- */
+
+header{
+background:#020617;
+color:white;
+padding:14px 26px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:sticky;
+top:0;
+z-index:999;
+box-shadow:0 4px 18px rgba(0,0,0,.35);
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.brand img{
+width:46px;
+height:46px;
+border-radius:50%;
+border:2px solid #22c55e;
+}
+
+.brand h1{
+font-size:22px;
+font-weight:600;
+letter-spacing:.5px;
+}
+
+nav a{
+color:#e2e8f0;
+text-decoration:none;
+margin-left:22px;
+font-weight:500;
+transition:.25s;
+}
+
+nav a:hover{
+color:#22c55e;
+}
+
+/* ---------- HERO ---------- */
+
+.hero{
+min-height:92vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:80px 20px;
+background:
+linear-gradient(rgba(2,6,23,.75), rgba(2,6,23,.95)),
+url('https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=1400&auto=format&fit=crop') center/cover no-repeat;
+color:white;
+}
+
+.hero h2{
+font-size:48px;
+font-weight:700;
+margin-bottom:18px;
+}
+
+.hero p{
+max-width:820px;
+font-size:19px;
+color:#cbd5e1;
+margin-bottom:35px;
+}
+
+.btn{
+background:#22c55e;
+padding:16px 34px;
+border-radius:12px;
+color:white;
+text-decoration:none;
 font-weight:600;
 font-size:17px;
 box-shadow:0 10px 25px rgba(34,197,94,.35);
+transition:.25s;
 }
 
-/* SECTION */
+.btn:hover{
+transform:translateY(-3px);
+box-shadow:0 14px 30px rgba(34,197,94,.5);
+}
+
+/* ---------- SECTION ---------- */
 
 .section{
 max-width:1150px;
@@ -646,7 +758,7 @@ max-width:850px;
 margin:auto;
 }
 
-/* GRID */
+/* ---------- CARDS ---------- */
 
 .grid{
 display:grid;
@@ -660,6 +772,12 @@ background:white;
 padding:30px;
 border-radius:16px;
 box-shadow:0 18px 40px rgba(0,0,0,.08);
+transition:.25s;
+}
+
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 22px 50px rgba(0,0,0,.15);
 }
 
 .card h4{
@@ -667,7 +785,7 @@ font-size:22px;
 margin-bottom:12px;
 }
 
-/* CTA */
+/* ---------- CTA ---------- */
 
 .cta{
 background:linear-gradient(135deg,#020617,#0f172a);
@@ -685,7 +803,7 @@ text-decoration:none;
 font-weight:600;
 }
 
-/* FOOTER */
+/* ---------- FOOTER ---------- */
 
 footer{
 background:#020617;
@@ -695,7 +813,7 @@ padding:22px;
 font-size:14px;
 }
 
-/* MOBILE */
+/* ---------- MOBILE ---------- */
 
 @media(max-width:768px){
 
@@ -742,16 +860,18 @@ font-size:28px;
 
 <section class="hero">
 <h2>Welcome to Y N Hosakote</h2>
+
 <p>
-Y. N. Hosakote (Yallappa Nayakana Hosakote) is a historic town in Pavagada Taluk of Tumakuru District, Karnataka. The town was established around a hill fort built by local ruler Yallappa Nayaka in the 16th century.
+Y. N. Hosakote (Yallappa Nayakana Hosakote) is a historic town in Pavagada Taluk of Tumakuru District, Karnataka. The town was established around a hill fort built by the local ruler Yallappa Nayaka in the 16th century and remains an important local centre.
 </p>
+
 <a class="btn" href="https://wa.me/918880003326">Contact on WhatsApp</a>
 </section>
 
 <section class="section">
 <h3>About the Town</h3>
 <p>
-Y N Hosakote serves as a regional hub for surrounding villages and provides administrative, market and service connections for rural communities.
+Y N Hosakote serves as a regional hub for nearby villages and provides administrative, market and service connections for surrounding rural communities.
 </p>
 </section>
 
@@ -761,18 +881,18 @@ Y N Hosakote serves as a regional hub for surrounding villages and provides admi
 <div class="grid">
 
 <div class="card">
-<h4>Silk Saree Weaving</h4>
-<p>Traditional handloom silk saree production and textile craft.</p>
+<h4>Textile Craft</h4>
+<p>Traditional weaving and small textile related occupations support many families.</p>
 </div>
 
 <div class="card">
 <h4>Agriculture</h4>
-<p>Groundnut and dry land farming are major occupations.</p>
+<p>Groundnut farming and dry land agriculture dominate the surrounding countryside.</p>
 </div>
 
 <div class="card">
 <h4>Community Life</h4>
-<p>Temples, fairs and weekly markets shape social life.</p>
+<p>Temples, fairs and weekly markets form the social and cultural identity of the town.</p>
 </div>
 
 </div>
@@ -780,7 +900,7 @@ Y N Hosakote serves as a regional hub for surrounding villages and provides admi
 
 <section class="cta">
 <h3>Need to Reach Us?</h3>
-<p style="margin:15px 0 25px;">Open our contact page for phone, WhatsApp and directions.</p>
+<p style="margin:15px 0 25px;">Visit our contact page for phone, WhatsApp and directions.</p>
 <a href="contact.html">Open Contact Page</a>
 </section>
 
