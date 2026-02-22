@@ -3,15 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Y N Hosakote</title>
+<title>Contact - Y N Hosakote</title>
 
 <style>
 body{
 margin:0;
 font-family:Arial, Helvetica, sans-serif;
-background:#f1f5f9;
+background:#eef2f7;
 }
 
+/* Header */
 header{
 background:#0f172a;
 color:white;
@@ -34,7 +35,148 @@ text-decoration:none;
 font-weight:bold;
 }
 
-.hero{
+/* Page Title */
+.title{
+text-align:center;
+padding:30px 15px;
+background:linear-gradient(135deg,#1e293b,#020617);
+color:white;
+}
+
+/* Contact Card */
+.container{
+padding:25px 15px;
+}
+
+.card{
+max-width:650px;
+margin:auto;
+background:white;
+padding:25px;
+border-radius:14px;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+text-align:center;
+}
+
+.card h2{
+margin-top:0;
+}
+
+/* Info blocks */
+.info{
+margin:18px 0;
+font-size:18px;
+}
+
+.info a{
+text-decoration:none;
+color:#0f172a;
+font-weight:bold;
+}
+
+/* Buttons */
+.buttons{
+margin-top:20px;
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+.btn{
+padding:14px;
+border-radius:10px;
+color:white;
+text-decoration:none;
+font-size:18px;
+}
+
+.call{ background:#2563eb; }
+.whatsapp{ background:#22c55e; }
+.email{ background:#f59e0b; }
+
+/* Map */
+.map{
+margin-top:25px;
+}
+
+iframe{
+width:100%;
+height:350px;
+border:0;
+border-radius:10px;
+}
+
+/* Footer */
+footer{
+margin-top:40px;
+background:#0f172a;
+color:white;
+text-align:center;
+padding:18px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Y N Hosakote</h1>
+<nav>
+<a href="index.html">Home</a>
+<a href="contact.html">Contact</a>
+</nav>
+</header>
+
+<div class="title">
+<h2>Contact Us</h2>
+<p>We are here to help you</p>
+</div>
+
+<div class="container">
+<div class="card">
+
+<div class="info">
+📞 Phone:<br>
+<a href="tel:+918880003326">+91 88800 03326</a>
+</div>
+
+<div class="info">
+💬 WhatsApp:<br>
+<a href="https://wa.me/918880003326">Chat on WhatsApp</a>
+</div>
+
+<div class="info">
+📧 Email:<br>
+<a href="mailto:admin@ynhosakote.in">admin@ynhosakote.in</a>
+</div>
+
+<div class="info">
+📍 Address:<br>
+No.2503, E2 Block,<br>
+Dwajasthamba Road,<br>
+Y N Hosakote, Pavagada Taluk,<br>
+Tumakuru - 572141
+</div>
+
+<div class="buttons">
+<a class="btn call" href="tel:+918880003326">Call Now</a>
+<a class="btn whatsapp" href="https://wa.me/918880003326">WhatsApp Message</a>
+<a class="btn email" href="mailto:admin@ynhosakote.in">Send Email</a>
+</div>
+
+<div class="map">
+<iframe src="https://maps.google.com/maps?q=Y%20N%20Hosakote%20Pavagada&t=&z=14&ie=UTF8&iwloc=&output=embed"></iframe>
+</div>
+
+</div>
+</div>
+
+<footer>
+© 2026 Y N Hosakote
+</footer>
+
+</body>
+</html>.hero{
 height:90vh;
 display:flex;
 flex-direction:column;
