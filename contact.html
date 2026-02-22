@@ -1,1 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact | Y N Hosakote</title>
 
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:'Segoe UI',Arial,sans-serif;
+background:linear-gradient(135deg,#0f172a,#020617);
+min-height:100vh;
+display:flex;
+flex-direction:column;
+}
+
+/* Header */
+header{
+position:sticky;
+top:0;
+background:rgba(15,23,42,.9);
+backdrop-filter:blur(10px);
+padding:18px 28px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+color:white;
+}
+
+header h1{font-size:22px;}
+
+nav a{
+color:white;
+text-decoration:none;
+margin-left:22px;
+font-weight:500;
+}
+
+/* Center Layout */
+.main{
+flex:1;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:40px 15px;
+}
+
+/* Card */
+.card{
+width:100%;
+max-width:720px;
+background:white;
+padding:45px;
+border-radius:20px;
+box-shadow:0 25px 60px rgba(0,0,0,.35);
+text-align:center;
+}
+
+.card h2{
+font-size:30px;
+margin-bottom:30px;
+color:#0f172a;
+}
+
+/* Info */
+.info{margin-bottom:24px;line-height:1.8;}
+
+.info span{
+display:block;
+font-size:13px;
+letter-spacing:1px;
+color:#6b7280;
+margin-bottom:6px;
+}
+
+.info a{
+color:#2563eb;
+font-weight:600;
+font-size:18px;
+text-decoration:none;
+}
+
+/* Buttons */
+.buttons{
+margin-top:25px;
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+.btn{
+padding:15px;
+border-radius:14px;
+text-decoration:none;
+color:white;
+font-weight:600;
+}
+
+.call{background:#2563eb;}
+.whatsapp{background:#22c55e;}
+.email{background:#f59e0b;}
+
+.map{margin-top:30px;}
+
+iframe{
+width:100%;
+height:380px;
+border:0;
+border-radius:14px;
+}
+
+/* Footer */
+footer{
+background:#020617;
+color:#cbd5e1;
+text-align:center;
+padding:18px;
+font-size:14px;
+margin-top:auto;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Y N Hosakote</h1>
+<nav>
+<a href="index.html">Home</a>
+<a href="contact.html">Contact</a>
+</nav>
+</header>
+
+<div class="main">
+<div class="card">
+
+<h2>Contact Details</h2>
+
+<div class="info">
+<span>Phone</span>
+<a href="tel:+918880003326">+91 88800 03326</a>
+</div>
+
+<div class="info">
+<span>WhatsApp</span>
+<a href="https://wa.me/918880003326">Message on WhatsApp</a>
+</div>
+
+<div class="info">
+<span>Email</span>
+<a href="mailto:admin@ynhosakote.in">admin@ynhosakote.in</a>
+</div>
+
+<div class="info">
+<span>Address</span>
+No.2503, E2 Block,<br>
+Dwajasthamba Road,<br>
+Y N Hosakote, Pavagada Taluk,<br>
+Tumakuru - 572141
+</div>
+
+<div class="buttons">
+<a class="btn call" href="tel:+918880003326">Call Now</a>
+<a class="btn whatsapp" href="https://wa.me/918880003326">WhatsApp Chat</a>
+<a class="btn email" href="mailto:admin@ynhosakote.in">Send Email</a>
+</div>
+
+<div class="map">
+<iframe src="https://maps.google.com/maps?q=Y%20N%20Hosakote%20Pavagada&t=&z=14&ie=UTF8&iwloc=&output=embed"></iframe>
+</div>
+
+</div>
+</div>
+
+<footer>
+© 2026 Y N Hosakote. All Rights Reserved.
+</footer>
+
+</body>
+</html>
