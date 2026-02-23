@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Administration (Accessible Large Text) | Y N Hosakote</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#22c55e",
+                        "navy-deep": "#0f172a",
+                        "light-gray-bg": "#f1f5f9",
+                        "background-light": "#f8fafc",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+            font-size: 18px;}
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+        }
+    </style>
+</head>
+<body class="bg-background-light text-slate-900">
+<header class="sticky top-0 z-50 w-full bg-white border-b border-slate-200 shadow-sm">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-20">
+<div class="flex items-center gap-4">
+<div class="bg-primary p-2 rounded-lg text-white">
+<span class="material-symbols-outlined block text-3xl">account_balance</span>
+</div>
+<span class="text-2xl font-bold tracking-tight text-navy-deep">Y N Hosakote Village</span>
+</div>
+<nav class="hidden md:flex space-x-10 text-base font-bold">
+<a class="text-slate-600 hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-primary border-b-4 border-primary pb-1" href="#">Administration</a>
+<a class="text-slate-600 hover:text-primary transition-colors" href="#">Services</a>
+<a class="text-slate-600 hover:text-primary transition-colors" href="#">Documents</a>
+<a class="text-slate-600 hover:text-primary transition-colors" href="#">Contact</a>
+</nav>
+<div class="flex items-center gap-6">
+<button class="bg-navy-deep hover:bg-slate-800 text-white font-black py-3 px-6 rounded-xl text-base transition-all">
+                    Portal Login
+                </button>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<section class="bg-white rounded-3xl p-10 md:p-16 mb-16 border border-slate-200 flex flex-col md:flex-row items-center gap-12 shadow-sm">
+<div class="flex-1 space-y-8">
+<h1 class="text-5xl md:text-7xl font-black text-navy-deep leading-[1.1]">
+                Village Administration &amp; <br/><span class="text-primary">Governance</span>
+</h1>
+<p class="text-xl md:text-2xl text-slate-600 max-w-2xl leading-relaxed">
+                Meet the leaders and officials dedicated to the development and governance of Y N Hosakote. We strive for transparent, accountable, and citizen-centric leadership.
+            </p>
+<div class="flex gap-6">
+<button class="bg-primary text-white font-black px-10 py-5 rounded-2xl flex items-center gap-3 hover:bg-green-600 transition-all shadow-xl text-xl">
+<span class="material-symbols-outlined text-3xl">description</span>
+                    View Citizen Charter
+                </button>
+</div>
+</div>
+<div class="w-full md:w-2/5 aspect-square bg-slate-50 rounded-3xl overflow-hidden relative border border-slate-200 shadow-md">
+<img alt="Official village council building" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdpgMRp3oYHd3If91YnGbeHqLJUlr-IpWUi2bNlq3Uffjv74DvKAXH1FyxpNj0cV-sfLolIv3Tnz7_esZP6NPTFN1OOUCAURKXvdNgC4zHgTYhP8htqAUjdU4sLlpgNeEW4hrD4uKrTCshM2QcT5opDVeGJPsWriL-O9sphoJfwJX-QV2xdAaK8mx5RGCDm7jqVTxjvR-w8zWZFaPxCt28SSPwvtswPd7UaO0K8hUin3FJdntQPsf-Y_PN-SeRxUWRcA6kNAAP-L4"/>
+</div>
+</section>
+<section class="mb-20">
+<div class="flex items-center gap-4 mb-10">
+<div class="h-12 w-2.5 bg-primary rounded-full"></div>
+<h2 class="text-4xl font-black text-navy-deep">Panchayat Leadership</h2>
+</div>
+<div class="bg-white rounded-3xl shadow-md border border-slate-200 overflow-hidden mb-12">
+<div class="flex flex-col lg:flex-row">
+<div class="lg:w-2/5 h-96 lg:h-auto overflow-hidden bg-slate-50">
+<img alt="Village President" class="w-full h-full object-cover object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxi0WCsSmGUK12FXogV2qbupNPnF8glVa7YQG1wq1bS6imFZ84yihXDlh6DC6WbdglC5oe-LyidO31piEI_7cODkvgYKRqdnqwWRQGzx8FP2fJK1dVjOhihSnXBWUFNbkddjpj1zhsh_NJmo6ZNSPQ_X2_ybWCEY0Ljx-olES81TB_EsTimlDM5TG_EaWjZ0us68Z2WLUm7hyCO1oTNVcmT1_FU2ZijxDuzzhsukJGxGFzsZ3c9Psww37CDaDT8FuTHZ-s6qpO4-8"/>
+</div>
+<div class="flex-1 p-10 lg:p-16 flex flex-col justify-center">
+<span class="text-primary font-black tracking-[0.2em] text-sm uppercase mb-4">Hon'ble President</span>
+<h3 class="text-5xl font-black text-navy-deep mb-6">Sri. K. Venkatesh</h3>
+<p class="text-slate-600 mb-10 italic text-2xl leading-relaxed border-l-4 border-slate-100 pl-6">
+                        "Our mission is to ensure transparent governance and sustainable development for every citizen. We are committed to making Y N Hosakote a model village for the entire region."
+                    </p>
+<div class="flex flex-wrap gap-6">
+<button class="bg-navy-deep text-white px-8 py-4 rounded-xl text-lg font-black flex items-center gap-3 hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">mail</span>
+                            Message President
+                        </button>
+<button class="border-2 border-slate-300 px-8 py-4 rounded-xl text-lg font-black hover:bg-slate-50 transition-colors text-slate-700">
+                            View Full Profile
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<div class="grid md:grid-cols-2 gap-10">
+<div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 flex gap-8 items-center">
+<div class="size-32 rounded-full overflow-hidden flex-shrink-0 border-4 border-primary shadow-inner">
+<img alt="Vice President" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDF0YUoPiZJjlKZecDYtqtQyiTZ3kbd0m_a7weh9hKYBTTf2tuFiT9ai5wRhUSGCFbJVknR0_PRT9uhQ-XYS6QMt846lrA5vgazd4dgKqhXbOGNkBW_B3GTSeIbBeNYdgpphAE-kJBsixYQo0iRWigNlVuBn_eWOdx-XC-TfU5qcB1T6qWOnK-jXclhwCuPmnn3yJ_NmlhuFgPgdOsLlfnx2kqW8JQjfm3cNielVPKmuAkT99NixJlN4bwE18UOtA0lqWW-TSeeb18"/>
+</div>
+<div>
+<span class="text-primary text-sm font-black uppercase tracking-widest">Vice President</span>
+<h4 class="text-3xl font-black text-navy-deep">Smt. Lakshmi Devi</h4>
+<p class="text-xl text-slate-600 mt-2">Head of Education &amp; Women Welfare</p>
+</div>
+</div>
+<div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 flex gap-8 items-center">
+<div class="size-32 rounded-full overflow-hidden flex-shrink-0 border-4 border-slate-100 shadow-inner">
+<img alt="PDO" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-jDyG8l80vb5FPUbZFkzIzre4e-fZq5OoWgJZpK3FMwZF9aFA1VqV3CIIuAzJehf6ccsScoLefMcjMQkBM3qRFTOvuY7adD2vxXJvABGU9TORx-A_1FDigi42jsOFagTUb-q81sEE7RV1AY2vbs_c02yucJEGzJCOPk4hHyZ9lzrPr4xflxA7iKVu6Vb23NgSbx3CKydx0u8yd8ya3XZYFY8nNzYXX5dd7D7KCH09i2lmnQpX3VWAB0BT7do3Ibj48y9wI9MnVoc"/>
+</div>
+<div>
+<span class="text-slate-500 text-sm font-black uppercase tracking-widest">PDO (Executive Head)</span>
+<h4 class="text-3xl font-black text-navy-deep">Sri. R. Nagaraju</h4>
+<p class="text-xl text-slate-600 mt-2">Panchayat Development Officer</p>
+</div>
+</div>
+</div>
+</section>
+<section class="mb-20">
+<div class="flex justify-between items-end mb-10">
+<div class="flex items-center gap-4">
+<div class="h-12 w-2.5 bg-primary rounded-full"></div>
+<h2 class="text-4xl font-black text-navy-deep">Elected Ward Members</h2>
+</div>
+<a class="text-primary text-xl font-black flex items-center gap-2 hover:underline" href="#">
+                View All Wards <span class="material-symbols-outlined text-2xl font-bold">chevron_right</span>
+</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+<div class="bg-white border border-slate-200 rounded-3xl overflow-hidden group hover:shadow-xl transition-all">
+<div class="h-72 bg-slate-50 overflow-hidden relative">
+<img alt="Ward Member 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1ZU-GrbVf6P8PxMw0jzlci8MPfZLcklbwpgPjQGLE9B0fvgfrROvMyE3d0ryYSChG5A4Vj1tg8XH8kUwWbNBvoAYjHpMpX2oXcBBseTFJBeikf7qBqzJhy839lJ_ciMwa2DM1oFnKlEB9o5tIDx69muHh6fCzA82UJexsWLYX4rX3wBenZzJwM6PlpCBv5ux706T9WeTNqJKFwwQScdAFEiHBz89XV6xFxLNnl-RzwljvHmpdRxKUnnicddKneOqdfqi2C082WUo"/>
+<div class="absolute top-4 right-4 bg-white/95 backdrop-blur-md shadow-lg text-navy-deep text-sm px-4 py-2 rounded-xl font-black uppercase tracking-widest border border-slate-100">Ward 01</div>
+</div>
+<div class="p-8">
+<h4 class="text-2xl font-black text-navy-deep mb-1">Sri. Manjunath B.</h4>
+<p class="text-base text-slate-500 mb-6 font-medium">Area: Main Market Circle</p>
+<button class="w-full py-5 bg-slate-50 text-slate-700 hover:bg-primary hover:text-white font-black text-lg rounded-2xl transition-all flex justify-center items-center gap-3 border-2 border-slate-100">
+<span class="material-symbols-outlined text-2xl">call</span>
+                        Contact Member
+                    </button>
+</div>
+</div>
+<div class="bg-white border border-slate-200 rounded-3xl overflow-hidden group hover:shadow-xl transition-all">
+<div class="h-72 bg-slate-50 overflow-hidden relative">
+<img alt="Ward Member 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBw54E_ACpcPTQ4bcX4lydxsossBaWhn3y1u9DHk4KIjKsN3dpvf1ZP6oJLTMcg10tc1Oqqw5TttaLMYVPl6vpsSqX6IBOIGaft03BChzBY6cyAo84OiHnXm-8yqngid2Qc9TwYVLsVh6f3_SqUgoSH7AYE4Z-ydpD7kbtP1XYdaV0aAcT-eCKWqQ90hnN6nCr1RjULH82icwonrFi64Jmx5EcrIuftQDXPbwGUWCdzhjTzjK7D-TxkR1UhbbetuXKnLfX0nkTfWPg"/>
+<div class="absolute top-4 right-4 bg-white/95 backdrop-blur-md shadow-lg text-navy-deep text-sm px-4 py-2 rounded-xl font-black uppercase tracking-widest border border-slate-100">Ward 02</div>
+</div>
+<div class="p-8">
+<h4 class="text-2xl font-black text-navy-deep mb-1">Sri. Suresh Kumar</h4>
+<p class="text-base text-slate-500 mb-6 font-medium">Area: Agrahara Layout</p>
+<button class="w-full py-5 bg-slate-50 text-slate-700 hover:bg-primary hover:text-white font-black text-lg rounded-2xl transition-all flex justify-center items-center gap-3 border-2 border-slate-100">
+<span class="material-symbols-outlined text-2xl">call</span>
+                        Contact Member
+                    </button>
+</div>
+</div>
+<div class="bg-white border border-slate-200 rounded-3xl overflow-hidden group hover:shadow-xl transition-all">
+<div class="h-72 bg-slate-50 overflow-hidden relative">
+<img alt="Ward Member 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2KpG2ioGn6A7CcId9vUvdN2XlTJYH12wsXtUWRDOQRYo1oWxHt0EcU5_uu5cdTkue61sF27TMdkpBbIPSjZmsCcOUB5IY3KE1-Z3R2d3GhXJZdUl-sFpTmscLjiJZSaXRicvkW6ZWSShPUU1VlfCfWxV358EQSiAFeODWVuariWGngWCfNVfzgvNpqjS8BgLz8kBrC8W2Wo586UNSgET1zpalF7AR8s_t6qKp5Kadzrk0Z2Cco_AEvgl0lAV1F606JYXE7MAkPeo"/>
+<div class="absolute top-4 right-4 bg-white/95 backdrop-blur-md shadow-lg text-navy-deep text-sm px-4 py-2 rounded-xl font-black uppercase tracking-widest border border-slate-100">Ward 03</div>
+</div>
+<div class="p-8">
+<h4 class="text-2xl font-black text-navy-deep mb-1">Smt. Rathnamma</h4>
+<p class="text-base text-slate-500 mb-6 font-medium">Area: Krishna Nagar</p>
+<button class="w-full py-5 bg-slate-50 text-slate-700 hover:bg-primary hover:text-white font-black text-lg rounded-2xl transition-all flex justify-center items-center gap-3 border-2 border-slate-100">
+<span class="material-symbols-outlined text-2xl">call</span>
+                        Contact Member
+                    </button>
+</div>
+</div>
+<div class="bg-white border border-slate-200 rounded-3xl overflow-hidden group hover:shadow-xl transition-all">
+<div class="h-72 bg-slate-50 overflow-hidden relative">
+<img alt="Ward Member 4" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAp-cBctLbOlQavb20fRfV20AgJDvaQdfnwfs5N2QPQzyThuvZKnc2uH_jaovjk5DbPkQrxeXvdmEoAYxUZLAinwzu1miRfHvom-PHq7x_9gJw9x2CCWG2IngDxjwsmUELjmOPd_dFIzFzt39qW7RasgMev9KguwLG0_fhFzpGkIS_1Tm4D7F_NV9XSiNNpLhpTfNd0lgJa43a7ZUfVQf-W0MhRn4bjj1tBFWjRLPpQxIWSZ1nKENvdWWHvbiPD_9oLlwjt_T1HPDU"/>
+<div class="absolute top-4 right-4 bg-white/95 backdrop-blur-md shadow-lg text-navy-deep text-sm px-4 py-2 rounded-xl font-black uppercase tracking-widest border border-slate-100">Ward 04</div>
+</div>
+<div class="p-8">
+<h4 class="text-2xl font-black text-navy-deep mb-1">Smt. Geetha</h4>
+<p class="text-base text-slate-500 mb-6 font-medium">Area: Railway Colony</p>
+<button class="w-full py-5 bg-slate-50 text-slate-700 hover:bg-primary hover:text-white font-black text-lg rounded-2xl transition-all flex justify-center items-center gap-3 border-2 border-slate-100">
+<span class="material-symbols-outlined text-2xl">call</span>
+                        Contact Member
+                    </button>
+</div>
+</div>
+</div>
+</section>
+<div class="grid lg:grid-cols-3 gap-12 mb-20">
+<div class="lg:col-span-2">
+<div class="flex items-center gap-4 mb-10">
+<div class="h-10 w-2.5 bg-primary rounded-full"></div>
+<h2 class="text-3xl font-black text-navy-deep">Administrative Departments</h2>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div class="bg-white p-8 rounded-2xl border border-slate-200 flex items-start gap-6 hover:border-primary transition-colors cursor-pointer shadow-sm hover:shadow-md">
+<div class="bg-slate-50 p-5 rounded-2xl text-slate-400">
+<span class="material-symbols-outlined text-4xl">payments</span>
+</div>
+<div>
+<h5 class="text-2xl font-black text-navy-deep">Revenue Department</h5>
+<p class="text-lg text-slate-600 mt-2 font-semibold">Lead: Sri. Anand Rao</p>
+<p class="text-base text-slate-400 mt-2">Room No: G-04</p>
+</div>
+</div>
+<div class="bg-white p-8 rounded-2xl border border-slate-200 flex items-start gap-6 hover:border-primary transition-colors cursor-pointer shadow-sm hover:shadow-md">
+<div class="bg-slate-50 p-5 rounded-2xl text-slate-400">
+<span class="material-symbols-outlined text-4xl">engineering</span>
+</div>
+<div>
+<h5 class="text-2xl font-black text-navy-deep">Public Works (PWD)</h5>
+<p class="text-lg text-slate-600 mt-2 font-semibold">Lead: Sri. Shivaram</p>
+<p class="text-base text-slate-400 mt-2">Room No: F-12</p>
+</div>
+</div>
+<div class="bg-white p-8 rounded-2xl border border-slate-200 flex items-start gap-6 hover:border-primary transition-colors cursor-pointer shadow-sm hover:shadow-md">
+<div class="bg-slate-50 p-5 rounded-2xl text-slate-400">
+<span class="material-symbols-outlined text-4xl">medical_services</span>
+</div>
+<div>
+<h5 class="text-2xl font-black text-navy-deep">Health &amp; Sanitation</h5>
+<p class="text-lg text-slate-600 mt-2 font-semibold">Lead: Dr. Vinay Kumar</p>
+<p class="text-base text-slate-400 mt-2">Room No: G-02</p>
+</div>
+</div>
+<div class="bg-white p-8 rounded-2xl border border-slate-200 flex items-start gap-6 hover:border-primary transition-colors cursor-pointer shadow-sm hover:shadow-md">
+<div class="bg-slate-50 p-5 rounded-2xl text-slate-400">
+<span class="material-symbols-outlined text-4xl">diversity_3</span>
+</div>
+<div>
+<h5 class="text-2xl font-black text-navy-deep">Social Welfare</h5>
+<p class="text-lg text-slate-600 mt-2 font-semibold">Lead: Smt. Pushpa Devi</p>
+<p class="text-base text-slate-400 mt-2">Room No: F-08</p>
+</div>
+</div>
+</div>
+</div>
+<div>
+<div class="flex items-center gap-4 mb-10">
+<div class="h-10 w-2.5 bg-primary rounded-full"></div>
+<h2 class="text-3xl font-black text-navy-deep">Official Documents</h2>
+</div>
+<div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+<ul class="space-y-4">
+<li class="flex items-center justify-between p-5 bg-slate-50 rounded-2xl group hover:bg-slate-100 transition-colors border border-transparent hover:border-slate-200">
+<div class="flex items-center gap-5">
+<span class="material-symbols-outlined text-slate-400 text-4xl">picture_as_pdf</span>
+<span class="text-slate-800 text-lg font-bold">Annual Budget 2024-25</span>
+</div>
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-3xl font-bold">download</span></button>
+</li>
+<li class="flex items-center justify-between p-5 bg-slate-50 rounded-2xl group hover:bg-slate-100 transition-colors border border-transparent hover:border-slate-200">
+<div class="flex items-center gap-5">
+<span class="material-symbols-outlined text-slate-400 text-4xl">picture_as_pdf</span>
+<span class="text-slate-800 text-lg font-bold">Meeting Minutes - June</span>
+</div>
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-3xl font-bold">download</span></button>
+</li>
+<li class="flex items-center justify-between p-5 bg-slate-50 rounded-2xl group hover:bg-slate-100 transition-colors border border-transparent hover:border-slate-200">
+<div class="flex items-center gap-5">
+<span class="material-symbols-outlined text-slate-400 text-4xl">picture_as_pdf</span>
+<span class="text-slate-800 text-lg font-bold">Development Projects Map</span>
+</div>
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-3xl font-bold">download</span></button>
+</li>
+<li class="flex items-center justify-between p-5 bg-slate-50 rounded-2xl group hover:bg-slate-100 transition-colors border border-transparent hover:border-slate-200">
+<div class="flex items-center gap-5">
+<span class="material-symbols-outlined text-slate-400 text-4xl">picture_as_pdf</span>
+<span class="text-slate-800 text-lg font-bold">Audit Report 2023</span>
+</div>
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-3xl font-bold">download</span></button>
+</li>
+</ul>
+<button class="w-full mt-8 py-5 border-2 border-slate-200 text-slate-700 rounded-2xl text-lg font-black hover:bg-slate-50 transition-all">
+                    View All Documents
+                </button>
+</div>
+</div>
+</div>
+<section class="mb-20">
+<div class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
+<div class="bg-slate-50 border-b border-slate-200 p-10">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="flex items-center gap-6">
+<div class="bg-primary/10 p-4 rounded-2xl">
+<span class="material-symbols-outlined text-primary text-5xl">verified_user</span>
+</div>
+<div>
+<h2 class="text-3xl font-black text-navy-deep uppercase tracking-tight leading-none">Citizen's Charter</h2>
+<p class="text-xl text-slate-500 font-bold mt-2">Guaranteed Service Delivery Timelines</p>
+</div>
+</div>
+<div class="text-sm bg-slate-200 text-slate-700 px-5 py-2 rounded-full font-black uppercase tracking-widest">Updated: July 2024</div>
+</div>
+</div>
+<div class="p-10 overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="text-navy-deep border-b-2 border-slate-100">
+<th class="pb-6 font-black uppercase tracking-widest text-base">Service Type</th>
+<th class="pb-6 font-black uppercase tracking-widest text-base">Department</th>
+<th class="pb-6 font-black uppercase tracking-widest text-base">Max. Timeline</th>
+<th class="pb-6 font-black uppercase tracking-widest text-base text-right">Apply</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<tr class="text-xl text-slate-800 hover:bg-slate-50 transition-colors">
+<td class="py-8 font-black">Birth/Death Certificate</td>
+<td class="py-8 text-slate-600 font-medium">Health Department</td>
+<td class="py-8 font-black text-primary">7 Working Days</td>
+<td class="py-8 text-right"><span class="material-symbols-outlined text-slate-300 hover:text-primary cursor-pointer transition-colors text-3xl font-bold">open_in_new</span></td>
+</tr>
+<tr class="text-xl text-slate-800 hover:bg-slate-50 transition-colors">
+<td class="py-8 font-black">Khata Transfer</td>
+<td class="py-8 text-slate-600 font-medium">Revenue Department</td>
+<td class="py-8 font-black text-primary">30 Working Days</td>
+<td class="py-8 text-right"><span class="material-symbols-outlined text-slate-300 hover:text-primary cursor-pointer transition-colors text-3xl font-bold">open_in_new</span></td>
+</tr>
+<tr class="text-xl text-slate-800 hover:bg-slate-50 transition-colors">
+<td class="py-8 font-black">Building Approvals</td>
+<td class="py-8 text-slate-600 font-medium">PWD / Planning</td>
+<td class="py-8 font-black text-primary">45 Working Days</td>
+<td class="py-8 text-right"><span class="material-symbols-outlined text-slate-300 hover:text-primary cursor-pointer transition-colors text-3xl font-bold">open_in_new</span></td>
+</tr>
+<tr class="text-xl text-slate-800 hover:bg-slate-50 transition-colors">
+<td class="py-8 font-black">Social Security Pensions</td>
+<td class="py-8 text-slate-600 font-medium">Social Welfare</td>
+<td class="py-8 font-black text-primary">60 Working Days</td>
+<td class="py-8 text-right"><span class="material-symbols-outlined text-slate-300 hover:text-primary cursor-pointer transition-colors text-3xl font-bold">open_in_new</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-light-gray-bg border-t border-slate-200 text-slate-700 py-20">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid md:grid-cols-4 gap-16">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-4 text-navy-deep mb-8">
+<span class="material-symbols-outlined text-primary text-4xl">account_balance</span>
+<span class="text-2xl font-black tracking-tight">Y N Hosakote</span>
+</div>
+<p class="text-lg leading-relaxed mb-8 font-medium">
+                    Official Gram Panchayat Portal dedicated to the digital transformation and empowerment of our village community.
+                </p>
+<div class="flex gap-6">
+<a class="text-slate-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined text-3xl">social_leaderboard</span></a>
+<a class="text-slate-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined text-3xl">share</span></a>
+<a class="text-slate-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined text-3xl">rss_feed</span></a>
+</div>
+</div>
+<div>
+<h4 class="text-navy-deep font-black text-xl mb-8 uppercase tracking-widest">Quick Links</h4>
+<ul class="space-y-5 text-lg font-bold">
+<li><a class="hover:text-primary transition-colors" href="#">Property Tax Online</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Tenders &amp; Auctions</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Grievance Redressal</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Village Map</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-navy-deep font-black text-xl mb-8 uppercase tracking-widest">Administration</h4>
+<ul class="space-y-5 text-lg font-bold">
+<li><a class="hover:text-primary transition-colors" href="#">Elected Representatives</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Panchayat Staff</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Government Orders</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Citizen Charter</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-navy-deep font-black text-xl mb-8 uppercase tracking-widest">Contact Us</h4>
+<ul class="space-y-5 text-lg">
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-slate-400 text-2xl mt-1">location_on</span>
+<span class="font-medium">Gram Panchayat Office, <br/>Main Road, Y N Hosakote, <br/>Tumkur District - 572141</span>
+</li>
+<li class="flex items-center gap-4">
+<span class="material-symbols-outlined text-slate-400 text-2xl">call</span>
+<span class="font-bold">+91 8133 2XXXXX</span>
+</li>
+<li class="flex items-center gap-4">
+<span class="material-symbols-outlined text-slate-400 text-2xl">mail</span>
+<span class="font-bold">info@ynhosakote.gov.in</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="mt-20 pt-10 border-t border-slate-300 flex flex-col md:flex-row justify-between items-center gap-6 text-sm font-black text-slate-500 uppercase tracking-widest">
+<p>© 2024 Y N Hosakote Gram Panchayat. All rights reserved.</p>
+<div class="flex gap-10">
+<a class="hover:text-navy-deep transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-navy-deep transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-navy-deep transition-colors" href="#">Accessibility Statement</a>
+</div>
+</div>
+</div>
+</footer>
+
+</body></html>
