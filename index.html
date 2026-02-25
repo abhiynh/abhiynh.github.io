@@ -54,6 +54,49 @@
       }
     </script>
 </head>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyANO19SvpXnBRbVssgO5My_RZUGIdbV_eU",
+  authDomain: "ynhosakote-portal.firebaseapp.com",
+  projectId: "ynhosakote-portal",
+  storageBucket: "ynhosakote-portal.firebasestorage.app",
+  messagingSenderId: "590401150310",
+  appId: "1:590401150310:web:1af5701c6dae674c0b7ca7",
+  measurementId: "G-ZGML7T4PET"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// LOAD ANNOUNCEMENTS
+async function loadAnnouncements(){
+  const container = document.getElementById("announcementContainer");
+  const querySnapshot = await getDocs(collection(db, "announcements"));
+
+  container.innerHTML = "";
+
+  querySnapshot.forEach((doc)=>{
+    const data = doc.data();
+
+    container.innerHTML += `
+    <div class="bg-white rounded-xl shadow-md p-5 border-l-4 border-green-500">
+        <h3 class="text-xl font-bold">${data.title}</h3>
+        <p class="mt-2 text-gray-700">${data.message}</p>
+        <p class="text-sm text-gray-400 mt-3">${data.date}</p>
+    </div>
+    `;
+  });
+}
+
+loadAnnouncements();
+
+</script>
+      
 <body class="bg-white text-slate-900 font-[Public_Sans]">
 <div class="relative flex min-h-screen flex-col">
 <!-- Header / Navigation -->
