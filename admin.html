@@ -74,10 +74,10 @@ background:#64748b;
 
 <div class="panel">
 
-<h2>Admin Login</h2>
+<h2>Village Admin Login</h2>
 
 <div id="loginArea">
-<input type="email" id="email" placeholder="Email">
+<input type="email" id="email" placeholder="Admin Email">
 <input type="password" id="password" placeholder="Password">
 <button onclick="login()">Login</button>
 </div>
@@ -85,7 +85,7 @@ background:#64748b;
 <div id="postArea">
 <h3>Post Announcement</h3>
 <textarea id="notice" placeholder="Type announcement here..."></textarea>
-<button onclick="postNotice()">Publish</button>
+<button onclick="postNotice()">Publish Announcement</button>
 
 <h3>Delete Latest Notice</h3>
 <button class="delete" onclick="deleteNotice()">Delete Last</button>
@@ -113,29 +113,38 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+
+// ---------------- LOGIN ----------------
 function login(){
 const email=document.getElementById("email").value;
 const password=document.getElementById("password").value;
 
 auth.signInWithEmailAndPassword(email,password)
 .then(()=>{
-document.getElementById("loginArea").style.display="none";
-document.getElementById("postArea").style.display="block";
+document.getElementById("status").innerHTML="Logged in successfully";
 })
 .catch(e=>{
 alert("Login Failed: "+e.message);
 });
 }
 
+
+// ----------- SESSION KEEP --------------
 auth.onAuthStateChanged(user=>{
 if(user){
 document.getElementById("loginArea").style.display="none";
 document.getElementById("postArea").style.display="block";
+}else{
+document.getElementById("loginArea").style.display="block";
+document.getElementById("postArea").style.display="none";
 }
 });
 
+
+// ----------- POST ANNOUNCEMENT ----------
 function postNotice(){
-const text=document.getElementById("notice").value;
+
+const text=document.getElementById("notice").value.trim();
 
 if(!text){
 alert("Enter announcement");
@@ -143,30 +152,38 @@ return;
 }
 
 db.collection("announcements").add({
-message:text,
-time:Date.now()
-}).then(()=>{
-document.getElementById("status").innerHTML="Announcement Posted!";
+message: text,
+created: new Date().toISOString(),
+author: "Y N Hosakote Administration"
+})
+.then(()=>{
+document.getElementById("status").innerHTML="Announcement Posted Successfully!";
 document.getElementById("notice").value="";
 });
 }
 
+
+// ----------- DELETE LATEST --------------
 function deleteNotice(){
+
 db.collection("announcements")
-.orderBy("time","desc")
+.orderBy("created","desc")
 .limit(1)
 .get()
-.then(s=>{
-s.forEach(doc=>{
+.then(snapshot=>{
+snapshot.forEach(doc=>{
 db.collection("announcements").doc(doc.id).delete();
 });
-document.getElementById("status").innerHTML="Deleted Latest Announcement";
+document.getElementById("status").innerHTML="Latest Announcement Deleted";
 });
 }
 
+
+// --------------- LOGOUT -----------------
 function logout(){
-auth.signOut();
+auth.signOut().then(()=>{
 location.reload();
+});
 }
 
 </script>
