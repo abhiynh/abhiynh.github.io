@@ -7,9 +7,9 @@
 <style>
 
 <script type="module">
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyANO19SvpXnBRbVssgO5My_RZUGIdbV_eU",
@@ -17,26 +17,45 @@ const firebaseConfig = {
   projectId: "ynhosakote-portal",
   storageBucket: "ynhosakote-portal.firebasestorage.app",
   messagingSenderId: "590401150310",
-  appId: "1:590401150310:web:1af5701c6dae674c0b7ca7",
-  measurementId: "G-ZGML7T4PET"
+  appId: "1:590401150310:web:1af5701c6dae674c0b7ca7"
 };
 
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 const db = getFirestore(app);
 
-window.publishAnnouncement = async function(){
-  const title = document.getElementById("title").value;
-  const message = document.getElementById("message").value;
+const provider = new GoogleAuthProvider();
 
-  await addDoc(collection(db, "announcements"), {
-    title: title,
-    message: message,
-    date: new Date().toLocaleDateString()
-  });
-
-  alert("Announcement Published!");
+// LOGIN
+window.loginGoogle = async function(){
+  const result = await signInWithPopup(auth, provider);
+  alert("Welcome " + result.user.displayName);
 }
 
+// POST ANNOUNCEMENT
+window.postNotice = async function(){
+  const text = document.getElementById("notice").value;
+  if(!text) return alert("Enter notice");
+
+  await addDoc(collection(db, "announcements"), {
+    message: text,
+    created: Date.now()
+  });
+
+  alert("Announcement Posted!");
+}
+
+// DELETE LAST NOTICE
+window.deleteLast = async function(){
+  const q = query(collection(db,"announcements"), orderBy("created","desc"), limit(1));
+  const snap = await getDocs(q);
+
+  snap.forEach(async d=>{
+    await deleteDoc(doc(db,"announcements", d.id));
+  });
+
+  alert("Last notice deleted");
+}
 </script>
 
   
