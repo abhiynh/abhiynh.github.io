@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Village Announcements - Y N Hosakote</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+font-family:Segoe UI;
+background:#f1f5f9;
+margin:0;
+}
+
+header{
+background:#0f172a;
+color:white;
+padding:18px;
+text-align:center;
+font-size:22px;
+font-weight:bold;
+}
+
+.container{
+max-width:900px;
+margin:30px auto;
+padding:20px;
+}
+
+.card{
+background:white;
+padding:20px;
+margin-bottom:18px;
+border-radius:12px;
+box-shadow:0 6px 20px rgba(0,0,0,.1);
+}
+
+.date{
+color:gray;
+font-size:14px;
+margin-bottom:6px;
+}
+
+.msg{
+font-size:18px;
+}
+</style>
+</head>
+
+<body>
+
+<header>Y N Hosakote Village Announcements</header>
+
+<div class="container" id="noticeList">
+Loading notices...
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+apiKey:"demo",
+authDomain:"demo.firebaseapp.com",
+projectId:"demo"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+db.collection("announcements")
+.orderBy("time","desc")
+.onSnapshot(snapshot=>{
+let html="";
+snapshot.forEach(doc=>{
+let d = new Date(doc.data().time);
+html += `
+<div class="card">
+<div class="date">${d.toDateString()}</div>
+<div class="msg">${doc.data().message}</div>
+</div>`;
+});
+document.getElementById("noticeList").innerHTML=html;
+});
+</script>
+
+</body>
+</html>
