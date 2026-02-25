@@ -5,6 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyANO19SvpXnBRbVssgO5My_RZUGIdbV_eU",
+  authDomain: "ynhosakote-portal.firebaseapp.com",
+  projectId: "ynhosakote-portal",
+  storageBucket: "ynhosakote-portal.firebasestorage.app",
+  messagingSenderId: "590401150310",
+  appId: "1:590401150310:web:1af5701c6dae674c0b7ca7",
+  measurementId: "G-ZGML7T4PET"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.publishAnnouncement = async function(){
+  const title = document.getElementById("title").value;
+  const message = document.getElementById("message").value;
+
+  await addDoc(collection(db, "announcements"), {
+    title: title,
+    message: message,
+    date: new Date().toLocaleDateString()
+  });
+
+  alert("Announcement Published!");
+}
+
+</script>
+
+  
 body{
 font-family:Segoe UI;
 background:#f1f5f9;
