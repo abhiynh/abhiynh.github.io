@@ -5,60 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyANO19SvpXnBRbVssgO5My_RZUGIdbV_eU",
-  authDomain: "ynhosakote-portal.firebaseapp.com",
-  projectId: "ynhosakote-portal",
-  storageBucket: "ynhosakote-portal.firebasestorage.app",
-  messagingSenderId: "590401150310",
-  appId: "1:590401150310:web:1af5701c6dae674c0b7ca7"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-const provider = new GoogleAuthProvider();
-
-// LOGIN
-window.loginGoogle = async function(){
-  const result = await signInWithPopup(auth, provider);
-  alert("Welcome " + result.user.displayName);
-}
-
-// POST ANNOUNCEMENT
-window.postNotice = async function(){
-  const text = document.getElementById("notice").value;
-  if(!text) return alert("Enter notice");
-
-  await addDoc(collection(db, "announcements"), {
-    message: text,
-    created: Date.now()
-  });
-
-  alert("Announcement Posted!");
-}
-
-// DELETE LAST NOTICE
-window.deleteLast = async function(){
-  const q = query(collection(db,"announcements"), orderBy("created","desc"), limit(1));
-  const snap = await getDocs(q);
-
-  snap.forEach(async d=>{
-    await deleteDoc(doc(db,"announcements", d.id));
-  });
-
-  alert("Last notice deleted");
-}
-</script>
-
-  
 body{
 font-family:Segoe UI;
 background:#f1f5f9;
@@ -105,12 +51,96 @@ background:#ef4444;
 
 #postArea{display:none;}
 </style>
+
+<!-- Firebase Compat SDK (stable for static hosting) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
 </head>
 
 <body>
 
 <div class="panel">
 
+<h2>Village Admin Login</h2>
+
+<button onclick="login()">Login with Google</button>
+
+<div id="postArea">
+<h3>Post Announcement</h3>
+<textarea id="notice" placeholder="Type announcement here..."></textarea>
+<button onclick="postNotice()">Publish</button>
+
+<h3>Delete Latest Notice</h3>
+<button class="delete" onclick="deleteNotice()">Delete Last</button>
+
+<p id="status"></p>
+</div>
+
+</div>
+
+<script>
+
+const firebaseConfig = {
+  apiKey: "AIzaSyANO19SvpXnBRbVssgO5My_RZUGIdbV_eU",
+  authDomain: "ynhosakote-portal.firebaseapp.com",
+  projectId: "ynhosakote-portal",
+  storageBucket: "ynhosakote-portal.firebasestorage.app",
+  messagingSenderId: "590401150310",
+  appId: "1:590401150310:web:1af5701c6dae674c0b7ca7"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+function login(){
+  const provider = new firebase.auth.GoogleAuthProvider();
+
+  auth.signInWithPopup(provider).then((result)=>{
+    document.getElementById("postArea").style.display="block";
+    alert("Welcome " + result.user.displayName);
+  }).catch(error=>{
+    alert(error.message);
+  });
+}
+
+function postNotice(){
+  const text = document.getElementById("notice").value;
+
+  if(!text){
+    alert("Please enter announcement text");
+    return;
+  }
+
+  db.collection("announcements").add({
+    message:text,
+    time:Date.now()
+  }).then(()=>{
+    document.getElementById("status").innerHTML="Notice Posted!";
+    document.getElementById("notice").value="";
+  });
+}
+
+function deleteNotice(){
+  db.collection("announcements")
+  .orderBy("time","desc")
+  .limit(1)
+  .get()
+  .then(snapshot=>{
+    snapshot.forEach(doc=>{
+      db.collection("announcements").doc(doc.id).delete();
+    });
+    document.getElementById("status").innerHTML="Latest Notice Deleted";
+  });
+}
+
+</script>
+
+</body>
+</html>
 <h2>Village Admin Login</h2>
 
 <button onclick="login()">Login with Google</button>
