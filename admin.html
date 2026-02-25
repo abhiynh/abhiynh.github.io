@@ -11,103 +11,7 @@ background:#f1f5f9;
 display:flex;
 justify-content:center;
 align-items:center;
-height:100vh;
-margin:0;
-}
-
-.panel{
-background:white;
-padding:30px;
-border-radius:12px;
-width:380px;
-box-shadow:0 10px 30px rgba(0,0,0,.15);
-text-align:center;
-}
-
-input{
-width:100%;
-padding:12px;
-margin-top:12px;
-border-radius:8px;
-border:1px solid #ccc;
-}
-
-textarea{
-width:100%;
-height:120px;
-margin-top:15px;
-padding:10px;
-border-radius:8px;
-border:1px solid #ccc;
-}
-
-button{
-margin-top:15px;
-padding:12px;
-width:100%;
-border:none;
-border-radius:8px;
-background:#22c55e;
-color:white;
-font-weight:bold;
-cursor:pointer;
-}
-
-.delete{
-background:#ef4444;
-}
-
-.logout{
-background:#64748b;
-}
-
-#postArea{display:none;}
-</style>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-
-</head>
-
-<body>
-
-<div class="panel">
-
-<h2>Admin Login</h2>
-
-<div id="loginArea">
-<input type="email" id="email" placeholder="Email">
-<input type="password" id="password" placeholder="Password">
-<button onclick="login()">Login</button>
-</div>
-
-<div id="postArea">
-<h3>Post Announcement</h3>
-<textarea id="notice" placeholder="Type announcement here..."></textarea>
-<button onclick="postNotice()">Publish</button>
-
-<h3>Delete Latest Notice</h3>
-<button class="delete" onclick="deleteNotice()">Delete Last</button>
-
-<button class="logout" onclick="logout()">Logout</button>
-
-<p id="status"></p>
-</div>
-<!DOCTYPE html>
-<html>
-<head>
-<title>Admin Panel - Y N Hosakote</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-body{
-font-family:Segoe UI;
-background:#f1f5f9;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
+min-height:100vh;
 margin:0;
 }
 
@@ -209,7 +113,6 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-/* LOGIN */
 function login(){
 const email=document.getElementById("email").value;
 const password=document.getElementById("password").value;
@@ -224,7 +127,6 @@ alert("Login Failed: "+e.message);
 });
 }
 
-/* KEEP SESSION */
 auth.onAuthStateChanged(user=>{
 if(user){
 document.getElementById("loginArea").style.display="none";
@@ -232,7 +134,6 @@ document.getElementById("postArea").style.display="block";
 }
 });
 
-/* POST NOTICE */
 function postNotice(){
 const text=document.getElementById("notice").value;
 
@@ -250,7 +151,6 @@ document.getElementById("notice").value="";
 });
 }
 
-/* DELETE */
 function deleteNotice(){
 db.collection("announcements")
 .orderBy("time","desc")
@@ -264,7 +164,6 @@ document.getElementById("status").innerHTML="Deleted Latest Announcement";
 });
 }
 
-/* LOGOUT */
 function logout(){
 auth.signOut();
 location.reload();
