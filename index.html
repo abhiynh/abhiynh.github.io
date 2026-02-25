@@ -55,10 +55,23 @@
     </script>
 </head>
 
-<script type="module">
+
+      
+<body class="bg-white text-slate-900 font-[Public_Sans]">
+<div class="relative flex min-h-screen flex-col">
+<!-- Header / Navigation -->
+<header class="sticky top-0 z-50 w-full border-b border-white/10 bg-primary text-white shadow-lg backdrop-blur-sm bg-opacity-95">
+<div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+<div class="flex items-center gap-3">
+<div class="h-11 w-11 rounded-full overflow-hidden border-2 border-white/30">
+<img src="logo.png" alt="Y N Hosakote Logo" class="h-full w-full object-cover">
+</div>
+<span class="text-lg font-bold tracking-tight">Y N Hosakote</span>
+</div>
+<nav class="hidden md:flex items-center<script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyANO19SvpXnBRbVssgO5My_RZUGIdbV_eU",
@@ -72,49 +85,38 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-async function loadAnnouncements(){
+window.addEventListener("DOMContentLoaded", () => {
 
   const container = document.getElementById("announcementContainer");
+  if (!container) return;
 
-  const q = query(collection(db,"announcements"), orderBy("time","desc"));
-  const snapshot = await getDocs(q);
+  onSnapshot(collection(db,"announcements"), (snapshot) => {
 
-  container.innerHTML = "";
+    container.innerHTML = "";
 
-  snapshot.forEach(doc => {
+    if(snapshot.empty){
+      container.innerHTML = "<p>No announcements yet.</p>";
+      return;
+    }
 
-    const data = doc.data();
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      const date = new Date(data.time).toLocaleString();
 
-    const date = new Date(data.time).toLocaleString();
-
-    container.innerHTML += `
-      <div class="bg-white border-l-4 border-green-500 rounded-xl shadow-md p-6">
-        <h3 class="text-lg font-bold text-gray-800">📢 Official Notice</h3>
-        <p class="text-gray-700 mt-2">${data.message}</p>
-        <p class="text-sm text-gray-400 mt-3">${date}</p>
-      </div>
-    `;
+      container.innerHTML += `
+        <div style="background:white;padding:15px;margin-bottom:15px;border-left:4px solid green;">
+          <strong>📢 Official Notice</strong>
+          <p>${data.message}</p>
+          <small>${date}</small>
+        </div>
+      `;
+    });
 
   });
 
-}
+});
 
-loadAnnouncements();
-
-</script>
-      
-<body class="bg-white text-slate-900 font-[Public_Sans]">
-<div class="relative flex min-h-screen flex-col">
-<!-- Header / Navigation -->
-<header class="sticky top-0 z-50 w-full border-b border-white/10 bg-primary text-white shadow-lg backdrop-blur-sm bg-opacity-95">
-<div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-<div class="flex items-center gap-3">
-<div class="h-11 w-11 rounded-full overflow-hidden border-2 border-white/30">
-<img src="logo.png" alt="Y N Hosakote Logo" class="h-full w-full object-cover">
-</div>
-<span class="text-lg font-bold tracking-tight">Y N Hosakote</span>
-</div>
-<nav class="hidden md:flex items-center gap-8">
+</script> gap-8">
 <a class="text-sm font-medium hover:text-gray-300 transition-colors" href="#">Home</a>
 <a class="text-sm font-medium hover:text-gray-300 transition-colors" href="#announcements">Announcements</a>
 <a class="text-sm font-medium hover:text-gray-300 transition-colors" href="#about">About</a>
