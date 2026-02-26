@@ -12,7 +12,6 @@
 
 <script>
 tailwind.config = {
-  darkMode: "class",
   theme: {
     extend: {
       colors: {
@@ -38,8 +37,8 @@ tailwind.config = {
 
 <div class="relative w-full max-w-5xl bg-white shadow-2xl rounded-3xl overflow-hidden grid md:grid-cols-2">
 
-  <!-- Left Branding Section -->
-  <div class="bg-navy text-white p-10 flex flex-col justify-between relative">
+  <!-- LEFT SIDE -->
+  <div class="bg-navy text-white p-10 flex flex-col justify-between">
 
     <div>
       <div class="flex items-center gap-3 mb-6">
@@ -54,92 +53,107 @@ tailwind.config = {
       </h3>
 
       <p class="text-slate-400 text-sm leading-relaxed">
-        Official secure access portal for managing village announcements, services,
-        and administrative operations.
+        Secure login portal for managing village announcements and services.
       </p>
     </div>
 
-    <div class="bg-white/10 backdrop-blur-md border border-white/10 rounded-xl p-5 mt-10">
+    <div class="bg-white/10 border border-white/10 rounded-xl p-5 mt-10">
       <div class="flex items-center gap-2 mb-2 text-yellow-400">
         <span class="material-symbols-outlined">security</span>
         <span class="text-xs font-semibold uppercase tracking-wider">Restricted Access</span>
       </div>
       <p class="text-xs text-slate-300 leading-relaxed">
-        Only authorized personnel may access this system. All login attempts
-        and activities are monitored and logged.
+        Only authorized admins are allowed. All activities are monitored.
       </p>
     </div>
 
   </div>
 
-  <!-- Right Login Section -->
+  <!-- RIGHT SIDE LOGIN -->
   <div class="p-10 flex items-center">
 
     <div class="w-full max-w-sm mx-auto">
 
       <div class="mb-8 text-center">
-        <h1 class="text-3xl font-bold text-slate-800 mb-2">
-          Admin Login
-        </h1>
-        <p class="text-slate-500 text-sm">
-          Sign in to manage village operations
-        </p>
+        <h1 class="text-3xl font-bold text-slate-800 mb-2">Admin Login</h1>
+        <p class="text-slate-500 text-sm">Sign in to manage announcements</p>
       </div>
 
-      <form class="space-y-6">
-
-        <!-- Email -->
-        <div>
-          <label class="text-sm font-medium text-slate-700">Email Address</label>
-          <div class="relative mt-1">
-            <span class="material-symbols-outlined absolute left-3 top-3 text-slate-400">mail</span>
-            <input type="email"
-              class="w-full pl-10 pr-3 py-3 rounded-xl border border-slate-200 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none transition"
-              placeholder="Email ID" required/>
-          </div>
+      <!-- EMAIL -->
+      <div class="mb-5">
+        <label class="text-sm font-medium text-slate-700">Email</label>
+        <div class="relative mt-1">
+          <span class="material-symbols-outlined absolute left-3 top-3 text-slate-400">mail</span>
+          <input id="email" type="email"
+          class="w-full pl-10 pr-3 py-3 rounded-xl border border-slate-200 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none transition"
+          placeholder="Enter email"/>
         </div>
+      </div>
 
-        <!-- Password -->
-        <div>
-          <label class="text-sm font-medium text-slate-700">Password</label>
-          <div class="relative mt-1">
-            <span class="material-symbols-outlined absolute left-3 top-3 text-slate-400">lock</span>
-            <input type="password"
-              class="w-full pl-10 pr-3 py-3 rounded-xl border border-slate-200 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none transition"
-              placeholder="••••••••" required/>
-          </div>
+      <!-- PASSWORD -->
+      <div class="mb-5">
+        <label class="text-sm font-medium text-slate-700">Password</label>
+        <div class="relative mt-1">
+          <span class="material-symbols-outlined absolute left-3 top-3 text-slate-400">lock</span>
+          <input id="password" type="password"
+          class="w-full pl-10 pr-3 py-3 rounded-xl border border-slate-200 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none transition"
+          placeholder="Password"/>
         </div>
+      </div>
 
-        <!-- Remember -->
-        <div class="flex items-center justify-between text-sm">
-          <label class="flex items-center gap-2 text-slate-600">
-            <input type="checkbox" class="accent-green-600">
-            Remember me
-          </label>
-          <a href="#" class="text-green-600 hover:underline">Forgot password?</a>
-        </div>
+      <!-- BUTTON -->
+      <button onclick="login()"
+      class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl shadow-md transition">
+      Sign In
+      </button>
 
-        <!-- Submit -->
-        <button
-          class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl shadow-md transition transform hover:-translate-y-0.5">
-          Sign In
-        </button>
-
-      </form>
-
-      <!-- Divider -->
-      <div class="my-8 border-t"></div>
-
-      <p class="text-xs text-center text-red-500 flex items-center justify-center gap-1">
-        <span class="material-symbols-outlined text-sm">warning</span>
-        Unauthorized access is prohibited.
-      </p>
+      <p id="error" class="text-red-500 text-sm mt-4 text-center"></p>
 
     </div>
 
   </div>
 
 </div>
+
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyANO19SvpXnBRbVssgO5My_RZUGIdbV_eU",
+  authDomain: "ynhosakote-portal.firebaseapp.com",
+  projectId: "ynhosakote-portal",
+  storageBucket: "ynhosakote-portal.firebasestorage.app",
+  messagingSenderId: "590401150310",
+  appId: "1:590401150310:web:1af5701c6dae674c0b7ca7"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+/* LOGIN */
+function login(){
+const email=document.getElementById("email").value;
+const password=document.getElementById("password").value;
+
+auth.signInWithEmailAndPassword(email,password)
+.then(()=>{
+window.location.href="dashboard.html";
+})
+.catch(error=>{
+document.getElementById("error").innerText="Invalid email or password";
+});
+}
+
+/* AUTO LOGIN */
+auth.onAuthStateChanged(user=>{
+if(user){
+window.location.href="dashboard.html";
+}
+});
+</script>
 
 </body>
 </html>
