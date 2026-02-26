@@ -50,7 +50,43 @@ tailwind.config = {
 }
 </script>
 </head>
+<script>
 
+async function loadWeather(){
+
+const apiKey = "3945031e3e7aa6fd79734837ea2c5169";
+
+const url = `https://api.openweathermap.org/data/2.5/weather?q=Hosakote,IN&units=metric&appid=${apiKey}`;
+
+try{
+  const res = await fetch(url);
+  const data = await res.json();
+
+  document.getElementById("temp").innerText = Math.round(data.main.temp) + "°C";
+  document.getElementById("condition").innerText = data.weather[0].description;
+
+  document.getElementById("humidity").innerText = data.main.humidity + "%";
+  document.getElementById("wind").innerText = Math.round(data.wind.speed*3.6) + " km/h";
+
+  document.getElementById("rain").innerText =
+    (data.rain && data.rain["1h"] ? data.rain["1h"] : 0) + "%";
+
+  const icon = data.weather[0].icon;
+  document.getElementById("weatherIcon").src =
+    `https://openweathermap.org/img/wn/${icon}@2x.png`;
+
+}catch(e){
+  document.getElementById("condition").innerText = "Weather unavailable";
+}
+
+}
+
+loadWeather();
+
+/* auto refresh every 10 minutes */
+setInterval(loadWeather, 600000);
+
+</script>
       
 <body class="bg-section text-primary font-display">
 <div class="relative flex min-h-screen flex-col">
@@ -195,6 +231,87 @@ menuBtn.addEventListener("click", () => {
       </div>
 
     </div>
+  </div>
+</section>
+
+  <!-- WEATHER WIDGET -->
+<section class="bg-white py-12">
+  <div class="max-w-7xl mx-auto px-4">
+
+    <div id="weatherCard"
+      class="relative overflow-hidden rounded-3xl shadow-xl
+      bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700
+      text-white px-6 py-8 sm:px-10 sm:py-10 lg:px-14 lg:py-12">
+
+      <!-- Top Section -->
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+
+        <!-- Left -->
+        <div>
+          <p class="text-sm sm:text-base opacity-90 tracking-wide">
+            Y N Hosakote
+          </p>
+
+          <h2 id="temp"
+            class="text-5xl sm:text-6xl lg:text-7xl font-bold mt-2">
+            --°C
+          </h2>
+
+          <p id="condition"
+            class="text-lg sm:text-xl mt-2 opacity-90 capitalize">
+            Loading weather...
+          </p>
+        </div>
+
+        <!-- Right Icon -->
+        <div class="flex justify-start sm:justify-end">
+          <img id="weatherIcon"
+            src=""
+            class="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28">
+        </div>
+
+      </div>
+
+      <!-- Divider -->
+      <div class="h-px bg-white/30 my-8"></div>
+
+      <!-- Bottom Stats -->
+      <div class="grid grid-cols-3 gap-4 sm:gap-8 text-center">
+
+        <div>
+          <p class="text-xs sm:text-sm opacity-80 uppercase tracking-wide">
+            Humidity
+          </p>
+          <p id="humidity"
+            class="text-xl sm:text-2xl lg:text-3xl font-semibold mt-1">
+            --%
+          </p>
+        </div>
+
+        <div>
+          <p class="text-xs sm:text-sm opacity-80 uppercase tracking-wide">
+            Wind
+          </p>
+          <p id="wind"
+            class="text-xl sm:text-2xl lg:text-3xl font-semibold mt-1">
+            -- km/h
+          </p>
+        </div>
+
+        <div>
+          <p class="text-xs sm:text-sm opacity-80 uppercase tracking-wide">
+            Precip
+          </p>
+          <p id="rain"
+            class="text-xl sm:text-2xl lg:text-3xl font-semibold mt-1">
+            --%
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
   </div>
 </section>
 
