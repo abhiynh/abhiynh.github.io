@@ -1,197 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel - Y N Hosakote</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Y N Hosakote Admin Portal</title>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
 
-<style>
-body{
-  font-family:Segoe UI, sans-serif;
-  background:#f8fafc;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  min-height:100vh;
-  margin:0;
-}
-
-.panel{
-  background:white;
-  padding:35px;
-  border-radius:14px;
-  width:400px;
-  box-shadow:0 15px 40px rgba(0,0,0,.12);
-  text-align:center;
-}
-
-h2{
-  margin-bottom:20px;
-}
-
-input, textarea{
-  width:100%;
-  padding:12px;
-  margin-top:12px;
-  border-radius:8px;
-  border:1px solid #d1d5db;
-  font-size:14px;
-}
-
-textarea{
-  height:120px;
-  resize:none;
-}
-
-button{
-  margin-top:15px;
-  padding:12px;
-  width:100%;
-  border:none;
-  border-radius:8px;
-  background:#16a34a;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-button:hover{
-  opacity:0.9;
-}
-
-.delete{
-  background:#dc2626;
-}
-
-.logout{
-  background:#64748b;
-}
-
-#postArea{
-  display:none;
-}
-
-.status{
-  margin-top:15px;
-  font-size:14px;
-  color:#16a34a;
-}
-.error{
-  color:#dc2626;
-}
-</style>
-</head>
-
-<body>
-
-<div class="panel">
-
-<h2>Village Admin Login</h2>
-
-<div id="loginArea">
-  <input type="email" id="email" placeholder="Admin Email">
-  <input type="password" id="password" placeholder="Password">
-  <button onclick="login()">Login</button>
-  <p id="loginError" class="error"></p>
-</div>
-
-<div id="postArea">
-  <h3>Post Announcement</h3>
-  <textarea id="notice" placeholder="Type announcement here..."></textarea>
-  <button onclick="postNotice()">Publish Announcement</button>
-
-  <button class="delete" onclick="deleteNotice()">Delete Latest Announcement</button>
-  <button class="logout" onclick="logout()">Logout</button>
-
-  <p id="status" class="status"></p>
-</div>
-
-</div>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
 
 <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyANO19SvpXnBRbVssgO5My_RZUGIdbV_eU",
-  authDomain: "ynhosakote-portal.firebaseapp.com",
-  projectId: "ynhosakote-portal",
-  storageBucket: "ynhosakote-portal.firebasestorage.app",
-  messagingSenderId: "590401150310",
-  appId: "1:590401150310:web:1af5701c6dae674c0b7ca7"
-};
-
-firebase.initializeApp(firebaseConfig);
-
-const auth = firebase.auth();
-const db = firebase.firestore();
-
-/* LOGIN */
-function login(){
-  const email=document.getElementById("email").value;
-  const password=document.getElementById("password").value;
-
-  auth.signInWithEmailAndPassword(email,password)
-  .then(()=>{
-    document.getElementById("loginError").innerHTML="";
-  })
-  .catch(e=>{
-    document.getElementById("loginError").innerHTML=e.message;
-  });
-}
-
-/* SESSION PERSISTENCE */
-auth.onAuthStateChanged(user=>{
-  if(user){
-    document.getElementById("loginArea").style.display="none";
-    document.getElementById("postArea").style.display="block";
-  }else{
-    document.getElementById("loginArea").style.display="block";
-    document.getElementById("postArea").style.display="none";
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        primary: "#16a34a",
+        navy: "#0f172a",
+      },
+      fontFamily: {
+        display: ["Public Sans", "sans-serif"]
+      }
+    }
   }
-});
-
-/* POST NOTICE */
-function postNotice(){
-  const text=document.getElementById("notice").value.trim();
-
-  if(!text){
-    document.getElementById("status").innerHTML="Enter announcement!";
-    document.getElementById("status").classList.add("error");
-    return;
-  }
-
-  db.collection("announcements").add({
-    message:text,
-    time:Date.now()
-  }).then(()=>{
-    document.getElementById("status").innerHTML="Announcement Posted Successfully!";
-    document.getElementById("status").classList.remove("error");
-    document.getElementById("notice").value="";
-  });
-}
-
-/* DELETE LAST */
-function deleteNotice(){
-  db.collection("announcements")
-  .orderBy("time","desc")
-  .limit(1)
-  .get()
-  .then(snapshot=>{
-    snapshot.forEach(doc=>{
-      db.collection("announcements").doc(doc.id).delete();
-    });
-    document.getElementById("status").innerHTML="Latest Announcement Deleted!";
-  });
-}
-
-/* LOGOUT */
-function logout(){
-  auth.signOut();
 }
 </script>
+</head>
+
+<body class="bg-gradient-to-br from-slate-100 via-white to-slate-200 font-display min-h-screen flex items-center justify-center">
+
+<!-- Background Glow -->
+<div class="absolute inset-0 overflow-hidden">
+  <div class="absolute -top-32 -left-32 w-96 h-96 bg-green-400/20 blur-3xl rounded-full"></div>
+  <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-emerald-300/20 blur-3xl rounded-full"></div>
+</div>
+
+<div class="relative w-full max-w-5xl bg-white shadow-2xl rounded-3xl overflow-hidden grid md:grid-cols-2">
+
+  <!-- Left Branding Section -->
+  <div class="bg-navy text-white p-10 flex flex-col justify-between relative">
+
+    <div>
+      <div class="flex items-center gap-3 mb-6">
+        <div class="bg-green-500/20 p-3 rounded-xl">
+          <span class="material-symbols-outlined text-3xl text-green-400">admin_panel_settings</span>
+        </div>
+        <h2 class="text-lg font-bold tracking-wide">Y N Hosakote</h2>
+      </div>
+
+      <h3 class="text-3xl font-bold mb-4 leading-tight">
+        Administrative Control Center
+      </h3>
+
+      <p class="text-slate-400 text-sm leading-relaxed">
+        Official secure access portal for managing village announcements, services,
+        and administrative operations.
+      </p>
+    </div>
+
+    <div class="bg-white/10 backdrop-blur-md border border-white/10 rounded-xl p-5 mt-10">
+      <div class="flex items-center gap-2 mb-2 text-yellow-400">
+        <span class="material-symbols-outlined">security</span>
+        <span class="text-xs font-semibold uppercase tracking-wider">Restricted Access</span>
+      </div>
+      <p class="text-xs text-slate-300 leading-relaxed">
+        Only authorized personnel may access this system. All login attempts
+        and activities are monitored and logged.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Right Login Section -->
+  <div class="p-10 flex items-center">
+
+    <div class="w-full max-w-sm mx-auto">
+
+      <div class="mb-8 text-center">
+        <h1 class="text-3xl font-bold text-slate-800 mb-2">
+          Admin Login
+        </h1>
+        <p class="text-slate-500 text-sm">
+          Sign in to manage village operations
+        </p>
+      </div>
+
+      <form class="space-y-6">
+
+        <!-- Email -->
+        <div>
+          <label class="text-sm font-medium text-slate-700">Email Address</label>
+          <div class="relative mt-1">
+            <span class="material-symbols-outlined absolute left-3 top-3 text-slate-400">mail</span>
+            <input type="email"
+              class="w-full pl-10 pr-3 py-3 rounded-xl border border-slate-200 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none transition"
+              placeholder="Email ID" required/>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label class="text-sm font-medium text-slate-700">Password</label>
+          <div class="relative mt-1">
+            <span class="material-symbols-outlined absolute left-3 top-3 text-slate-400">lock</span>
+            <input type="password"
+              class="w-full pl-10 pr-3 py-3 rounded-xl border border-slate-200 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none transition"
+              placeholder="••••••••" required/>
+          </div>
+        </div>
+
+        <!-- Remember -->
+        <div class="flex items-center justify-between text-sm">
+          <label class="flex items-center gap-2 text-slate-600">
+            <input type="checkbox" class="accent-green-600">
+            Remember me
+          </label>
+          <a href="#" class="text-green-600 hover:underline">Forgot password?</a>
+        </div>
+
+        <!-- Submit -->
+        <button
+          class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl shadow-md transition transform hover:-translate-y-0.5">
+          Sign In
+        </button>
+
+      </form>
+
+      <!-- Divider -->
+      <div class="my-8 border-t"></div>
+
+      <p class="text-xs text-center text-red-500 flex items-center justify-center gap-1">
+        <span class="material-symbols-outlined text-sm">warning</span>
+        Unauthorized access is prohibited.
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
 
 </body>
 </html>
