@@ -69,51 +69,7 @@
 <span class="text-lg font-bold tracking-tight">Y N Hosakote</span>
 </div>
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyANO19SvpXnBRbVssgO5My_RZUGIdbV_eU",
-  authDomain: "ynhosakote-portal.firebaseapp.com",
-  projectId: "ynhosakote-portal",
-  storageBucket: "ynhosakote-portal.firebasestorage.app",
-  messagingSenderId: "590401150310",
-  appId: "1:590401150310:web:1af5701c6dae674c0b7ca7"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-window.addEventListener("DOMContentLoaded", () => {
-
-  const container = document.getElementById("announcementContainer");
-  if (!container) return;
-
-  onSnapshot(collection(db,"announcements"), (snapshot) => {
-
-    container.innerHTML = "";
-
-    if(snapshot.empty){
-      container.innerHTML = "<p>No announcements yet.</p>";
-      return;
-    }
-
-    snapshot.forEach(doc => {
-      const data = doc.data();
-      const date = new Date(data.time).toLocaleString();
-
-      container.innerHTML += `
-        <div style="background:white;padding:15px;margin-bottom:15px;border-left:4px solid green;">
-          <strong>📢 Official Notice</strong>
-          <p>${data.message}</p>
-          <small>${date}</small>
-        </div>
-      `;
-    });
-
-  });
-
-});
 
 </script> gap-8">
 <a class="text-sm font-medium hover:text-gray-300 transition-colors" href="#">Home</a>
