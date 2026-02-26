@@ -16,6 +16,60 @@
 <link rel="icon" href="https://ynhosakote.in/logo.png" type="image/png">
 <link rel="apple-touch-icon" href="https://ynhosakote.in/logo.png">
 
+  <script>
+
+async function loadWeather(){
+
+const apiKey = "3945031e3e7aa6fd79734837ea2c5169";
+const city = "Hosakote";
+const country = "IN";
+
+const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&units=metric&appid=${apiKey}`;
+
+try{
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  if(data.cod !== 200){
+    throw new Error("API error");
+  }
+
+  document.getElementById("temp").innerText =
+    Math.round(data.main.temp) + "°C";
+
+  document.getElementById("condition").innerText =
+    data.weather[0].description;
+
+  document.getElementById("humidity").innerText =
+    data.main.humidity + "%";
+
+  document.getElementById("wind").innerText =
+    Math.round(data.wind.speed * 3.6) + " km/h";
+
+  document.getElementById("rain").innerText =
+    data.rain && data.rain["1h"] ? data.rain["1h"] + "%" : "0%";
+
+  const icon = data.weather[0].icon;
+  document.getElementById("weatherIcon").src =
+    `https://openweathermap.org/img/wn/${icon}@4x.png`;
+
+}catch(error){
+
+  document.getElementById("condition").innerText =
+    "Weather unavailable";
+
+}
+
+}
+
+loadWeather();
+
+/* Refresh every 10 minutes */
+setInterval(loadWeather, 600000);
+
+      </script>>
+
 <style>
 html{
   scroll-behavior:smooth;
@@ -70,60 +124,8 @@ tailwind.config = {
       </div>
       <span class="text-lg font-semibold text-gray-900">
         Y N Hosakote
-      </span<script>
-
-async function loadWeather(){
-
-const apiKey = "3945031e3e7aa6fd79734837ea2c5169";
-const city = "Hosakote";
-const country = "IN";
-
-const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&units=metric&appid=${apiKey}`;
-
-try{
-
-  const res = await fetch(url);
-  const data = await res.json();
-
-  if(data.cod !== 200){
-    throw new Error("API error");
-  }
-
-  document.getElementById("temp").innerText =
-    Math.round(data.main.temp) + "°C";
-
-  document.getElementById("condition").innerText =
-    data.weather[0].description;
-
-  document.getElementById("humidity").innerText =
-    data.main.humidity + "%";
-
-  document.getElementById("wind").innerText =
-    Math.round(data.wind.speed * 3.6) + " km/h";
-
-  document.getElementById("rain").innerText =
-    data.rain && data.rain["1h"] ? data.rain["1h"] + "%" : "0%";
-
-  const icon = data.weather[0].icon;
-  document.getElementById("weatherIcon").src =
-    `https://openweathermap.org/img/wn/${icon}@4x.png`;
-
-}catch(error){
-
-  document.getElementById("condition").innerText =
-    "Weather unavailable";
-
-}
-
-}
-
-loadWeather();
-
-/* Refresh every 10 minutes */
-setInterval(loadWeather, 600000);
-
-      </script>>
-      
+      </span
+        
     </div>
 
     <!-- Desktop Menu -->
@@ -306,6 +308,7 @@ menuBtn.addEventListener("click", () => {
     </div>
 
   </div>
+  
 </section>      <!-- WhatsApp Button (Primary CTA) -->
         <a href="https://wa.me/918880003326"
            class="flex items-center gap-2 rounded-xl bg-green-600 px-8 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-green-700 hover:shadow-xl hover:-translate-y-1 active:scale-95">
@@ -502,8 +505,7 @@ window.addEventListener("DOMContentLoaded", () => {
     </div>
   </div>
 </section>
-  
-<!-- Economy & Culture Section -->
+
 <!-- Economy & Culture Section -->
 <section class="py-20 bg-white">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
