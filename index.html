@@ -86,31 +86,57 @@ tailwind.config = {
 </header>
       
 <!-- Hero Section -->
-<section class="relative flex min-h-[600px] flex-col justify-center overflow-hidden bg-primary py-20">
-<div class="absolute inset-0 z-0">
-<img alt="Panoramic view of a misty Indian hill fort landscape at sunrise" class="h-full w-full object-cover opacity-60" data-alt="Panoramic view of a misty Indian hill fort landscape at sunrise" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYIkpfpfKxvy-sq4pB-G_EiZg5qCD87JKbhWCGg7KXoayTK4ICahTN9z1ihoCgtZJCjO2CdtUFJfFn0mhYFq9O6UipXDLEiLlRV_bdARAgnz16ECouOE0f_k2nEJMqpT-5f9RsOceARlG0vVX_z3cbohH5f-tKr7tatg_a9zjbHBAVHkHGDngWoB9kHU20bmqX2j2UYp4TWb9Eg-idmrGEZZKVIZ15cRsTEb8wrhlsNtugLETPmjnKmlIBRu-7synj38X1bTV-pTA"/>
-<div class="absolute inset-0 bg-white/60"></div>
-</div>
-<div class="relative z-10 mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-<div class="mx-auto max-w-3xl">
-<h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl drop-shadow-sm">
-                        Welcome to Y N Hosakote
-                    </h1>
-<p class="mt-6 text-lg leading-relaxed text-gray-700 sm:text-xl">
-                        Discover the enduring legacy of this 16th-century regional hub. A timeless place of heritage, thriving economy, and vibrant community in the heart of Karnataka.
-                    </p>
-<div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-<button class="group flex h-12 min-w-[200px] items-center justify-center rounded-lg bg-accent-green px-6 text-base font-bold text-white transition-all hover:bg-green-600 shadow-lg shadow-green-900/20">
-<span class="material-symbols-outlined mr-2">chat</span>
-                            Contact on WhatsApp
-                        </button>
-<button class="group flex h-12 min-w-[200px] items-center justify-center rounded-lg border-2 border-white/30 bg-white/5 px-6 text-base font-bold text-white backdrop-blur-sm transition-all hover:bg-white/10 hover:border-white">
-<span>View Contact Details</span>
-<span class="material-symbols-outlined ml-2 transition-transform group-hover:translate-x-1">arrow_forward</span>
-</button>
-</div>
-</div>
-</div>
+<section class="relative flex min-h-[650px] flex-col justify-center overflow-hidden">
+
+  <!-- Background Image -->
+  <div class="absolute inset-0 z-0">
+    <img
+      src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYIkpfpfKxvy-sq4pB-G_EiZg5qCD87JKbhWCGg7KXoayTK4ICahTN9z1ihoCgtZJCjO2CdtUFJfFn0mhYFq9O6UipXDLEiLlRV_bdARAgnz16ECouOE0f_k2nEJMqpT-5f9RsOceARlG0vVX_z3cbohH5f-tKr7tatg_a9zjbHBAVHkHGDngWoB9kHU20bmqX2j2UYp4TWb9Eg-idmrGEZZKVIZ15cRsTEb8wrhlsNtugLETPmjnKmlIBRu-7synj38X1bTV-pTA"
+      class="h-full w-full object-cover"
+    />
+
+    <!-- Professional Gradient Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-b from-white/80 via-white/60 to-white/90"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-3xl">
+
+      <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+        Welcome to Y N Hosakote
+      </h1>
+
+      <p class="mt-6 text-lg leading-relaxed text-gray-700 sm:text-xl">
+        Discover the enduring legacy of this 16th-century regional hub. A timeless place of heritage,
+        thriving economy, and vibrant community in the heart of Karnataka.
+      </p>
+
+      <!-- Buttons -->
+      <div class="mt-12 flex flex-col items-center justify-center gap-5 sm:flex-row">
+
+        <!-- WhatsApp Button (Primary CTA) -->
+        <a href="https://wa.me/918880003326"
+           class="flex items-center gap-2 rounded-xl bg-green-600 px-8 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-green-700 hover:shadow-xl hover:-translate-y-1 active:scale-95">
+
+          <span class="material-symbols-outlined">chat</span>
+          Contact on WhatsApp
+        </a>
+
+        <!-- Secondary Button -->
+        <a href="#contact"
+           class="flex items-center gap-2 rounded-xl border border-gray-400 px-8 py-3 text-base font-semibold text-gray-800 transition-all duration-300 hover:bg-gray-900 hover:text-white hover:border-gray-900 hover:-translate-y-1 active:scale-95">
+
+          View Contact Details
+          <span class="material-symbols-outlined transition-transform duration-300 group-hover:translate-x-1">
+            arrow_forward
+          </span>
+        </a>
+
+      </div>
+
+    </div>
+  </div>
 </section>
 
 <!-- FIREBASE REALTIME ANNOUNCEMENTS -->
