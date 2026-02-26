@@ -246,71 +246,64 @@ menuBtn.addEventListener("click", () => {
           <p class="text-sm sm:text-base opacity-90 tracking-wide">
             Y N Hosakote
           </p>
-
-          <h2 id="temp"
 <!-- HERO SECTION -->
-<section class="relative bg-white overflow-hidden">
+<section class="relative bg-cover bg-center min-h-[650px] flex items-center justify-center"
+style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuBYIkpfpfKxvy-sq4pB-G_EiZg5qCD87JKbhWCGg7KXoayTK4ICahTN9z1ihoCgtZJCjO2CdtUFJfFn0mhYFq9O6UipXDLEiLlRV_bdARAgnz16ECouOE0f_k2nEJMqpT-5f9RsOceARlG0vVX_z3cbohH5f-tKr7tatg_a9zjbHBAVHkHGDngWoB9kHU20bmqX2j2UYp4TWb9Eg-idmrGEZZKVIZ15cRsTEb8wrhlsNtugLETPmjnKmlIBRu-7synj38X1bTV-pTA');">
 
-  <!-- Background Image -->
-  <div class="absolute inset-0">
-    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYIkpfpfKxvy-sq4pB-G_EiZg5qCD87JKbhWCGg7KXoayTK4ICahTN9z1ihoCgtZJCjO2CdtUFJfFn0mhYFq9O6UipXDLEiLlRV_bdARAgnz16ECouOE0f_k2nEJMqpT-5f9RsOceARlG0vVX_z3cbohH5f-tKr7tatg_a9zjbHBAVHkHGDngWoB9kHU20bmqX2j2UYp4TWb9Eg-idmrGEZZKVIZ15cRsTEb8wrhlsNtugLETPmjnKmlIBRu-7synj38X1bTV-pTA"
-         class="w-full h-full object-cover opacity-25">
-  </div>
+  <!-- overlay -->
+  <div class="absolute inset-0 bg-white/70"></div>
 
-  <div class="relative max-w-7xl mx-auto px-4 py-20">
+  <div class="relative z-10 max-w-7xl mx-auto px-4 w-full">
 
-    <div class="grid md:grid-cols-2 items-center gap-12">
+    <div class="grid lg:grid-cols-2 gap-10 items-center">
 
-      <!-- LEFT TEXT CONTENT -->
-      <div>
-        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
+      <!-- LEFT CONTENT -->
+      <div class="text-center lg:text-left">
+
+        <h1 class="text-4xl lg:text-6xl font-extrabold text-gray-900">
           Welcome to Y N Hosakote
         </h1>
 
-        <p class="mt-6 text-lg text-gray-700 max-w-xl">
+        <p class="mt-6 text-lg text-gray-700 max-w-xl mx-auto lg:mx-0">
           Discover the enduring legacy of this 16th-century regional hub. 
-          A timeless place of heritage, thriving economy, and vibrant 
-          community in the heart of Karnataka.
+          A timeless place of heritage, thriving economy, and vibrant community 
+          in the heart of Karnataka.
         </p>
 
-        <!-- Buttons -->
-        <div class="mt-8 flex flex-wrap gap-4">
+        <!-- BUTTONS -->
+        <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
 
           <a href="https://wa.me/918880003326"
-             class="flex items-center gap-2 bg-green-500 hover:bg-green-600
-             text-white px-6 py-3 rounded-xl font-semibold shadow-md transition">
+            class="flex items-center justify-center gap-2 rounded-xl bg-green-600 px-8 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-green-700 hover:shadow-xl hover:-translate-y-1 active:scale-95">
 
             <span class="material-symbols-outlined">chat</span>
             Contact on WhatsApp
           </a>
 
           <a href="#contact"
-             class="flex items-center gap-2 border border-gray-400
-             hover:border-black text-gray-800 px-6 py-3 rounded-xl
-             font-semibold transition">
+            class="flex items-center justify-center gap-2 rounded-xl border border-gray-500 px-8 py-3 text-base font-semibold text-gray-800 transition-all duration-300 hover:bg-gray-900 hover:text-white hover:border-gray-900 hover:-translate-y-1 active:scale-95">
 
             View Contact Details
             <span class="material-symbols-outlined">arrow_forward</span>
           </a>
 
         </div>
+
       </div>
 
-      <!-- RIGHT WEATHER CARD -->
-      <div class="flex justify-center md:justify-end">
+      <!-- WEATHER CARD -->
+      <div class="flex justify-center lg:justify-end">
 
-        <div class="w-full max-w-sm rounded-3xl shadow-2xl
-          bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700
-          text-white p-8">
+        <div class="w-[280px] rounded-3xl p-6 text-white shadow-2xl"
+             style="background:linear-gradient(135deg,#3b82f6,#1d4ed8);">
 
-          <p class="text-sm opacity-90">Y N Hosakote</p>
+          <p class="text-center text-sm opacity-90">Y N Hosakote</p>
 
-          <div class="flex items-center justify-between mt-3">
-            <h2 id="temp" class="text-6xl font-bold">--°C</h2>
-            <img id="weatherIcon" class="w-20 h-20">
+          <div class="text-center mt-2">
+            <span id="temp" class="text-5xl font-bold">--°C</span>
           </div>
 
-          <p id="condition" class="mt-2 text-lg opacity-90">
+          <p id="condition" class="text-center mt-2 opacity-90">
             Loading weather...
           </p>
 
