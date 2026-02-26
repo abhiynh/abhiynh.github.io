@@ -3,264 +3,341 @@
 <html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>History &amp; Heritage - Y N Hosakote</title>
+<title>Y N Hosakote Village Portal - History &amp; Heritage</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&amp;family=Playfair+Display:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<script>
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#0f1729",
-                        "secondary": "#334155",
-                        "background-light": "#ffffff",
-                        "background-dark": "#0f1729",
-                        "sand": "#f1f5f9",
-                        "sand-dark": "#1e293b",
+                        primary: "#0f49bd",
+                        "primary-dark": "#0a3285",
+                        "primary-light": "#eef4ff",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "text-primary": "#0d121b",
+                        "text-secondary": "#4c669a",
                     },
                     fontFamily: {
-                        "display": ["Public Sans", "sans-serif"],
-                        "serif": ["Playfair Display", "serif"],
+                        display: ["Lexend", "sans-serif"],
+                        serif: ["Noto Serif", "serif"] // Added for the requested elegant serif font in Hero
                     },
-                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px",
+                    },
                 },
             },
         }
     </script>
 <style>
-        .scrollbar-hide::-webkit-scrollbar {
-            display: none;
+        /* Custom scrollbar for timeline if needed */
+        .timeline-line {
+            position: absolute;
+            left: 19px;
+            top: 2rem;
+            bottom: 0;
+            width: 2px;
+            background-color: #cfd7e7;
+            z-index: 0;
         }
-        .scrollbar-hide {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+        .dark .timeline-line {
+            background-color: #374151;
         }
     </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display transition-colors duration-300">
-<!-- Sticky Navigation -->
-<header class="sticky top-0 z-50 w-full bg-primary text-white border-b border-white/10 shadow-sm">
-<div class="max-w-[1280px] mx-auto px-6 h-16 flex items-center justify-between">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-3xl">fort</span>
-<h1 class="text-lg font-bold tracking-tight">Y N Hosakote</h1>
-</div>
-<nav class="hidden md:flex items-center gap-8">
-<a class="text-sm font-medium hover:text-white/80 transition-colors" href="#">Home</a>
-<a class="text-sm font-medium text-white underline decoration-2 underline-offset-4" href="#">History</a>
-<a class="text-sm font-medium hover:text-white/80 transition-colors" href="#">Tourism</a>
-<a class="text-sm font-medium hover:text-white/80 transition-colors" href="#">Events</a>
-<a class="text-sm font-medium hover:text-white/80 transition-colors" href="#">Contact</a>
-</nav>
+<body class="bg-background-light dark:bg-background-dark text-text-primary dark:text-gray-100 font-display min-h-screen flex flex-col">
+<!-- Header -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-gray-200 dark:border-gray-800 bg-white dark:bg-[#1a2234] px-4 md:px-10 py-3 transition-colors duration-200">
 <div class="flex items-center gap-4">
-<button aria-label="Search" class="p-2 hover:bg-white/10 rounded-full transition-colors">
-<span class="material-symbols-outlined text-[20px]">search</span>
-</button>
-<button aria-label="Menu" class="md:hidden p-2 hover:bg-white/10 rounded-full transition-colors">
-<span class="material-symbols-outlined text-[24px]">menu</span>
+<div class="size-8 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">castle</span>
+</div>
+<h2 class="text-text-primary dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Y N Hosakote Village Portal</h2>
+</div>
+<div class="hidden md:flex flex-1 justify-end gap-8">
+<nav class="flex items-center gap-9">
+<a class="text-text-primary dark:text-gray-200 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-primary text-sm font-bold leading-normal" href="#">History</a>
+<a class="text-text-primary dark:text-gray-200 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Tourism</a>
+<a class="text-text-primary dark:text-gray-200 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Governance</a>
+<a class="text-text-primary dark:text-gray-200 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Services</a>
+</nav>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary hover:bg-primary-dark transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">English | ಕನ್ನಡ</span>
 </button>
 </div>
+<!-- Mobile Menu Icon -->
+<div class="md:hidden text-text-primary dark:text-white">
+<span class="material-symbols-outlined">menu</span>
 </div>
 </header>
-<!-- Hero Banner -->
-<div class="relative w-full h-[400px] bg-secondary overflow-hidden">
-<!-- Overlay -->
-<div class="absolute inset-0 bg-primary/40 z-10 mix-blend-multiply"></div>
-<div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent z-20"></div>
-<!-- Image -->
-<img alt="Atmospheric view of ancient stone fort walls on a hill" class="w-full h-full object-cover sepia-[.3] opacity-90" data-alt="Sepia toned ancient hill fort walls" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADoMMTU0TL64_b8NeFS_Pgs8zFrOH_F44DwOxDaUll4llHicMN3zpBwy9_SoiPbUQ_Zz0V5ftO6AeHyGmVE6idGBrYfTp877G7ezTOFEh4zVA5Larg9r7EeR4Vh5YhZl2U37_vshNswUrozGUFLwS_rNQIT9FU1o1RIkjPNkAncFns78DAX8Lds0AVFcL5qd4qQR14oB58cU0Z1WZVmXOLEVqEQTonNYSOC4GuZC8VIpTBlagT1FBa9Up6UwR7DUx15G-gHUi0JN4"/>
-<div class="absolute bottom-0 left-0 w-full z-30 pb-12 pt-20 px-6">
-<div class="max-w-[1280px] mx-auto">
-<nav class="flex items-center gap-2 text-sm text-white/80 mb-4 font-medium">
-<a class="hover:text-white transition-colors" href="#">Home</a>
-<span class="material-symbols-outlined text-[14px]">chevron_right</span>
-<span class="text-white">History</span>
-</nav>
-<h1 class="text-4xl md:text-6xl font-serif font-bold text-white leading-tight mb-4">
-                    Our History &amp; Heritage
-                </h1>
-<p class="text-lg md:text-xl text-white/90 max-w-2xl font-light">
-                    Tracing the legacy of Y N Hosakote from a 16th-century fortress to a vibrant cultural hub.
-                </p>
+<main class="flex-grow flex flex-col items-center w-full">
+<!-- Hero Section -->
+<div class="w-full max-w-[1280px] px-4 py-6 md:px-8">
+<div class="relative w-full h-[300px] rounded-xl overflow-hidden shadow-lg group">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Sepia toned ancient stone fort ruins on a hill" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDwTPnCwWZFkd5JvslZDto4Jti4lfb3-J91dFcvCZ78r8pWPluQxfI1OwKqADBPFdkxw-ttwil7w0u9XcSX7gT1eU3IlX78sFkvUhqZuNGAV3mRKXy7U9_5P5p0DlPXTZa-ju_dIxL6wnU5du_ins5bhtQNc2CkWF09pDbjvNCAGB6W8M_n5eL4KWhQVHIiwyABCGz7zQeZnFHUH-18vnRXAa62buQzlCTwlSlIXu7KWmbFY9qjjOowTpJuQsP99Yx0Ot-Lf1R3MCI'); filter: sepia(0.4) contrast(1.1);">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8 md:p-12">
+<span class="inline-block py-1 px-3 rounded-full bg-primary/90 text-white text-xs font-bold tracking-wider uppercase mb-3 backdrop-blur-sm">Heritage</span>
+<h1 class="text-4xl md:text-5xl font-bold text-white mb-2 font-serif tracking-tight">History &amp; Heritage</h1>
+<p class="text-gray-200 text-lg max-w-2xl font-light">Uncovering the 16th-century legacy of the Yallappa Nayaka dynasty and the enduring spirit of Pavagada.</p>
 </div>
 </div>
 </div>
-<main class="w-full flex flex-col items-center">
-<!-- Introduction -->
-<section class="max-w-[960px] w-full px-6 py-16 md:py-24 text-center">
-<span class="text-primary dark:text-blue-300 font-bold tracking-widest uppercase text-xs mb-4 block">The Origins</span>
-<h2 class="text-3xl md:text-4xl font-serif font-bold text-slate-900 dark:text-white mb-6">
-                A Legacy Etched in Stone
-            </h2>
-<p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl mx-auto">
-                Nestled amidst rugged hills, Y N Hosakote's history is a tapestry of valor, strategic brilliance, and enduring traditions. Founded by local chieftains and fortified over centuries, the village stands as a testament to the resilience of its people and the architectural ingenuity of the past.
-            </p>
-</section>
-<!-- Timeline Section -->
-<section class="w-full bg-sand dark:bg-sand-dark py-16 md:py-24 relative overflow-hidden">
-<!-- Background Pattern -->
-<div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: radial-gradient(#0f1729 1px, transparent 1px); background-size: 32px 32px;"></div>
-<div class="max-w-[1024px] mx-auto px-6 relative z-10">
-<div class="flex flex-col items-center mb-16">
-<h2 class="text-3xl font-serif font-bold text-primary dark:text-white">Timeline of Eras</h2>
-<div class="w-24 h-1 bg-primary dark:bg-blue-400 mt-4"></div>
+<!-- Main Content Container -->
+<div class="w-full max-w-[960px] px-4 md:px-8 flex flex-col gap-16 py-10">
+<!-- The Yallappa Nayaka Legacy -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
+<div class="md:col-span-5 relative">
+<div class="aspect-[3/4] rounded-lg overflow-hidden shadow-xl border-4 border-white dark:border-gray-700 bg-gray-200 relative">
+<!-- Placeholder for Illustration -->
+<div class="absolute inset-0 bg-[#e0d6c8] flex items-center justify-center">
+<span class="material-symbols-outlined text-6xl text-[#8c7e6a] opacity-50">person</span>
 </div>
-<div class="relative">
-<!-- Vertical Line -->
-<div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-slate-300 dark:bg-slate-700 md:-translate-x-1/2"></div>
-<!-- Timeline Item 1 -->
-<div class="relative flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 mb-16 group">
-<div class="md:w-1/2 md:pr-12 text-left md:text-right order-2 md:order-1 pl-12 md:pl-0">
-<span class="text-primary dark:text-blue-300 font-bold text-xl block mb-1">1500s</span>
-<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Foundation &amp; Fortification</h3>
-<p class="text-slate-600 dark:text-slate-300">Established by Yallappa Nayaka, laying the first stones of the hill fort that would guard the region for centuries.</p>
+<img alt="Artistic portrait illustration of a 16th century Indian ruler" class="w-full h-full object-cover mix-blend-multiply opacity-80" data-alt="Portrait illustration of Yallappa Nayaka" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyE00wGThIsZBKCivl0okykS58QQHBZjtYbDrGUaDoPQGS-rdtdteGxRdudmsNd2cmAByo7Ad15rjA59DL8GU9x1I7NZHlD39O3NDLH3NSZqT-x_abzl-_FSPBWKbqvI9ZtbFbXHZ0wmPOebfyf0Bc4T-DIuydbX_V66Uk0K7CH5NbVWZvSFyyaSSD_zJvEtMpyJcFRhuL2v1jxekxQgWq1rwOGd-Fca4ycs6EEiF3koemAUgo69nd0LDfHzuBbejM-pUUVyGHXfE"/>
 </div>
-<div class="absolute left-0 md:left-1/2 top-0 md:top-1/2 w-8 h-8 rounded-full bg-white dark:bg-slate-800 border-4 border-primary dark:border-blue-400 z-10 md:-translate-x-1/2 md:-translate-y-1/2 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-<div class="w-2 h-2 rounded-full bg-primary dark:bg-blue-400"></div>
-</div>
-<div class="md:w-1/2 md:pl-12 order-3 md:order-3 pl-12 md:pl-0 hidden md:block"></div>
-</div>
-<!-- Timeline Item 2 -->
-<div class="relative flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 mb-16 group">
-<div class="md:w-1/2 md:pr-12 order-2 md:order-1 hidden md:block"></div>
-<div class="absolute left-0 md:left-1/2 top-0 md:top-1/2 w-8 h-8 rounded-full bg-white dark:bg-slate-800 border-4 border-primary dark:border-blue-400 z-10 md:-translate-x-1/2 md:-translate-y-1/2 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-[16px] text-primary dark:text-blue-400">shield</span>
-</div>
-<div class="md:w-1/2 md:pl-12 text-left order-2 md:order-3 pl-12 md:pl-0">
-<span class="text-primary dark:text-blue-300 font-bold text-xl block mb-1">1700s</span>
-<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">The Polygar Era</h3>
-<p class="text-slate-600 dark:text-slate-300">Growth as a strategic regional hub under the Polygar chieftains, witnessing expansion in trade and military significance.</p>
+<div class="absolute -bottom-4 -right-4 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg border border-gray-100 dark:border-gray-700 max-w-[200px]">
+<p class="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Founder</p>
+<p class="text-primary font-bold text-lg leading-tight">Yallappa Nayaka</p>
 </div>
 </div>
-<!-- Timeline Item 3 -->
-<div class="relative flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 mb-16 group">
-<div class="md:w-1/2 md:pr-12 text-left md:text-right order-2 md:order-1 pl-12 md:pl-0">
-<span class="text-primary dark:text-blue-300 font-bold text-xl block mb-1">1900s</span>
-<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Weaving &amp; Agriculture</h3>
-<p class="text-slate-600 dark:text-slate-300">Evolution into a prominent economic center known for its silk weaving traditions and agricultural prosperity.</p>
-</div>
-<div class="absolute left-0 md:left-1/2 top-0 md:top-1/2 w-8 h-8 rounded-full bg-white dark:bg-slate-800 border-4 border-primary dark:border-blue-400 z-10 md:-translate-x-1/2 md:-translate-y-1/2 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-[16px] text-primary dark:text-blue-400">history_edu</span>
-</div>
-<div class="md:w-1/2 md:pl-12 order-3 md:order-3 pl-12 md:pl-0 hidden md:block"></div>
-</div>
-<!-- Timeline Item 4 -->
-<div class="relative flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 group">
-<div class="md:w-1/2 md:pr-12 order-2 md:order-1 hidden md:block"></div>
-<div class="absolute left-0 md:left-1/2 top-0 md:top-1/2 w-8 h-8 rounded-full bg-white dark:bg-slate-800 border-4 border-primary dark:border-blue-400 z-10 md:-translate-x-1/2 md:-translate-y-1/2 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-[16px] text-primary dark:text-blue-400">temple_buddhist</span>
-</div>
-<div class="md:w-1/2 md:pl-12 text-left order-2 md:order-3 pl-12 md:pl-0">
-<span class="text-primary dark:text-blue-300 font-bold text-xl block mb-1">Present Day</span>
-<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Living Heritage</h3>
-<p class="text-slate-600 dark:text-slate-300">Active preservation of local traditions, festivals, and heritage sites, blending modern life with ancient roots.</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Historical Figures -->
-<section class="max-w-[1280px] w-full px-6 py-20">
-<h2 class="text-3xl font-serif font-bold text-primary dark:text-white mb-12 text-center">Historical Figures</h2>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center max-w-4xl mx-auto">
-<!-- Figure Card 1 -->
-<div class="flex flex-col items-center text-center p-8 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow">
-<div class="w-32 h-32 rounded-full overflow-hidden border-4 border-sand dark:border-slate-600 mb-6 bg-slate-200">
-<img alt="Portrait sketch of historical male figure" class="w-full h-full object-cover grayscale contrast-125" data-alt="Black and white sketch of a warrior king" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgTeo3Ohl2xZdFkcvF1BRclgLc4I0S6gQGayj2Fd2c4thNXINcbIO9h92W3aNRxRSzGGa5E4dsAURCyht2miO5Lvne4aEvHaIq7OUghYvkCPGDCiQHqonkD_XVUNsNJGFyCXT3yRJRU1s2DwZigjhplT2WuYbBORgnrAhm89kGBGr4TVEBR7acHez-DusQnut3BccAXPNowf8ktr4-POYmjXCEP6v3a0kg-7qAJRfgWs3KvA9WzSR_QwCzfCHwkFeyjtps_Bxyr4Y"/>
-</div>
-<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Yallappa Nayaka</h3>
-<p class="text-sm font-bold text-primary dark:text-blue-300 mb-4 uppercase tracking-wider">Founder (16th Century)</p>
-<p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
-                        The visionary chieftain responsible for the initial fortifications of the hill. His strategic foresight laid the groundwork for the village's enduring safety and prosperity.
-                    </p>
-</div>
-<!-- Figure Card 2 (Placeholder for balance) -->
-<div class="flex flex-col items-center text-center p-8 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow">
-<div class="w-32 h-32 rounded-full overflow-hidden border-4 border-sand dark:border-slate-600 mb-6 bg-slate-200">
-<img alt="Portrait sketch of historical female figure" class="w-full h-full object-cover grayscale contrast-125" data-alt="Black and white sketch of a queen or female leader" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCE2blQcGVRjtIDF3P5_fiQGMOheRu6ZIyObau-5Ca5e17Pd2U0B4KEt5Ic82e68j_dfd-ZAn8Jt3izB2AXe6_NDjQeTkteGHm8kLoew0CuwTVS6gjgsKuIkZT2CKhht1ZA-iVYit44Frsax9n39K7kUTM0V7WU_ag8ruzfpss1_I6Dgmn7sDQh6ZVKcyMFrpcE2BEeyd9bzJinnIjh-AwwF6wOQxAjIUWOEEkRM7MpdDutfFPieglXHTUy2n6vFTcs1lzaGY7CqLQ"/>
-</div>
-<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Rani Chennamma</h3>
-<p class="text-sm font-bold text-primary dark:text-blue-300 mb-4 uppercase tracking-wider">Patron of Arts (18th Century)</p>
-<p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
-                        Remembered for her contributions to local temple architecture and the promotion of silk weaving, establishing the village as a cultural beacon.
-                    </p>
-</div>
-</div>
-</section>
-<!-- Cultural Landmarks Grid -->
-<section class="w-full bg-sand dark:bg-sand-dark py-20 px-6">
-<div class="max-w-[1280px] mx-auto">
-<div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+<div class="md:col-span-7 flex flex-col justify-center h-full space-y-6">
 <div>
-<span class="text-primary dark:text-blue-300 font-bold tracking-widest uppercase text-xs mb-2 block">Explore</span>
-<h2 class="text-3xl font-serif font-bold text-slate-900 dark:text-white">Cultural Landmarks</h2>
+<h2 class="text-3xl font-bold text-text-primary dark:text-white mb-4">The Yallappa Nayaka Legacy</h2>
+<div class="h-1 w-20 bg-primary rounded-full mb-6"></div>
 </div>
-<a class="text-primary dark:text-white font-medium hover:underline flex items-center gap-1" href="#">
-                        View all landmarks <span class="material-symbols-outlined text-sm">arrow_forward</span>
-</a>
+<p class="text-text-primary dark:text-gray-300 text-lg leading-relaxed">
+                        Founded in the 16th century by the chieftain Yallappa Nayaka, Y N Hosakote stands as a testament to strategic foresight and resilience. The hill fort, constructed to oversee the surrounding plains, became a pivotal stronghold in the region's history.
+                    </p>
+<p class="text-text-secondary dark:text-gray-400 text-base leading-relaxed">
+                        Nayaka's rule established the foundations of local governance and agricultural planning that continue to influence the village's layout today. His vision extended beyond defense, fostering a community that thrived on trade and craftsmanship.
+                    </p>
+<div class="bg-primary-light dark:bg-primary/10 p-5 rounded-lg border-l-4 border-primary mt-4">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-primary">history_edu</span>
+<div>
+<h3 class="font-bold text-primary text-sm uppercase tracking-wide mb-1">Historical Fact</h3>
+<p class="text-sm text-text-primary dark:text-gray-300">The original layout of the fort was designed to maximize water harvesting, a crucial innovation for the arid Pavagada landscape.</p>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+</div>
+</div>
+</div>
+</section>
+<!-- Historical Timeline -->
+<section>
+<div class="text-center mb-12">
+<h2 class="text-3xl font-bold text-text-primary dark:text-white mb-3">Timeline of Events</h2>
+<p class="text-text-secondary dark:text-gray-400 max-w-2xl mx-auto">Tracing the journey from a strategic outpost to a thriving cultural hub.</p>
+</div>
+<div class="relative pl-4 md:pl-8 space-y-8">
+<!-- Vertical Line -->
+<div class="timeline-line absolute left-[27px] md:left-[43px] top-4 bottom-4 w-0.5 bg-gray-200 dark:bg-gray-700"></div>
+<!-- Item 1 -->
+<div class="relative flex gap-6 md:gap-10 group">
+<div class="flex flex-col items-center z-10">
+<div class="w-14 h-14 rounded-full bg-white dark:bg-gray-800 border-2 border-primary flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary">fort</span>
+</div>
+</div>
+<div class="flex-1 pt-1 pb-6 border-b border-gray-100 dark:border-gray-800">
+<span class="text-primary font-bold text-sm tracking-widest uppercase mb-1 block">1500s</span>
+<h3 class="text-xl font-bold text-text-primary dark:text-white mb-2">The Foundation</h3>
+<p class="text-text-secondary dark:text-gray-400">Establishment of the fort by Yallappa Nayaka as a strategic defense point.</p>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="relative flex gap-6 md:gap-10 group">
+<div class="flex flex-col items-center z-10">
+<div class="w-14 h-14 rounded-full bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-600 flex items-center justify-center shadow-sm group-hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-gray-500 dark:text-gray-400 group-hover:text-primary">shield</span>
+</div>
+</div>
+<div class="flex-1 pt-1 pb-6 border-b border-gray-100 dark:border-gray-800">
+<span class="text-gray-500 dark:text-gray-400 font-bold text-sm tracking-widest uppercase mb-1 block group-hover:text-primary transition-colors">1700s</span>
+<h3 class="text-xl font-bold text-text-primary dark:text-white mb-2">Strategic Shifts</h3>
+<p class="text-text-secondary dark:text-gray-400">The fort gains strategic importance during regional conflicts between Mysore rulers and local chieftains.</p>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="relative flex gap-6 md:gap-10 group">
+<div class="flex flex-col items-center z-10">
+<div class="w-14 h-14 rounded-full bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-600 flex items-center justify-center shadow-sm group-hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-gray-500 dark:text-gray-400 group-hover:text-primary">factory</span>
+</div>
+</div>
+<div class="flex-1 pt-1 pb-6 border-b border-gray-100 dark:border-gray-800">
+<span class="text-gray-500 dark:text-gray-400 font-bold text-sm tracking-widest uppercase mb-1 block group-hover:text-primary transition-colors">1900s</span>
+<h3 class="text-xl font-bold text-text-primary dark:text-white mb-2">Industrial Emergence</h3>
+<p class="text-text-secondary dark:text-gray-400">Rise of the weaving industry and agricultural hubs, transforming the local economy.</p>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="relative flex gap-6 md:gap-10 group">
+<div class="flex flex-col items-center z-10">
+<div class="w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/30">
+<span class="material-symbols-outlined">diversity_3</span>
+</div>
+</div>
+<div class="flex-1 pt-1 pb-6">
+<span class="text-primary font-bold text-sm tracking-widest uppercase mb-1 block">Present</span>
+<h3 class="text-xl font-bold text-text-primary dark:text-white mb-2">Modern Era</h3>
+<p class="text-text-secondary dark:text-gray-400">Focus on cultural preservation, community growth, and digital integration while honoring traditions.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Heritage Landmarks Grid -->
+<section>
+<div class="flex flex-col md:flex-row justify-between items-end mb-8 gap-4">
+<div>
+<h2 class="text-3xl font-bold text-text-primary dark:text-white mb-2">Heritage Landmarks</h2>
+<p class="text-text-secondary dark:text-gray-400">Explore the architectural marvels that define our identity.</p>
+</div>
+<button class="text-primary hover:text-primary-dark font-medium flex items-center gap-1 transition-colors">
+                        View All Locations <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 <!-- Card 1 -->
-<div class="group bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-700">
-<div class="h-48 overflow-hidden relative">
-<img alt="Stone fort walls against a blue sky" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" data-alt="Ancient stone fortress ramparts" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQJi509UuSYD8bE84LMMFedBsJl2webwV6RCMFXZQ5MSUApTHCkH6Ew22m_HqyH0BJcPrW1UvGtircsdZItR0KNbA10FWl2NQb_284Pz2pysR96JjrzfwWES2SvWvezSM1gXHeI4I0xGV6vuCQOQYOq5G7eLg95YtvGIcFVNQsqU79n-k_KMHC3_GzhWf0H4bL3sMJgsB2yyvRJOXIFm4UG6MqWvPha8hXt1fUl9fdYgPBBwrXJDgGE0IbGFz1PjWjHbZ1_R4Cfxw"/>
-<div class="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Architecture</div>
+<div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full">
+<div class="h-48 bg-gray-200 relative overflow-hidden">
+<img alt="Ancient stone fort walls on a rocky hill" class="w-full h-full object-cover" data-alt="Stone walls of the Y N Hosakote Hill Fort" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxmq7dl8bl4L7QXIxmGpThrY0Jh20DGw35O-LsNYgPbZFSwcBBnZcrNxjNcwaJbkomWazrRXgKZGqrx-PATGEWOqLA8tFsJHNgcRnXHSEfcNVUviCl1AJvFlDzIPQi3cElSm4buB7CxlAekxESvUIZUWvXbgujkcwdioLt1jty5DpIm12JIfB1HgVz82Z8BK7IF_nG4vdklQrifgYr3vGPenMQumlbXmHonOthx29Sjz884RipVQv8CkPaiOqf8n2G3W9Kjtn4T00"/>
+<div class="absolute top-3 right-3 bg-white/90 dark:bg-black/70 px-2 py-1 rounded text-xs font-bold uppercase tracking-wider text-text-primary dark:text-white backdrop-blur-sm">Fort</div>
 </div>
-<div class="p-6">
-<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary dark:group-hover:text-blue-300 transition-colors">Hill Fort Architecture</h3>
-<p class="text-slate-600 dark:text-slate-300 text-sm mb-4 line-clamp-3">
-                                Explore the massive stone bastions and secret passageways designed to withstand prolonged sieges and protect the inner citadel.
+<div class="p-5 flex-1 flex flex-col">
+<h3 class="text-xl font-bold text-text-primary dark:text-white mb-2">The Hill Fort</h3>
+<p class="text-text-secondary dark:text-gray-400 text-sm mb-4 line-clamp-3 flex-1">
+                                Standing tall since the 16th century, the fort offers panoramic views and intricate stone architecture designed for defense.
                             </p>
-<a class="inline-flex items-center text-primary dark:text-blue-300 text-sm font-bold hover:gap-2 transition-all" href="#">
-                                Read More <span class="material-symbols-outlined text-[16px] ml-1">chevron_right</span>
-</a>
+<div class="pt-4 border-t border-gray-100 dark:border-gray-700 flex items-center gap-2 text-sm text-primary font-medium">
+<span class="material-symbols-outlined text-lg">hiking</span>
+<span>2km Trek</span>
+</div>
 </div>
 </div>
 <!-- Card 2 -->
-<div class="group bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-700">
-<div class="h-48 overflow-hidden relative">
-<img alt="Intricate stone carvings on a temple pillar" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" data-alt="Ancient Indian temple stone carvings" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6tj5HzilMLDP5VAbo1sS8fjeP0S1yoMdOLJuYczfzs7u-2IcVnDU3-cplEHygPnackf9hdO-K-Xs70V8v6gQZQl8GmPCozx4AYfHbfHqOcP89lSbNwsXzYOgp0ySPFwdy-l42QRjSxY2cDAMwwjlE6o5Dc9NNFNPL9WLMipBqhtUgguX-IKwlpKaKOfL-E3hvaAuvonJWzxjO-ZWrLb94kAfjrY6YLNhLUhmeIAKe5QknkPDBCJ-Rogg5ArJOuPqBNcBrPt86e_Y"/>
-<div class="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Spirituality</div>
+<div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full">
+<div class="h-48 bg-gray-200 relative overflow-hidden">
+<img alt="Intricate stone carvings of an ancient Indian temple" class="w-full h-full object-cover" data-alt="Detail of ancient temple stone carvings" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7CBMXxFiCXLkMWfcfhl7Di2J3Tgi-oTYlfjFa7BPV5VOIgqUWPXUTE4q7GWUWyyMdh-tDdvLPS52rbcuFI3gr5c4OwoK2jMDaO6Kc-JVBy-qa-Fid7PiN0LjL2mHwQlUHSlkr-jcNAsMyK5XAZGvl3il4Gqya5uDuyBlRx2c3lHSkEcjWu5axQuDxDWrDm-L4msA3YzPw9pOiKtDA_InXgV42NSNSH-kp_hNvFCb60gg8PTD_R85i-4Rrk9ZwN9IvSJHxtlNk1J8"/>
+<div class="absolute top-3 right-3 bg-white/90 dark:bg-black/70 px-2 py-1 rounded text-xs font-bold uppercase tracking-wider text-text-primary dark:text-white backdrop-blur-sm">Temple</div>
 </div>
-<div class="p-6">
-<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary dark:group-hover:text-blue-300 transition-colors">Ancient Temples</h3>
-<p class="text-slate-600 dark:text-slate-300 text-sm mb-4 line-clamp-3">
-                                Discover the spiritual heart of the village through 16th-century temples featuring intricate Vijayanagara style carvings.
+<div class="p-5 flex-1 flex flex-col">
+<h3 class="text-xl font-bold text-text-primary dark:text-white mb-2">Ancient Temples</h3>
+<p class="text-text-secondary dark:text-gray-400 text-sm mb-4 line-clamp-3 flex-1">
+                                Dedicated to local deities, these temples feature Dravidian style pillars and centuries-old rituals still performed today.
                             </p>
-<a class="inline-flex items-center text-primary dark:text-blue-300 text-sm font-bold hover:gap-2 transition-all" href="#">
-                                Read More <span class="material-symbols-outlined text-[16px] ml-1">chevron_right</span>
-</a>
+<div class="pt-4 border-t border-gray-100 dark:border-gray-700 flex items-center gap-2 text-sm text-primary font-medium">
+<span class="material-symbols-outlined text-lg">temple_hindu</span>
+<span>Daily Puja</span>
+</div>
 </div>
 </div>
 <!-- Card 3 -->
-<div class="group bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-700">
-<div class="h-48 overflow-hidden relative">
-<img alt="Colorful silk threads on a weaving loom" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" data-alt="Traditional handloom weaving texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAM_5mw8gKAyvHoyhQ6dKBOedJEv4WPUvhqGOOYG0yzAvEtG3j_JXHcJLyniE049WhaisiRlAmdilWHa9kThquKon7ujqBzue5Q5SXvOeE0E7WD-zfaD9uBbyBtXbaJBeUyl19JwI34aiDE_77q9Z3zFxMK5AcTpI3l-qwn8AELROrhJUedobVTxiYaidTU1a4tBfAgRt6BWoYcM14iSJV-lYDEz5ln9T8q-csjak67TerviTRk_8nW_Wm0qNZ3sANU2NOvx30Jqos"/>
-<div class="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Craft</div>
+<div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full">
+<div class="h-48 bg-gray-200 relative overflow-hidden">
+<img alt="Colorful silk threads on a traditional handloom" class="w-full h-full object-cover" data-alt="Traditional handloom weaving setup" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBg8PtPiqop9_3cd8-9295nNNtr3kom0UBDqXIGxcJwg2Sc6ZpnAJnOU2C3xujqAs7tAjDt4a4cLYS4cI27UQlGFda2iqsUCGnq2UFopwLjfHmb3rD8sY9jSZ48rfshQOBClB3fzLUYcZ-bx7tR-Iad4XOvfjo_2N7dA2aUa-kIao7OeBPDrFSlZK9hntZ7gOYCeiGPhlYsw6J0MHbGF4OzceB81e2CVVyQ8SiVVEOLjegrAkXNFZ2PLtTwHaYOFw_4Mjsw_HDqtfg"/>
+<div class="absolute top-3 right-3 bg-white/90 dark:bg-black/70 px-2 py-1 rounded text-xs font-bold uppercase tracking-wider text-text-primary dark:text-white backdrop-blur-sm">Craft</div>
 </div>
-<div class="p-6">
-<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary dark:group-hover:text-blue-300 transition-colors">Weaving Heritage</h3>
-<p class="text-slate-600 dark:text-slate-300 text-sm mb-4 line-clamp-3">
-                                A living tradition that has put Y N Hosakote on the map. Witness the mastery of silk weavers passing skills down generations.
+<div class="p-5 flex-1 flex flex-col">
+<h3 class="text-xl font-bold text-text-primary dark:text-white mb-2">Weaving Heritage</h3>
+<p class="text-text-secondary dark:text-gray-400 text-sm mb-4 line-clamp-3 flex-1">
+                                The hum of the loom is the heartbeat of Hosakote. Explore the silk weaving traditions passed down through generations.
                             </p>
-<a class="inline-flex items-center text-primary dark:text-blue-300 text-sm font-bold hover:gap-2 transition-all" href="#">
-                                Read More <span class="material-symbols-outlined text-[16px] ml-1">chevron_right</span>
-</a>
+<div class="pt-4 border-t border-gray-100 dark:border-gray-700 flex items-center gap-2 text-sm text-primary font-medium">
+<span class="material-symbols-outlined text-lg">palette</span>
+<span>Live Demos</span>
 </div>
 </div>
 </div>
 </div>
 </section>
-<!-- Gallery / Archives -->
-<section class="max-w-[1280px] w-full px-6 py-20">
-<div class="text-center mb-12">
-<h2 class="text-3xl font-serif font-bold text-primary dark:text-white mb-4">From the Archives</h2>
-<p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">A collection of preserved documents, maps, and photographs that offer a glimpse into the past life of Y N Hosakote.</p>
+<!-- Cultural Traditions -->
+<section class="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700 shadow-sm">
+<div class="flex flex-col md:flex-row gap-8 items-center">
+<div class="flex-1 space-y-4">
+<h2 class="text-3xl font-bold text-text-primary dark:text-white">Cultural Traditions</h2>
+<p class="text-text-secondary dark:text-gray-300 leading-relaxed">
+                            The Pavagada region is alive with vibrant festivals and folk traditions. From the annual <strong>Jatre</strong> that draws thousands to the rhythmic beats of <strong>Dollu Kunitha</strong>, our culture is a living, breathing entity.
+                        </p>
+<ul class="space-y-3 mt-4">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">celebration</span>
+<span class="text-text-primary dark:text-gray-200">Annual Rathotsava (Chariot Festival)</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">music_note</span>
+<span class="text-text-primary dark:text-gray-200">Folk Music &amp; Dance Performances</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">restaurant_menu</span>
+<span class="text-text-primary dark:text-gray-200">Traditional Culinary Fests</span>
+</li>
+</ul>
+<button class="mt-4 px-6 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-full text-text-primary dark:text-white font-medium hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors">
+                            View Event Calendar
+                        </button>
 </div>
-<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-<!-- Archive Item 1 -->
-<div class="relative group cursor-pointer aspect-[4/5] bg-sand dark:bg-slate-800 border-8 border-white dark:border-slate-700 shadow-lg rotate-1 hover:rotate-0 transition-all duration-300">
-<img alt="Vintage faded map on paper" class="w-full h-full object-cover sepia-[.5] opacity-90" data-alt="Old paper texture with faint map lines" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLcW4kR7RQ-fjGZlwdj5FEc1wROHGePAVieZdOl9lH
+<div class="flex-1 w-full">
+<div class="grid grid-cols-2 gap-3">
+<div class="rounded-lg overflow-hidden h-40">
+<img alt="Colorful powder explosion during a festival" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500" data-alt="Vibrant festival colors and celebration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSLNveBw8z0FUcYmbDuYhYyH3IjSsFB7Y6gfiv8HB0Gt55SelBzhZTX4XIt_prOrO1s1IIGwIHWj6T3eme9drLOwij_MjVRtdwAv18FfVfmY5ZM7qBdRA-bL4BF36xN3m3_16VTuEVuQ0hS8pnyUpyj0gpjFu4LBBq5yVaYBnidjZTRF7R5lVtF6umqEZaAgu2RckWpmdv8zq-LfenbJN2E9hwAEsrKLY6PjeafYfUz05ZvE781cBb1leKlDX8BraDjxD9leR6yI8"/>
+</div>
+<div class="rounded-lg overflow-hidden h-40">
+<img alt="Traditional Indian drums being played" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500" data-alt="Folk drummers performing Dollu Kunitha" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaH-RMvaEgjxaE9CBxxGkfu_7zSephNXXaDiIeA4H6zttYSDblC7_vZ5PjBqrLU6mXCbBHAtl6ufe990a4IkGuKbE6uzVTtlVoulDg7c68mU5ZKdqfBnFh0Am4vOLNCbX9zjQvknKHvh1KywxViqKRBQzj2jFcg5xmATisoTcRZYpquUMxAN8jrXBNdgTRQ1Si5ateA9wjkqwZznmRqXttsSMPAktyK2yn-QM4x7pHR_VfSAnzM1IE9sl0gIu5AN3zniED2u45Ma8"/>
+</div>
+<div class="col-span-2 rounded-lg overflow-hidden h-40">
+<img alt="Crowd gathered for a religious procession" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500" data-alt="Community gathering for Rathotsava" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNwuGWH_KElBs9qdWmVFpD9wlNquKtWXk9Bfciu4qb_2QTdYux3ITCl0ojXx1tbscv9QbFCY_yIM66ImZyk92S-vUmxCla8m25qSldPTceAVLR6gOmNfOTZAx4mBwjF99oO1dC5pe4En-BznYC0Budt_u7OE7lRyNxaWoYQfSKpytk6LKPOlQ6QfHCYU7J9ANbbU_f6sdX3Hwfll6Zhjyi474th8GWuUmyoMbwf_6yRfMM6uK88X9szucr8n8fStPhKKZogSHJPik"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-gray-100 dark:bg-[#1a2234] border-t border-gray-200 dark:border-gray-800 py-10 px-4 md:px-10">
+<div class="max-w-[1280px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-2 text-text-primary dark:text-white">
+<span class="material-symbols-outlined text-2xl">castle</span>
+<span class="font-bold text-lg">Y N Hosakote</span>
+</div>
+<p class="text-sm text-text-secondary dark:text-gray-400">
+                    Gateway to history, culture, and community growth.
+                </p>
+</div>
+<div class="flex flex-col gap-3">
+<h4 class="font-bold text-text-primary dark:text-white">Quick Links</h4>
+<a class="text-sm text-text-secondary dark:text-gray-400 hover:text-primary transition-colors" href="#">About Us</a>
+<a class="text-sm text-text-secondary dark:text-gray-400 hover:text-primary transition-colors" href="#">Tourism Guide</a>
+<a class="text-sm text-text-secondary dark:text-gray-400 hover:text-primary transition-colors" href="#">Citizen Services</a>
+<a class="text-sm text-text-secondary dark:text-gray-400 hover:text-primary transition-colors" href="#">Contact</a>
+</div>
+<div class="flex flex-col gap-3">
+<h4 class="font-bold text-text-primary dark:text-white">Resources</h4>
+<a class="text-sm text-text-secondary dark:text-gray-400 hover:text-primary transition-colors" href="#">Map of Fort</a>
+<a class="text-sm text-text-secondary dark:text-gray-400 hover:text-primary transition-colors" href="#">Weaver Directory</a>
+<a class="text-sm text-text-secondary dark:text-gray-400 hover:text-primary transition-colors" href="#">Festival Calendar</a>
+</div>
+<div class="flex flex-col gap-3">
+<h4 class="font-bold text-text-primary dark:text-white">Connect</h4>
+<div class="flex gap-4">
+<a class="text-text-secondary dark:text-gray-400 hover:text-primary" href="#"><span class="material-symbols-outlined">mail</span></a>
+<a class="text-text-secondary dark:text-gray-400 hover:text-primary" href="#"><span class="material-symbols-outlined">call</span></a>
+<a class="text-text-secondary dark:text-gray-400 hover:text-primary" href="#"><span class="material-symbols-outlined">share</span></a>
+</div>
+<p class="text-xs text-text-secondary dark:text-gray-500 mt-2">
+                    © 2023 Y N Hosakote Gram Panchayat. All rights reserved.
+                </p>
+</div>
+</div>
+</footer>
+</body></html>
