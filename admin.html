@@ -1,158 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Y N Hosakote Admin Portal</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel - Y N Hosakote</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        primary: "#16a34a",
-        navy: "#0f172a",
-      },
-      fontFamily: {
-        display: ["Public Sans", "sans-serif"]
-      }
-    }
-  }
-}
-</script>
+<style>
+body{font-family:'Lexend',sans-serif;background:#eef2f7;}
+</style>
 </head>
 
-<body class="bg-gradient-to-br from-slate-100 via-white to-slate-200 font-display min-h-screen flex items-center justify-center">
+<body>
 
-<!-- Background Glow -->
-<div class="absolute inset-0 overflow-hidden">
-  <div class="absolute -top-32 -left-32 w-96 h-96 bg-green-400/20 blur-3xl rounded-full"></div>
-  <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-emerald-300/20 blur-3xl rounded-full"></div>
-</div>
+<header class="bg-blue-700 text-white p-4 flex justify-between">
+<h1 class="font-bold">Admin Control Panel</h1>
+<button id="logout" class="bg-white text-blue-700 px-3 py-1 rounded">Logout</button>
+</header>
 
-<div class="relative w-full max-w-5xl bg-white shadow-2xl rounded-3xl overflow-hidden grid md:grid-cols-2">
+<div class="max-w-5xl mx-auto mt-6">
 
-  <!-- LEFT SIDE -->
-  <div class="bg-navy text-white p-10 flex flex-col justify-between">
+<h2 class="text-2xl font-bold mb-4">🚩 Reported Posts</h2>
+<div id="reports" class="space-y-4"></div>
 
-    <div>
-      <div class="flex items-center gap-3 mb-6">
-        <div class="bg-green-500/20 p-3 rounded-xl">
-          <span class="material-symbols-outlined text-3xl text-green-400">admin_panel_settings</span>
-        </div>
-        <h2 class="text-lg font-bold tracking-wide">Y N Hosakote</h2>
-      </div>
+<hr class="my-10">
 
-      <h3 class="text-3xl font-bold mb-4 leading-tight">
-        Administrative Control Center
-      </h3>
-
-      <p class="text-slate-400 text-sm leading-relaxed">
-        Secure login portal for managing village announcements and services.
-      </p>
-    </div>
-
-    <div class="bg-white/10 border border-white/10 rounded-xl p-5 mt-10">
-      <div class="flex items-center gap-2 mb-2 text-yellow-400">
-        <span class="material-symbols-outlined">security</span>
-        <span class="text-xs font-semibold uppercase tracking-wider">Restricted Access</span>
-      </div>
-      <p class="text-xs text-slate-300 leading-relaxed">
-        Only authorized admins are allowed. All activities are monitored.
-      </p>
-    </div>
-
-  </div>
-
-  <!-- RIGHT SIDE LOGIN -->
-  <div class="p-10 flex items-center">
-
-    <div class="w-full max-w-sm mx-auto">
-
-      <div class="mb-8 text-center">
-        <h1 class="text-3xl font-bold text-slate-800 mb-2">Admin Login</h1>
-        <p class="text-slate-500 text-sm">Sign in to manage announcements</p>
-      </div>
-
-      <!-- EMAIL -->
-      <div class="mb-5">
-        <label class="text-sm font-medium text-slate-700">Email</label>
-        <div class="relative mt-1">
-          <span class="material-symbols-outlined absolute left-3 top-3 text-slate-400">mail</span>
-          <input id="email" type="email"
-          class="w-full pl-10 pr-3 py-3 rounded-xl border border-slate-200 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none transition"
-          placeholder="Enter email"/>
-        </div>
-      </div>
-
-      <!-- PASSWORD -->
-      <div class="mb-5">
-        <label class="text-sm font-medium text-slate-700">Password</label>
-        <div class="relative mt-1">
-          <span class="material-symbols-outlined absolute left-3 top-3 text-slate-400">lock</span>
-          <input id="password" type="password"
-          class="w-full pl-10 pr-3 py-3 rounded-xl border border-slate-200 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none transition"
-          placeholder="Password"/>
-        </div>
-      </div>
-
-      <!-- BUTTON -->
-      <button onclick="login()"
-      class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl shadow-md transition">
-      Sign In
-      </button>
-
-      <p id="error" class="text-red-500 text-sm mt-4 text-center"></p>
-
-    </div>
-
-  </div>
+<h2 class="text-2xl font-bold mb-4">👥 Members</h2>
+<div id="users" class="space-y-4"></div>
 
 </div>
 
+<script type="module">
 
-<!-- FIREBASE -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import { 
+  getAuth,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
 
-<script>
+import {
+  getFirestore,
+  collection,
+  query,
+  onSnapshot,
+  doc,
+  getDoc,
+  deleteDoc,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+/* Firebase Config */
 const firebaseConfig = {
-  apiKey: "AIzaSyANO19SvpXnBRbVssgO5My_RZUGIdbV_eU",
-  authDomain: "ynhosakote-portal.firebaseapp.com",
-  projectId: "ynhosakote-portal",
-  storageBucket: "ynhosakote-portal.firebasestorage.app",
-  messagingSenderId: "590401150310",
-  appId: "1:590401150310:web:1af5701c6dae674c0b7ca7"
+  apiKey: "AIzaSyCpNAu49OymCjNuRl7aRBRYQm0P6M0db0s",
+  authDomain: "ynhosakote-community.firebaseapp.com",
+  projectId: "ynhosakote-community",
+  storageBucket: "ynhosakote-community.firebasestorage.app",
+  messagingSenderId: "1053474727552",
+  appId: "1:1053474727552:web:9ed2d6523ef935fd666865"
 };
 
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-/* LOGIN */
-function login(){
-const email=document.getElementById("email").value;
-const password=document.getElementById("password").value;
+const reportsDiv = document.getElementById("reports");
+const usersDiv = document.getElementById("users");
 
-auth.signInWithEmailAndPassword(email,password)
-.then(()=>{
-window.location.href="dashboard.html";
-})
-.catch(error=>{
-document.getElementById("error").innerText="Invalid email or password";
+/* ADMIN CHECK */
+onAuthStateChanged(auth, async(user)=>{
+  if(!user){
+    window.location="citizen_login.html";
+    return;
+  }
+
+  const userDoc = await getDoc(doc(db,"users",user.uid));
+
+  if(!userDoc.exists() || userDoc.data().role !== "admin"){
+    alert("Access denied");
+    window.location="feed.html";
+    return;
+  }
+
+  loadReports();
+  loadUsers();
 });
+
+/* LOAD REPORTS */
+function loadReports(){
+  const q = query(collection(db,"reports"));
+
+  onSnapshot(q, async(snapshot)=>{
+    reportsDiv.innerHTML="";
+
+    for(const r of snapshot.docs){
+
+      const report = r.data();
+      const postDoc = await getDoc(doc(db,"posts",report.postId));
+
+      if(!postDoc.exists()) continue;
+
+      const post = postDoc.data();
+
+      reportsDiv.innerHTML += `
+      <div class="bg-white p-4 rounded-xl shadow">
+        <p class="font-bold text-red-600">Report Reason:</p>
+        <p class="mb-2">${report.reason}</p>
+
+        <p class="font-semibold">${post.authorName}</p>
+        <p>${post.text||""}</p>
+        ${post.imageUrl?`<img src="${post.imageUrl}" class="mt-2 rounded">`:""}
+
+        <div class="flex gap-3 mt-4">
+          <button onclick="deletePost('${report.postId}','${r.id}')" 
+          class="bg-red-600 text-white px-4 py-2 rounded">
+          Delete Post
+          </button>
+
+          <button onclick="dismissReport('${r.id}')" 
+          class="bg-gray-400 text-white px-4 py-2 rounded">
+          Ignore
+          </button>
+        </div>
+      </div>
+      `;
+    }
+  });
 }
 
-/* AUTO LOGIN */
-auth.onAuthStateChanged(user=>{
-if(user){
-window.location.href="dashboard.html";
+/* DELETE POST */
+window.deletePost = async(postId,reportId)=>{
+  await deleteDoc(doc(db,"posts",postId));
+  await deleteDoc(doc(db,"reports",reportId));
+  alert("Post removed");
+};
+
+/* DISMISS REPORT */
+window.dismissReport = async(reportId)=>{
+  await deleteDoc(doc(db,"reports",reportId));
+};
+
+/* LOAD USERS */
+function loadUsers(){
+  const q = query(collection(db,"users"));
+
+  onSnapshot(q,(snapshot)=>{
+    usersDiv.innerHTML="";
+
+    snapshot.forEach(docSnap=>{
+      const u = docSnap.data();
+      const id = docSnap.id;
+
+      usersDiv.innerHTML+=`
+      <div class="bg-white p-4 rounded-xl shadow flex justify-between items-center">
+        <div>
+          <p class="font-bold">${u.name||"User"}</p>
+          <p class="text-sm text-gray-500">${id}</p>
+          <p class="text-sm">Role: ${u.role}</p>
+        </div>
+
+        <button onclick="banUser('${id}')" 
+        class="bg-red-500 text-white px-4 py-2 rounded">
+        Ban
+        </button>
+      </div>
+      `;
+    });
+  });
 }
-});
+
+/* BAN USER */
+window.banUser = async(uid)=>{
+  await updateDoc(doc(db,"users",uid),{
+    approved:false
+  });
+  alert("User banned");
+};
+
+/* LOGOUT */
+document.getElementById("logout").onclick=()=>{
+  signOut(auth);
+  window.location="citizen_login.html";
+};
+
 </script>
 
 </body>
