@@ -9,57 +9,57 @@
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-body{
-font-family:'Lexend',sans-serif;
-background:#f3f4f8;
-}
+body{font-family:'Lexend',sans-serif;background:#eef2f7;}
 </style>
 </head>
 
-<body class="flex items-center justify-center min-h-screen">
+<body class="min-h-screen">
 
-<div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-lg">
+<!-- HEADER -->
+<header class="bg-white shadow p-4 flex justify-between items-center">
+<h1 class="font-bold text-lg">Create Post</h1>
+<a href="feed.html" class="text-blue-600 font-semibold">Back</a>
+</header>
 
-<h2 class="text-2xl font-bold text-center mb-6">Create Community Post</h2>
+<!-- FORM -->
+<div class="max-w-xl mx-auto mt-8 bg-white rounded-2xl shadow-lg p-6">
 
-<!-- Category -->
-<label class="text-sm font-semibold">Category</label>
-<select id="category" class="w-full border p-3 rounded-lg mb-4">
-  <option value="general">General</option>
-  <option value="official">Official Notice</option>
-  <option value="events">Events</option>
-  <option value="market">Market</option>
-  <option value="lostfound">Lost & Found</option>
-</select>
+<textarea id="postText"
+class="w-full border rounded-xl p-4 h-32 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+placeholder="What's happening in Y N Hosakote?"></textarea>
 
-<!-- Text -->
-<label class="text-sm font-semibold">Post Text</label>
-<textarea id="postText" placeholder="Write something for the village..."
-class="w-full border p-3 rounded-lg mb-4 h-32"></textarea>
+<input type="file" id="imageInput" accept="image/*"
+class="mt-4 w-full">
 
-<!-- Image -->
-<label class="text-sm font-semibold">Upload Photo</label>
-<input type="file" id="imageFile" accept="image/*"
-class="w-full border p-3 rounded-lg mb-4">
+<img id="preview" class="hidden mt-4 rounded-xl"/>
 
 <button id="postBtn"
-class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition">
-Upload Post
+class="mt-6 w-full bg-blue-600 text-white py-3 rounded-xl font-bold">
+Post Now
 </button>
 
-<p id="status" class="text-center text-sm mt-4"></p>
+<p id="status" class="text-center text-sm mt-4 text-gray-500"></p>
 
 </div>
-
 
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, addDoc, collection } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-storage.js";
+import { 
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
 
+import {
+  getFirestore,
+  addDoc,
+  collection,
+  serverTimestamp,
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
+/* Firebase Config */
 const firebaseConfig = {
   apiKey: "AIzaSyCpNAu49OymCjNuRl7aRBRYQm0P6M0db0s",
   authDomain: "ynhosakote-community.firebaseapp.com",
@@ -72,15 +72,13 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const storage = getStorage(app);
 
 let currentUser = null;
-let userData = null;
+let authorName = "";
 
-/* Check login */
-onAuthStateChanged(auth, async(user)=>{
+/* Require Login + Get User Name */
+onAuthStateChanged(auth, async (user)=>{
   if(!user){
-    alert("Login required");
     window.location="citizen_login.html";
     return;
   }
@@ -88,68 +86,63 @@ onAuthStateChanged(auth, async(user)=>{
   currentUser = user;
 
   const userDoc = await getDoc(doc(db,"users",user.uid));
+  authorName = userDoc.data().name;
+});
 
-  if(!userDoc.exists()){
-    alert("Account not approved");
-    window.location="citizen_login.html";
+/* Preview Image */
+const imageInput = document.getElementById("imageInput");
+const preview = document.getElementById("preview");
+
+imageInput.onchange = ()=>{
+  const file = imageInput.files[0];
+  preview.src = URL.createObjectURL(file);
+  preview.classList.remove("hidden");
+};
+
+/* POST BUTTON */
+document.getElementById("postBtn").onclick = async ()=>{
+
+  const text = document.getElementById("postText").value;
+  const file = imageInput.files[0];
+  const status = document.getElementById("status");
+
+  if(!text && !file){
+    status.innerText="Write something or select image";
     return;
   }
 
-  userData = userDoc.data();
+  status.innerText="Uploading image...";
 
-  if(userData.role === "citizen"){
-    alert("Citizens cannot post");
-    window.location="feed.html";
+  let imageUrl = "";
+
+  /* Upload to Cloudinary */
+  if(file){
+    const formData = new FormData();
+    formData.append("file",file);
+    formData.append("upload_preset","ynhosakote_posts");
+
+    const res = await fetch("https://api.cloudinary.com/v1_1/dnbfx0ynh/image/upload",{
+      method:"POST",
+      body:formData
+    });
+
+    const data = await res.json();
+    imageUrl = data.secure_url;
   }
-});
 
+  status.innerText="Publishing post...";
 
-/* Upload post */
-document.getElementById("postBtn").onclick = async()=>{
+  /* Save Post in Firestore */
+  await addDoc(collection(db,"posts"),{
+    text:text,
+    imageUrl:imageUrl,
+    authorName:authorName,
+    uid:currentUser.uid,
+    createdAt:serverTimestamp()
+  });
 
-const text = document.getElementById("postText").value;
-const category = document.getElementById("category").value;
-const file = document.getElementById("imageFile").files[0];
-const status = document.getElementById("status");
-
-if(!text){
-status.innerText="Write something first";
-return;
-}
-
-status.innerText="Uploading...";
-
-let imageURL = "";
-
-try{
-
-/* Upload image */
-if(file){
-const storageRef = ref(storage, "posts/"+Date.now()+"_"+file.name);
-await uploadBytes(storageRef,file);
-imageURL = await getDownloadURL(storageRef);
-}
-
-/* Create post */
-await addDoc(collection(db,"posts"),{
-authorId: currentUser.uid,
-authorName: userData.name,
-category: category,
-text: text,
-image: imageURL,
-time: Date.now(),
-likes: 0,
-comments: 0
-});
-
-status.innerText="Post Uploaded Successfully!";
-setTimeout(()=>window.location="feed.html",1500);
-
-}catch(e){
-console.error(e);
-status.innerText="Upload failed!";
-}
-
+  status.innerText="Posted successfully!";
+  window.location="feed.html";
 };
 
 </script>
