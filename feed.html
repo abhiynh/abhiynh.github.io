@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Y N Hosakote Community</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+font-family:'Lexend',sans-serif;
+background:#f3f4f6;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="bg-white shadow-md sticky top-0 z-50">
+<div class="max-w-5xl mx-auto flex items-center justify-between px-4 py-3">
+
+<div class="flex items-center gap-3">
+<img src="logo.png" class="w-9 h-9 rounded-full">
+<h1 class="font-bold text-lg">Y N Hosakote Community</h1>
+</div>
+
+<button id="logoutBtn" class="bg-red-500 text-white px-4 py-2 rounded-lg text-sm">
+Logout
+</button>
+
+</div>
+</header>
+
+
+<!-- FEED CONTAINER -->
+<main class="max-w-2xl mx-auto mt-6 px-3">
+
+<h2 class="text-xl font-bold mb-4">Village Updates</h2>
+
+<div id="postsContainer" class="space-y-5">
+
+<!-- Posts will load here -->
+
+</div>
+
+</main>
+
+
+
+<!-- Firebase + Security Check -->
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import { 
+  getAuth, 
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+
+import { 
+  getFirestore,
+  doc,
+  getDoc,
+  collection,
+  query,
+  orderBy,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCpNAu49OymCjNuRl7aRBRYQm0P6M0db0s",
+  authDomain: "ynhosakote-community.firebaseapp.com",
+  projectId: "ynhosakote-community",
+  storageBucket: "ynhosakote-community.firebasestorage.app",
+  messagingSenderId: "1053474727552",
+  appId: "1:1053474727552:web:9ed2d6523ef935fd666865"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+
+const postsContainer = document.getElementById("postsContainer");
+
+
+/* -------- SECURITY CHECK ---------- */
+
+onAuthStateChanged(auth, async(user)=>{
+
+  if(!user){
+    window.location="citizen_login.html";
+    return;
+  }
+
+  const docSnap = await getDoc(doc(db,"users",user.uid));
+
+  if(!docSnap.exists()){
+    window.location="citizen_login.html";
+    return;
+  }
+
+  const data = docSnap.data();
+
+  if(data.approved !== true){
+    alert("Waiting for admin approval");
+    window.location="citizen_login.html";
+    return;
+  }
+
+  loadPosts();
+
+});
+
+
+/* -------- LOGOUT ---------- */
+
+document.getElementById("logoutBtn").onclick = ()=>{
+  signOut(auth);
+  window.location="citizen_login.html";
+};
+
+
+/* -------- LOAD POSTS ---------- */
+
+function loadPosts(){
+
+const q = query(collection(db,"posts"), orderBy("time","desc"));
+
+onSnapshot(q, (snapshot)=>{
+
+postsContainer.innerHTML="";
+
+if(snapshot.empty){
+postsContainer.innerHTML=
+`<div class="text-center text-gray-500 mt-10">
+No posts yet.<br>
+Admin or members will post soon.
+</div>`;
+return;
+}
+
+snapshot.forEach(doc=>{
+
+const post = doc.data();
+const date = new Date(post.time).toLocaleString();
+
+postsContainer.innerHTML += `
+
+<div class="bg-white rounded-2xl shadow p-4">
+
+<div class="flex items-center gap-3 mb-3">
+<div class="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold">
+${post.authorName[0]}
+</div>
+<div>
+<p class="font-semibold">${post.authorName}</p>
+<p class="text-xs text-gray-500">${date}</p>
+</div>
+</div>
+
+<p class="mb-3 text-gray-800">${post.text}</p>
+
+${post.image ? `<img src="${post.image}" class="rounded-xl w-full">` : ``}
+
+</div>
+`;
+
+});
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
