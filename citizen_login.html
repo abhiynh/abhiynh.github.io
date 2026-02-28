@@ -6,6 +6,7 @@
 <title>Login - Y N Hosakote</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
 body{font-family:'Lexend',sans-serif;background:#f4f6fb;}
 </style>
@@ -24,11 +25,11 @@ class="w-full border p-3 rounded-lg mb-4">
 class="w-full border p-3 rounded-lg mb-4">
 
 <button id="loginBtn"
-class="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-lg text-base font-bold text-white bg-primary hover:bg-primary-hover transition-all">
+class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition">
 Sign In
 </button>
 
-<p id="loginError" class="text-red-500 text-sm text-center hidden"></p>
+<p id="loginError" class="text-red-500 text-sm text-center mt-3 hidden"></p>
 
 </div>
 
@@ -36,48 +37,7 @@ Sign In
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCpNAu49OymCjNuRl7aRBRYQm0P6M0db0s",
-  authDomain: "ynhosakote-community.firebaseapp.com",
-  projectId: "ynhosakote-community",
-  storageBucket: "ynhosakote-community.firebasestorage.app",
-  messagingSenderId: "1053474727552",
-  appId: "1:1053474727552:web:9ed2d6523ef935fd666865"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-document.getElementById("loginBtn").onclick = async ()=>{
-
-const email = email.value;
-const password = password.value;
-
-try{
-await signInWithEmailAndPassword(auth,email,password);
-window.location="posts.html";
-}catch(e){
-document.getElementById("error").innerText="Invalid login credentials";
-}
-
-};
-
-</script>
-
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { 
-  getAuth, 
-  signInWithEmailAndPassword,
-  onAuthStateChanged 
-} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
-import { 
-  getFirestore,
-  doc,
-  getDoc
-} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
 /* Firebase Config */
 const firebaseConfig = {
@@ -89,18 +49,17 @@ const firebaseConfig = {
   appId: "1:1053474727552:web:9ed2d6523ef935fd666865"
 };
 
-/* Initialize */
+/* Initialize Firebase */
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-/* Login Button */
 const loginBtn = document.getElementById("loginBtn");
 const errorBox = document.getElementById("loginError");
 
 loginBtn.addEventListener("click", async () => {
 
-  const email = document.getElementById("username").value;
+  const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
   if(!email || !password){
@@ -114,7 +73,7 @@ loginBtn.addEventListener("click", async () => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
-    /* Check role in Firestore */
+    /* Check user role in Firestore */
     const userDoc = await getDoc(doc(db,"users",user.uid));
 
     if(!userDoc.exists()){
@@ -125,34 +84,25 @@ loginBtn.addEventListener("click", async () => {
 
     const role = userDoc.data().role;
 
-    /* Redirect based on role */
     if(role === "admin"){
-      window.location.href = "/admin/dashboard.html";
+      window.location.href = "admin-dashboard.html";
     }
     else if(role === "member"){
-      window.location.href = "/member/dashboard.html";
+      window.location.href = "member-dashboard.html";
     }
     else{
-      window.location.href = "/feed.html";
+      window.location.href = "posts.html";
     }
 
   }
   catch(error){
-    errorBox.innerText = "Invalid login details";
+    errorBox.innerText = "Invalid email or password";
     errorBox.classList.remove("hidden");
   }
 
 });
 
-/* Auto login if already signed in */
-onAuthStateChanged(auth, (user) => {
-  if(user){
-    window.location.href = "/feed.html";
-  }
-});
-
 </script>
-
 
 </body>
 </html>
