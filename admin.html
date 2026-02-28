@@ -3,56 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel - Y N Hosakote</title>
+<title>Admin Panel</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-body{font-family:'Lexend',sans-serif;background:#eef2f7;}
+body{font-family:'Lexend',sans-serif;background:#f3f4f6;}
 </style>
 </head>
 
 <body>
 
-<header class="bg-blue-700 text-white p-4 flex justify-between">
-<h1 class="font-bold">Admin Control Panel</h1>
-<button id="logout" class="bg-white text-blue-700 px-3 py-1 rounded">Logout</button>
+<header class="bg-black text-white p-4 flex justify-between">
+<h1 class="font-bold">Y N Hosakote Admin Panel</h1>
+<button id="logoutBtn" class="bg-red-500 px-4 py-2 rounded">Logout</button>
 </header>
 
-<div class="max-w-5xl mx-auto mt-6">
+<div class="max-w-5xl mx-auto mt-8 space-y-10">
 
-<h2 class="text-2xl font-bold mb-4">🚩 Reported Posts</h2>
+<!-- REPORTS -->
+<section>
+<h2 class="text-2xl font-bold mb-4">🚩 Reports</h2>
 <div id="reports" class="space-y-4"></div>
+</section>
 
-<hr class="my-10">
+<!-- POSTS -->
+<section>
+<h2 class="text-2xl font-bold mb-4">📝 All Posts</h2>
+<div id="posts" class="space-y-6"></div>
+</section>
 
-<h2 class="text-2xl font-bold mb-4">👥 Members</h2>
-<div id="users" class="space-y-4"></div>
+<!-- USERS -->
+<section>
+<h2 class="text-2xl font-bold mb-4">👤 Members</h2>
+<div id="users" class="space-y-3"></div>
+</section>
 
 </div>
 
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { 
-  getAuth,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
-
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
 import {
-  getFirestore,
-  collection,
-  query,
-  onSnapshot,
-  doc,
-  getDoc,
-  deleteDoc,
-  updateDoc
+getFirestore,
+collection,
+onSnapshot,
+doc,
+deleteDoc,
+getDoc
 } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
-/* Firebase Config */
+/* Firebase */
 const firebaseConfig = {
   apiKey: "AIzaSyCpNAu49OymCjNuRl7aRBRYQm0P6M0db0s",
   authDomain: "ynhosakote-community.firebaseapp.com",
@@ -66,10 +69,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const reportsDiv = document.getElementById("reports");
-const usersDiv = document.getElementById("users");
-
-/* ADMIN CHECK */
+/* ADMIN AUTH GUARD */
 onAuthStateChanged(auth, async(user)=>{
   if(!user){
     window.location="citizen_login.html";
@@ -79,110 +79,89 @@ onAuthStateChanged(auth, async(user)=>{
   const userDoc = await getDoc(doc(db,"users",user.uid));
 
   if(!userDoc.exists() || userDoc.data().role !== "admin"){
-    alert("Access denied");
+    alert("Access Denied");
     window.location="feed.html";
-    return;
   }
-
-  loadReports();
-  loadUsers();
 });
 
-/* LOAD REPORTS */
-function loadReports(){
-  const q = query(collection(db,"reports"));
+/* LOGOUT */
+document.getElementById("logoutBtn").onclick=()=>{
+signOut(auth);
+window.location="citizen_login.html";
+};
 
-  onSnapshot(q, async(snapshot)=>{
-    reportsDiv.innerHTML="";
+/* LOAD POSTS */
+const postsDiv=document.getElementById("posts");
 
-    for(const r of snapshot.docs){
+onSnapshot(collection(db,"posts"),snapshot=>{
+postsDiv.innerHTML="";
+snapshot.forEach(d=>{
+const p=d.data();
 
-      const report = r.data();
-      const postDoc = await getDoc(doc(db,"posts",report.postId));
+postsDiv.innerHTML+=`
+<div class="bg-white p-4 rounded-xl shadow">
+<h3 class="font-bold">${p.authorName}</h3>
+<p>${p.text||""}</p>
+${p.imageUrl?`<img src="${p.imageUrl}" class="mt-3 rounded-xl">`:""}
 
-      if(!postDoc.exists()) continue;
-
-      const post = postDoc.data();
-
-      reportsDiv.innerHTML += `
-      <div class="bg-white p-4 rounded-xl shadow">
-        <p class="font-bold text-red-600">Report Reason:</p>
-        <p class="mb-2">${report.reason}</p>
-
-        <p class="font-semibold">${post.authorName}</p>
-        <p>${post.text||""}</p>
-        ${post.imageUrl?`<img src="${post.imageUrl}" class="mt-2 rounded">`:""}
-
-        <div class="flex gap-3 mt-4">
-          <button onclick="deletePost('${report.postId}','${r.id}')" 
-          class="bg-red-600 text-white px-4 py-2 rounded">
-          Delete Post
-          </button>
-
-          <button onclick="dismissReport('${r.id}')" 
-          class="bg-gray-400 text-white px-4 py-2 rounded">
-          Ignore
-          </button>
-        </div>
-      </div>
-      `;
-    }
-  });
-}
+<button onclick="deletePost('${d.id}')"
+class="mt-4 bg-red-600 text-white px-4 py-2 rounded">
+Delete Post
+</button>
+</div>
+`;
+});
+});
 
 /* DELETE POST */
-window.deletePost = async(postId,reportId)=>{
-  await deleteDoc(doc(db,"posts",postId));
-  await deleteDoc(doc(db,"reports",reportId));
-  alert("Post removed");
-};
-
-/* DISMISS REPORT */
-window.dismissReport = async(reportId)=>{
-  await deleteDoc(doc(db,"reports",reportId));
-};
-
-/* LOAD USERS */
-function loadUsers(){
-  const q = query(collection(db,"users"));
-
-  onSnapshot(q,(snapshot)=>{
-    usersDiv.innerHTML="";
-
-    snapshot.forEach(docSnap=>{
-      const u = docSnap.data();
-      const id = docSnap.id;
-
-      usersDiv.innerHTML+=`
-      <div class="bg-white p-4 rounded-xl shadow flex justify-between items-center">
-        <div>
-          <p class="font-bold">${u.name||"User"}</p>
-          <p class="text-sm text-gray-500">${id}</p>
-          <p class="text-sm">Role: ${u.role}</p>
-        </div>
-
-        <button onclick="banUser('${id}')" 
-        class="bg-red-500 text-white px-4 py-2 rounded">
-        Ban
-        </button>
-      </div>
-      `;
-    });
-  });
+window.deletePost=async(id)=>{
+if(confirm("Delete this post?")){
+await deleteDoc(doc(db,"posts",id));
 }
+};
+
+/* REPORTS */
+const reportsDiv=document.getElementById("reports");
+
+onSnapshot(collection(db,"reports"),snapshot=>{
+reportsDiv.innerHTML="";
+snapshot.forEach(d=>{
+const r=d.data();
+
+reportsDiv.innerHTML+=`
+<div class="bg-yellow-100 p-4 rounded-xl">
+<p><b>Post ID:</b> ${r.postId}</p>
+<p><b>Reason:</b> ${r.reason}</p>
+</div>
+`;
+});
+});
+
+/* USERS */
+const usersDiv=document.getElementById("users");
+
+onSnapshot(collection(db,"users"),snapshot=>{
+usersDiv.innerHTML="";
+snapshot.forEach(d=>{
+const u=d.data();
+
+usersDiv.innerHTML+=`
+<div class="bg-white p-3 rounded shadow flex justify-between">
+<span>${u.name} (${u.role})</span>
+<button onclick="removeUser('${d.id}')"
+class="bg-red-500 text-white px-3 py-1 rounded">
+Ban
+</button>
+</div>
+`;
+});
+});
 
 /* BAN USER */
-window.banUser = async(uid)=>{
-  await updateDoc(doc(db,"users",uid),{
-    approved:false
-  });
-  alert("User banned");
-};
-
-/* LOGOUT */
-document.getElementById("logout").onclick=()=>{
-  signOut(auth);
-  window.location="citizen_login.html";
+window.removeUser=async(uid)=>{
+if(confirm("Ban this user?")){
+await deleteDoc(doc(db,"users",uid));
+}
 };
 
 </script>
