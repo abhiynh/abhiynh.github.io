@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Post - Y N Hosakote</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+font-family:'Lexend',sans-serif;
+background:#f3f4f8;
+}
+</style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen">
+
+<div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-lg">
+
+<h2 class="text-2xl font-bold text-center mb-6">Create Community Post</h2>
+
+<!-- Category -->
+<label class="text-sm font-semibold">Category</label>
+<select id="category" class="w-full border p-3 rounded-lg mb-4">
+  <option value="general">General</option>
+  <option value="official">Official Notice</option>
+  <option value="events">Events</option>
+  <option value="market">Market</option>
+  <option value="lostfound">Lost & Found</option>
+</select>
+
+<!-- Text -->
+<label class="text-sm font-semibold">Post Text</label>
+<textarea id="postText" placeholder="Write something for the village..."
+class="w-full border p-3 rounded-lg mb-4 h-32"></textarea>
+
+<!-- Image -->
+<label class="text-sm font-semibold">Upload Photo</label>
+<input type="file" id="imageFile" accept="image/*"
+class="w-full border p-3 rounded-lg mb-4">
+
+<button id="postBtn"
+class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition">
+Upload Post
+</button>
+
+<p id="status" class="text-center text-sm mt-4"></p>
+
+</div>
+
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, addDoc, collection } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-storage.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCpNAu49OymCjNuRl7aRBRYQm0P6M0db0s",
+  authDomain: "ynhosakote-community.firebaseapp.com",
+  projectId: "ynhosakote-community",
+  storageBucket: "ynhosakote-community.firebasestorage.app",
+  messagingSenderId: "1053474727552",
+  appId: "1:1053474727552:web:9ed2d6523ef935fd666865"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+let currentUser = null;
+let userData = null;
+
+/* Check login */
+onAuthStateChanged(auth, async(user)=>{
+  if(!user){
+    alert("Login required");
+    window.location="citizen_login.html";
+    return;
+  }
+
+  currentUser = user;
+
+  const userDoc = await getDoc(doc(db,"users",user.uid));
+
+  if(!userDoc.exists()){
+    alert("Account not approved");
+    window.location="citizen_login.html";
+    return;
+  }
+
+  userData = userDoc.data();
+
+  if(userData.role === "citizen"){
+    alert("Citizens cannot post");
+    window.location="feed.html";
+  }
+});
+
+
+/* Upload post */
+document.getElementById("postBtn").onclick = async()=>{
+
+const text = document.getElementById("postText").value;
+const category = document.getElementById("category").value;
+const file = document.getElementById("imageFile").files[0];
+const status = document.getElementById("status");
+
+if(!text){
+status.innerText="Write something first";
+return;
+}
+
+status.innerText="Uploading...";
+
+let imageURL = "";
+
+try{
+
+/* Upload image */
+if(file){
+const storageRef = ref(storage, "posts/"+Date.now()+"_"+file.name);
+await uploadBytes(storageRef,file);
+imageURL = await getDownloadURL(storageRef);
+}
+
+/* Create post */
+await addDoc(collection(db,"posts"),{
+authorId: currentUser.uid,
+authorName: userData.name,
+category: category,
+text: text,
+image: imageURL,
+time: Date.now(),
+likes: 0,
+comments: 0
+});
+
+status.innerText="Post Uploaded Successfully!";
+setTimeout(()=>window.location="feed.html",1500);
+
+}catch(e){
+console.error(e);
+status.innerText="Upload failed!";
+}
+
+};
+
+</script>
+
+</body>
+</html>
