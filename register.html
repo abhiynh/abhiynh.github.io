@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Create Member</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 flex justify-center items-center h-screen">
+
+<div class="bg-white p-8 rounded-xl shadow w-96">
+
+<h2 class="text-xl font-bold mb-4">Create Village Member</h2>
+
+<input id="name" placeholder="Full Name" class="w-full border p-2 mb-3">
+<input id="email" placeholder="Email" class="w-full border p-2 mb-3">
+<input id="password" placeholder="Password" class="w-full border p-2 mb-3">
+
+<button id="createUser"
+class="w-full bg-green-600 text-white py-2 rounded">
+Create Member
+</button>
+
+<p id="msg" class="mt-3 text-center"></p>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCpNAu49OymCjNuRl7aRBRYQm0P6M0db0s",
+  authDomain: "ynhosakote-community.firebaseapp.com",
+  projectId: "ynhosakote-community",
+  storageBucket: "ynhosakote-community.firebasestorage.app",
+  messagingSenderId: "1053474727552",
+  appId: "1:1053474727552:web:9ed2d6523ef935fd666865"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+document.getElementById("createUser").onclick = async ()=>{
+
+const name = document.getElementById("name").value;
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
+
+const userCred = await createUserWithEmailAndPassword(auth,email,password);
+
+await setDoc(doc(db,"users",userCred.user.uid),{
+name,
+email,
+role:"member",
+created:Date.now()
+});
+
+document.getElementById("msg").innerText="Member Created Successfully";
+};
+
+</script>
+</body>
+</html>
