@@ -1,279 +1,147 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Y N Hosakote Connect</title>
 
-<html lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Y N Hosakote Connect Social Feed</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#0f49bd",
-                        "secondary": "#22c55e", // Green for actions
-                        "background-light": "#f8f9fc",
-                        "background-dark": "#101622",
-                    },
-                    fontFamily: {
-                        "display": ["Lexend", "sans-serif"]
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "2xl": "1rem",
-                        "full": "9999px"
-                    },
-                },
-            },
-        }
-    </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
-        body {
-            font-family: 'Lexend', sans-serif;
-        }
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-    </style>
+body{font-family:'Lexend',sans-serif;background:#f5f7fb;}
+.post-img{max-height:420px;object-fit:cover;width:100%;}
+</style>
 </head>
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased min-h-screen relative">
-<!-- Sticky Top Navbar -->
-<header class="sticky top-0 z-50 w-full bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 shadow-sm">
-<div class="max-w-[960px] mx-auto px-4 md:px-8 py-3 flex items-center justify-between gap-4">
-<!-- Left: Logo & Title -->
-<div class="flex items-center gap-3 md:gap-4 shrink-0">
-<div class="h-10 w-10 md:h-12 md:w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
-<span class="material-symbols-outlined text-2xl md:text-3xl">temple_hindu</span>
-</div>
-<h1 class="text-slate-900 dark:text-white text-lg md:text-xl font-bold leading-tight tracking-tight hidden sm:block">Y N Hosakote<br/><span class="text-primary font-normal text-base">Connect</span></h1>
-<h1 class="text-slate-900 dark:text-white text-lg font-bold sm:hidden">Y N H Connect</h1>
-</div>
-<!-- Middle: Search (Desktop) -->
-<div class="hidden md:flex flex-1 max-w-md mx-4">
-<div class="relative w-full">
-<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-<span class="material-symbols-outlined">search</span>
-</div>
-<input class="block w-full pl-10 pr-3 py-2.5 border-none rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white placeholder-slate-500 focus:ring-2 focus:ring-primary focus:bg-white transition-all" placeholder="Search community..." type="text"/>
-</div>
-</div>
-<!-- Right: Actions -->
-<div class="flex items-center gap-2 md:gap-3 shrink-0">
-<button class="md:hidden p-2 text-slate-600 dark:text-slate-300 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700">
-<span class="material-symbols-outlined text-2xl">search</span>
-</button>
-<button class="relative p-2 text-slate-600 dark:text-slate-300 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
-<span class="material-symbols-outlined text-2xl md:text-[28px]">notifications</span>
-<span class="absolute top-1.5 right-1.5 h-2.5 w-2.5 rounded-full bg-red-500 border-2 border-white dark:border-slate-800"></span>
-</button>
-<button class="hidden md:flex items-center gap-2 bg-primary hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl font-medium transition-colors shadow-sm">
-<span class="material-symbols-outlined">add_circle</span>
-<span>Upload</span>
-</button>
-</div>
-</div>
-<!-- Scrollable Tabs -->
-<div class="w-full bg-white dark:bg-slate-800 border-t border-slate-100 dark:border-slate-700/50">
-<div class="max-w-[960px] mx-auto px-4 md:px-8">
-<div class="flex items-center gap-6 overflow-x-auto hide-scrollbar whitespace-nowrap py-0">
-<a class="border-b-[3px] border-primary text-primary font-bold py-3 px-1 text-base md:text-lg" href="#">Home</a>
-<a class="border-b-[3px] border-transparent text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary font-medium py-3 px-1 text-base md:text-lg transition-colors" href="#">Notices</a>
-<a class="border-b-[3px] border-transparent text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary font-medium py-3 px-1 text-base md:text-lg transition-colors" href="#">Complaints</a>
-<a class="border-b-[3px] border-transparent text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary font-medium py-3 px-1 text-base md:text-lg transition-colors" href="#">Events</a>
-<a class="border-b-[3px] border-transparent text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary font-medium py-3 px-1 text-base md:text-lg transition-colors" href="#">Market</a>
-</div>
+
+<body>
+
+<!-- HEADER -->
+<header class="sticky top-0 bg-white shadow z-50">
+<div class="max-w-3xl mx-auto flex justify-between items-center p-4">
+<h1 class="text-xl font-bold text-blue-700">Y N Hosakote Connect</h1>
+
+<div id="authArea">
+<button id="loginBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg">Login</button>
 </div>
 </div>
 </header>
-<!-- Main Content Area -->
-<main class="max-w-[720px] mx-auto px-4 md:px-0 py-6 flex flex-col gap-6 pb-24">
-<!-- 1. OFFICIAL NOTICE CARD (Highlighted) -->
-<article class="bg-white dark:bg-slate-800 rounded-2xl shadow-md border-2 border-primary overflow-hidden relative">
-<div class="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
-                OFFICIAL
-            </div>
-<!-- Header -->
-<div class="p-4 md:p-5 flex items-center gap-3">
-<div class="h-12 w-12 rounded-full bg-slate-200 shrink-0 overflow-hidden border border-slate-100">
-<img alt="Panchayat Logo" class="h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHWPWw91BgydBkne9j8QoAwm0Mxv1YL3EjBGL1h1qw9Z3H1ebfovrL89iaCHJwSJzEUD9sh3aDmd7ApFVwLX_c4lqJvwuIxPLA6DZ1vAt3Lv2CMc0lfYhwTp_5HXDJybAlgR006W6Typo_Ng3q_XPGAYyp2i_nsiEpsh3RI8rteR393jp1uB3wEWOGLSBXw1VMM4f-2rdzS9G6zWYlU_EKzX6asuMZIouAfz2l817IC7pK6UzmxxwUnLIwwyJKOYidu3oKhEcD9W8"/>
-</div>
-<div class="flex flex-col">
-<h3 class="font-bold text-lg md:text-xl text-slate-900 dark:text-white leading-tight">Panchayat Office</h3>
-<span class="text-sm text-slate-500 dark:text-slate-400">2 hours ago • <span class="material-symbols-outlined align-middle text-sm">public</span></span>
-</div>
-</div>
-<!-- Content -->
-<div class="px-4 md:px-5 pb-2">
-<h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-2">Water Supply Interruption Notice</h2>
-<p class="text-lg md:text-xl text-slate-700 dark:text-slate-300 leading-relaxed">
-                    Due to pipeline maintenance, water supply will be interrupted tomorrow (15th Oct) from 9:00 AM to 2:00 PM. Please store sufficient water.
-                </p>
-</div>
-<!-- Hero Image for Notice -->
-<div class="mt-4 w-full h-64 bg-slate-100 dark:bg-slate-700 relative">
-<div class="w-full h-full bg-cover bg-center" data-alt="Worker repairing a water pipeline in a rural setting" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBH47U1-REb7f9hH1-XQwsMMS6WrWHB0hNaGC1ZnLF4IuVlgiqDcwZJtJgSiguwaO2S4I03dJpi5GK8I9FqAJES8P6BFfIxjTKj16U0VxroEa__Sgja78W2W-X23dn3BEn1BMiZonc9Kjd4NTcZQShp7Gr2WYRftu7YZFa20pP5o1coNcsU03Ca_Efv0FkoFzk6pYSqk9SZ_HkkI7qd6nCwEsW4xooeOXv6cTetbs-ggrZFC9bTeDmrki5UcX49Iij93JSgqmXhqJw');"></div>
-</div>
-<!-- Actions -->
-<div class="flex items-center justify-between border-t border-slate-100 dark:border-slate-700 mt-0">
-<button class="flex-1 py-4 flex flex-col items-center justify-center gap-1 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
-<span class="material-symbols-outlined text-[28px] text-slate-600 dark:text-slate-400 group-hover:text-primary">thumb_up</span>
-<span class="text-sm font-medium text-slate-600 dark:text-slate-400">Like</span>
-</button>
-<button class="flex-1 py-4 flex flex-col items-center justify-center gap-1 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
-<span class="material-symbols-outlined text-[28px] text-slate-600 dark:text-slate-400 group-hover:text-primary">chat_bubble</span>
-<span class="text-sm font-medium text-slate-600 dark:text-slate-400">Comment</span>
-</button>
-<button class="flex-1 py-4 flex flex-col items-center justify-center gap-1 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
-<span class="material-symbols-outlined text-[28px] text-slate-600 dark:text-slate-400 group-hover:text-primary">share</span>
-<span class="text-sm font-medium text-slate-600 dark:text-slate-400">Share</span>
-</button>
-<button class="flex-1 py-4 flex flex-col items-center justify-center gap-1 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
-<span class="material-symbols-outlined text-[28px] text-slate-600 dark:text-slate-400 group-hover:text-red-500">report</span>
-<span class="text-sm font-medium text-slate-600 dark:text-slate-400 group-hover:text-red-500">Report</span>
+
+<!-- CREATE POST -->
+<div id="createPost" class="hidden max-w-3xl mx-auto mt-6 bg-white p-4 rounded-xl shadow">
+<textarea id="postText" placeholder="Share something..." class="w-full border p-3 rounded-lg"></textarea>
+
+<input type="file" id="postImage" class="mt-3">
+
+<button id="uploadPost" class="mt-4 bg-green-600 text-white px-6 py-2 rounded-lg">
+Post
 </button>
 </div>
-</article>
-<!-- 2. MARKET POST (Photo/Video Type) -->
-<article class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
-<!-- Header -->
-<div class="p-4 md:p-5 flex items-center gap-3">
-<div class="h-12 w-12 rounded-full bg-slate-200 shrink-0 overflow-hidden">
-<img alt="Ramesh Profile" class="h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaOvVXFBSAP8dJ8vBdo1fEt8YUlhzOQDxTDAiu45_nKEIl-1Sat3jYxlqbmTU8fkq-ybEoy6B3JfdQwkbzzuc6CNGwJHqzpXw13l2DZi2RLDTDRoL8bxU7lhdtFdxqVp5c6Y3S96e1AGMYJOHG4TUKc-uFTW3rnhyOtcacMLvSlwk8-wMsIeu_3g6Co2KX-NBRAFSDJ2GwkiYUejfArV-NYT5W43Mz0FTbtudHIVU69pb8OaFXFiI7Ef08L-FSpOwV8GkYlcdZnzc"/>
+
+<!-- POSTS FEED -->
+<div id="feed" class="max-w-3xl mx-auto mt-6 space-y-6"></div>
+
+<!-- FIREBASE -->
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-storage.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCpNAu49OymCjNuRl7aRBRYQm0P6M0db0s",
+  authDomain: "ynhosakote-community.firebaseapp.com",
+  projectId: "ynhosakote-community",
+  storageBucket: "ynhosakote-community.firebasestorage.app",
+  messagingSenderId: "1053474727552",
+  appId: "1:1053474727552:web:9ed2d6523ef935fd666865"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+const provider = new GoogleAuthProvider();
+
+
+// LOGIN
+document.getElementById("loginBtn").onclick = () => {
+signInWithPopup(auth, provider);
+};
+
+// USER STATE
+onAuthStateChanged(auth, user=>{
+if(user){
+document.getElementById("authArea").innerHTML =
+`<button onclick="logout()" class="text-red-600">Logout</button>`;
+document.getElementById("createPost").classList.remove("hidden");
+}
+});
+
+// LOGOUT
+window.logout = ()=> signOut(auth);
+
+
+// UPLOAD POST
+document.getElementById("uploadPost").onclick = async ()=>{
+
+const text = document.getElementById("postText").value;
+const file = document.getElementById("postImage").files[0];
+
+let imageUrl = "";
+
+if(file){
+const storageRef = ref(storage,"posts/"+Date.now()+file.name);
+await uploadBytes(storageRef,file);
+imageUrl = await getDownloadURL(storageRef);
+}
+
+await addDoc(collection(db,"posts"),{
+text,
+imageUrl,
+likes:0,
+created:serverTimestamp()
+});
+
+document.getElementById("postText").value="";
+alert("Posted!");
+};
+
+
+// LOAD POSTS REALTIME
+const q = query(collection(db,"posts"),orderBy("created","desc"));
+
+onSnapshot(q,(snapshot)=>{
+const feed = document.getElementById("feed");
+feed.innerHTML="";
+
+snapshot.forEach(docu=>{
+const post = docu.data();
+
+feed.innerHTML += `
+<div class="bg-white p-4 rounded-xl shadow">
+
+<p class="text-lg mb-3">${post.text}</p>
+
+${post.imageUrl ? `<img src="${post.imageUrl}" class="post-img rounded-lg">` : ""}
+
+<div class="mt-4 flex justify-between items-center">
+<button onclick="likePost('${docu.id}')" class="text-blue-600">👍 Like (${post.likes})</button>
 </div>
-<div class="flex flex-col">
-<h3 class="font-bold text-lg md:text-xl text-slate-900 dark:text-white leading-tight">Ramesh Kumar</h3>
-<span class="text-sm text-slate-500 dark:text-slate-400">15 mins ago • Market</span>
-</div>
-</div>
-<!-- Content -->
-<div class="px-4 md:px-5 pb-3">
-<p class="text-lg md:text-xl text-slate-700 dark:text-slate-300 leading-relaxed">
-                    Fresh Ragi harvest available at Stall #4 today! Good quality and fair prices. Come visit before 5 PM.
-                </p>
-</div>
-<!-- Media Grid -->
-<div class="grid grid-cols-2 gap-1 px-1 mb-1">
-<div class="aspect-square bg-slate-100 rounded-lg overflow-hidden relative">
-<div class="w-full h-full bg-cover bg-center" data-alt="Heap of fresh ragi grains" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA54ybyO2C-x2h-mVxLRYAiYIK2RKkxMzkX34Ve1BDH2cIg4YSzvmFqqWDpZwv7gw-WUiDD8SaIl6EB7ZOjpFkMUJy1NfGaf4Vk3XVpOUf3VAc_5lL7owKoL3hnABq7L9QM3B3Wt6jwS38JyVmvZ5SiZ8ebGTj8s0OftfPjIYAFy5Zk7Op3pofCWKBWN3ZcEcZCUju3fHSKcnkCHJaPobFnJJA3XW0Vtl6O8vnDees4kVfE3aMLGYQcobAccEY4Js2Hz41_YCXH2MA');"></div>
-</div>
-<div class="aspect-square bg-slate-100 rounded-lg overflow-hidden relative">
-<div class="w-full h-full bg-cover bg-center" data-alt="Farmer smiling holding harvested crops" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDWRJ4Mm05zFHY3r3eXePyNN86yu-cRGgNu_Cuow8LNuRERJhJnEcGyYWA68eLmFygUD4hwn8xBOpj5V_JMukXOOd-ihTF9e9bYgDV_Nk_Ae0Iads-IRmxbvT3CdGNAman9DIoia1QWWFWbOXZSl7tfdmD7eLRj5HB0aIihoNuDtkQ91u5BsSYQNoBkv-wMdrYLxH64z4Gsw8dMiIF4xiocHbxmi2Y0XA2dK0CD9ZPNSrHrxeHC38wsrDRcKxO8JqkRJ3QCWSFkfPE');"></div>
-</div>
-</div>
-<!-- Actions -->
-<div class="flex items-center justify-between border-t border-slate-100 dark:border-slate-700 mt-2">
-<button class="flex-1 py-4 flex flex-col items-center justify-center gap-1 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
-<span class="material-symbols-outlined text-[28px] text-slate-600 dark:text-slate-400 group-hover:text-primary">thumb_up</span>
-<span class="text-sm font-medium text-slate-600 dark:text-slate-400">Like</span>
-</button>
-<button class="flex-1 py-4 flex flex-col items-center justify-center gap-1 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
-<span class="material-symbols-outlined text-[28px] text-slate-600 dark:text-slate-400 group-hover:text-primary">chat_bubble</span>
-<span class="text-sm font-medium text-slate-600 dark:text-slate-400">Comment</span>
-</button>
-<button class="flex-1 py-4 flex flex-col items-center justify-center gap-1 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
-<span class="material-symbols-outlined text-[28px] text-slate-600 dark:text-slate-400 group-hover:text-primary">share</span>
-<span class="text-sm font-medium text-slate-600 dark:text-slate-400">Share</span>
-</button>
-<button class="flex-1 py-4 flex flex-col items-center justify-center gap-1 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
-<span class="material-symbols-outlined text-[28px] text-slate-600 dark:text-slate-400 group-hover:text-red-500">report</span>
-<span class="text-sm font-medium text-slate-600 dark:text-slate-400 group-hover:text-red-500">Report</span>
-</button>
-</div>
-</article>
-<!-- 3. TEXT ONLY POST -->
-<article class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
-<!-- Header -->
-<div class="p-4 md:p-5 flex items-center gap-3">
-<div class="h-12 w-12 rounded-full bg-slate-200 shrink-0 overflow-hidden">
-<img alt="Lakshmi Profile" class="h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqvW9Sn3icZgpDnbgLjzIQVbWidr1Nek-WDrRjZR7wmsZU-J0SX_yZ0X_rqMEitTHGnhCbjDzWDuJLDu8fyTtAHnwTQDFVpljWY5_dSKHmByNpYuxpV-quXfu9PwJHaiSaHsQXmStww6OtvzQQEYRNJHS_ALMTH6Ejs89e-J_MUmp0pz6tCla_Ncrfr7nqKWe824gXF_Hf_gI5ELolHAt1Oa0z8T7WXVIHx4WQwL5TMoXGcovWVWRgy_3YLiupE9iX2bpul5L-uMY"/>
-</div>
-<div class="flex flex-col">
-<h3 class="font-bold text-lg md:text-xl text-slate-900 dark:text-white leading-tight">Lakshmi Devi</h3>
-<span class="text-sm text-slate-500 dark:text-slate-400">1 hour ago • General</span>
-</div>
-</div>
-<!-- Content -->
-<div class="px-4 md:px-5 pb-4">
-<p class="text-xl md:text-2xl font-medium text-slate-800 dark:text-slate-200 leading-relaxed">
-                    Has anyone seen my brown cow near the old banyan tree? It has a red rope around its neck. Please call me if found.
-                </p>
-</div>
-<!-- Actions -->
-<div class="flex items-center justify-between border-t border-slate-100 dark:border-slate-700">
-<button class="flex-1 py-4 flex flex-col items-center justify-center gap-1 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
-<span class="material-symbols-outlined text-[28px] text-slate-600 dark:text-slate-400 group-hover:text-primary">thumb_up</span>
-<span class="text-sm font-medium text-slate-600 dark:text-slate-400">Like</span>
-</button>
-<button class="flex-1 py-4 flex flex-col items-center justify-center gap-1 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
-<span class="material-symbols-outlined text-[28px] text-slate-600 dark:text-slate-400 group-hover:text-primary">chat_bubble</span>
-<span class="text-sm font-medium text-slate-600 dark:text-slate-400">Comment</span>
-</button>
-<button class="flex-1 py-4 flex flex-col items-center justify-center gap-1 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
-<span class="material-symbols-outlined text-[28px] text-slate-600 dark:text-slate-400 group-hover:text-primary">share</span>
-<span class="text-sm font-medium text-slate-600 dark:text-slate-400">Share</span>
-</button>
-<button class="flex-1 py-4 flex flex-col items-center justify-center gap-1 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
-<span class="material-symbols-outlined text-[28px] text-slate-600 dark:text-slate-400 group-hover:text-red-500">report</span>
-<span class="text-sm font-medium text-slate-600 dark:text-slate-400 group-hover:text-red-500">Report</span>
-</button>
-</div>
-</article>
-<!-- 4. EVENT POST -->
-<article class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
-<!-- Header -->
-<div class="p-4 md:p-5 flex items-center gap-3">
-<div class="h-12 w-12 rounded-full bg-slate-200 shrink-0 overflow-hidden">
-<img alt="Youth Club Profile" class="h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwvFh6w38HmEthEKlvpQ-ex8RC5IsnPpMHFiSw4fl_Wh3s2pSzIm4eqQvcw-pvj_BTax5IPcDPeykHUTC0lvrRh2_povWtPAnE9gZJlelzsBkPekaSOsFt3H12FoCCuzu_TZMMiL9HawWY_qJ45b_Z5lmQMEEDHyzB4W-Uhj8jY3VbDZlsLK11mzUPQ8JnhlbcdnPdocmqAgJPmeek9e0LaDq8-Diao1SuJOTJ0CxhrwMuRYXrSZNl15AB0HQJxkbXC600kDTH9vo"/>
-</div>
-<div class="flex flex-col">
-<h3 class="font-bold text-lg md:text-xl text-slate-900 dark:text-white leading-tight">Youth Club</h3>
-<span class="text-sm text-slate-500 dark:text-slate-400">5 hours ago • Events</span>
-</div>
-</div>
-<!-- Content -->
-<div class="px-4 md:px-5 pb-3">
-<h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-2">Cricket Tournament 🏏</h2>
-<p class="text-lg md:text-xl text-slate-700 dark:text-slate-300 leading-relaxed">
-                    We are organizing a cricket tournament this Sunday at the school ground. Entry fee ₹100 per team. Join us!
-                </p>
-<div class="mt-3 flex items-center gap-2 text-primary font-semibold text-lg">
-<span class="material-symbols-outlined">calendar_month</span>
-<span>Sunday, 9:00 AM</span>
-</div>
-</div>
-<!-- Actions -->
-<div class="flex items-center justify-between border-t border-slate-100 dark:border-slate-700 mt-2">
-<button class="flex-1 py-4 flex flex-col items-center justify-center gap-1 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
-<span class="material-symbols-outlined text-[28px] text-slate-600 dark:text-slate-400 group-hover:text-primary">thumb_up</span>
-<span class="text-sm font-medium text-slate-600 dark:text-slate-400">Like</span>
-</button>
-<button class="flex-1 py-4 flex flex-col items-center justify-center gap-1 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
-<span class="material-symbols-outlined text-[28px] text-slate-600 dark:text-slate-400 group-hover:text-primary">chat_bubble</span>
-<span class="text-sm font-medium text-slate-600 dark:text-slate-400">Comment</span>
-</button>
-<button class="flex-1 py-4 flex flex-col items-center justify-center gap-1 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
-<span class="material-symbols-outlined text-[28px] text-slate-600 dark:text-slate-400 group-hover:text-primary">share</span>
-<span class="text-sm font-medium text-slate-600 dark:text-slate-400">Share</span>
-</button>
-<button class="flex-1 py-4 flex flex-col items-center justify-center gap-1 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
-<span class="material-symbols-outlined text-[28px] text-slate-600 dark:text-slate-400 group-hover:text-red-500">report</span>
-<span class="text-sm font-medium text-slate-600 dark:text-slate-400 group-hover:text-red-500">Report</span>
-</button>
-</div>
-</article>
-</main>
-<!-- Floating Action Button (Mobile) -->
-<button class="md:hidden fixed bottom-6 right-6 h-16 w-16 bg-secondary text-white rounded-full shadow-lg flex items-center justify-center hover:bg-green-600 active:scale-95 transition-all z-50">
-<span class="material-symbols-outlined text-[36px]">add</span>
-</button>
-</body></html>
+
+</div>`;
+});
+});
+
+
+// LIKE SYSTEM
+window.likePost = async(id)=>{
+const postRef = doc(db,"posts",id);
+await updateDoc(postRef,{likes:increment(1)});
+};
+
+</script>
+</body>
+</html>
