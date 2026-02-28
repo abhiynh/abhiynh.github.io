@@ -42,8 +42,16 @@ Sign In
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+import { 
+  getAuth, 
+  signInWithEmailAndPassword,
+  onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+import { 
+  getFirestore,
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
 /* Firebase Config */
 const firebaseConfig = {
@@ -55,7 +63,7 @@ const firebaseConfig = {
   appId: "1:1053474727552:web:9ed2d6523ef935fd666865"
 };
 
-/* Initialize Firebase ONCE */
+/* Init */
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -63,54 +71,65 @@ const db = getFirestore(app);
 const loginBtn = document.getElementById("loginBtn");
 const errorBox = document.getElementById("loginError");
 
-loginBtn.addEventListener("click", async () => {
+loginBtn.onclick = async () => {
 
-  errorBox.classList.add("hidden");
-
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
   if(!email || !password){
-    errorBox.innerText = "Please enter email and password";
+    errorBox.innerText = "Enter email and password";
     errorBox.classList.remove("hidden");
     return;
   }
 
-  try {
+  try{
 
-    /* Step 1: Authenticate */
+    /* LOGIN */
     const userCredential = await signInWithEmailAndPassword(auth,email,password);
     const user = userCredential.user;
 
-    /* Step 2: Check Firestore Role */
-    const userDoc = await getDoc(doc(db,"users",user.uid));
+    /* GET USER ROLE FROM FIRESTORE */
+    const userRef = doc(db,"users",user.uid);
+    const userDoc = await getDoc(userRef);
 
     if(!userDoc.exists()){
-      errorBox.innerText = "Account not approved by admin";
+      errorBox.innerText = "Account not approved yet";
       errorBox.classList.remove("hidden");
       return;
     }
 
     const role = userDoc.data().role;
+    const approved = userDoc.data().approved;
 
-    /* Step 3: Redirect */
+    if(approved === false){
+      errorBox.innerText = "Your account is blocked by admin";
+      errorBox.classList.remove("hidden");
+      return;
+    }
+
+    /* 🔴 THIS IS WHERE YOUR LINE GOES */
     if(role === "admin"){
-      window.location.href = "posts.html";
+      window.location = "admin.html";
     }
     else if(role === "member"){
-      window.location.href = "member-dashboard.html";
+      window.location = "member.html";
     }
     else{
-      window.location.href = "feed.html";
+      window.location = "feed.html";
     }
 
-  } catch(error) {
-
+  }
+  catch(e){
     errorBox.innerText = "Invalid email or password";
     errorBox.classList.remove("hidden");
-
   }
+};
 
+/* Auto login */
+onAuthStateChanged(auth,(user)=>{
+  if(user){
+    window.location="feed.html";
+  }
 });
 
 </script>
