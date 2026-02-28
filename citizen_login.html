@@ -64,5 +64,95 @@ document.getElementById("error").innerText="Invalid login credentials";
 };
 
 </script>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import { 
+  getAuth, 
+  signInWithEmailAndPassword,
+  onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+import { 
+  getFirestore,
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+/* Firebase Config */
+const firebaseConfig = {
+  apiKey: "AIzaSyCpNAu49OymCjNuRl7aRBRYQm0P6M0db0s",
+  authDomain: "ynhosakote-community.firebaseapp.com",
+  projectId: "ynhosakote-community",
+  storageBucket: "ynhosakote-community.firebasestorage.app",
+  messagingSenderId: "1053474727552",
+  appId: "1:1053474727552:web:9ed2d6523ef935fd666865"
+};
+
+/* Initialize */
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+/* Login Button */
+const loginBtn = document.getElementById("loginBtn");
+const errorBox = document.getElementById("loginError");
+
+loginBtn.addEventListener("click", async () => {
+
+  const email = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
+  if(!email || !password){
+    errorBox.innerText = "Please enter email and password";
+    errorBox.classList.remove("hidden");
+    return;
+  }
+
+  try{
+
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    /* Check role in Firestore */
+    const userDoc = await getDoc(doc(db,"users",user.uid));
+
+    if(!userDoc.exists()){
+      errorBox.innerText = "Account not approved by admin";
+      errorBox.classList.remove("hidden");
+      return;
+    }
+
+    const role = userDoc.data().role;
+
+    /* Redirect based on role */
+    if(role === "admin"){
+      window.location.href = "/admin/dashboard.html";
+    }
+    else if(role === "member"){
+      window.location.href = "/member/dashboard.html";
+    }
+    else{
+      window.location.href = "/feed.html";
+    }
+
+  }
+  catch(error){
+    errorBox.innerText = "Invalid login details";
+    errorBox.classList.remove("hidden");
+  }
+
+});
+
+/* Auto login if already signed in */
+onAuthStateChanged(auth, (user) => {
+  if(user){
+    window.location.href = "/feed.html";
+  }
+});
+
+</script>
+
+
 </body>
 </html>
