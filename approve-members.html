@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Approve Members - YN Hosakote</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+  font-family:'Lexend',sans-serif;
+  background:#f1f5f9;
+}
+</style>
+</head>
+
+<body class="p-6">
+
+<h1 class="text-3xl font-bold mb-6">Pending Member Approvals</h1>
+
+<div id="membersList" class="space-y-4"></div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+import { 
+  getFirestore, 
+  collection, 
+  getDocs, 
+  doc, 
+  updateDoc 
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+/* Firebase Config */
+const firebaseConfig = {
+  apiKey: "AIzaSyCpNAu49OymCjNuRl7aRBRYQm0P6M0db0s",
+  authDomain: "ynhosakote-community.firebaseapp.com",
+  projectId: "ynhosakote-community",
+  storageBucket: "ynhosakote-community.firebasestorage.app",
+  messagingSenderId: "1053474727552",
+  appId: "1:1053474727552:web:9ed2d6523ef935fd666865"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const container = document.getElementById("membersList");
+
+/* Load pending users */
+async function loadMembers(){
+
+  const querySnapshot = await getDocs(collection(db,"users"));
+
+  container.innerHTML="";
+
+  querySnapshot.forEach((docSnap)=>{
+
+    const user = docSnap.data();
+
+    if(user.approved === false){
+
+      const card = document.createElement("div");
+
+      card.className="bg-white p-5 rounded-xl shadow flex justify-between items-center";
+
+      card.innerHTML=`
+        <div>
+          <p class="font-bold text-lg">${user.name || "No Name"}</p>
+          <p class="text-gray-500">${user.email}</p>
+        </div>
+
+        <button class="approveBtn bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+          Approve
+        </button>
+      `;
+
+      card.querySelector(".approveBtn").onclick = async ()=>{
+
+        await updateDoc(doc(db,"users",docSnap.id),{
+          approved:true,
+          role:"member"
+        });
+
+        alert("Member Approved!");
+        loadMembers();
+      };
+
+      container.appendChild(card);
+    }
+  });
+
+}
+
+/* Only admin allowed */
+onAuthStateChanged(auth,(user)=>{
+  if(!user){
+    window.location="citizen_login.html";
+    return;
+  }
+  loadMembers();
+});
+
+</script>
+
+</body>
+</html>
