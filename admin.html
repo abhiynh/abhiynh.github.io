@@ -68,6 +68,14 @@ const firebaseConfig = {
   appId: "1:1053474727552:web:9ed2d6523ef935fd666865"
 };
 
+import { updateDoc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+window.approveUser = async(uid)=>{
+await updateDoc(doc(db,"members",uid),{
+approved:true
+});
+};
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
