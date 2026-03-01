@@ -31,10 +31,10 @@ placeholder="What's happening in Y N Hosakote?"></textarea>
 <input type="file" id="imageInput" accept="image/*"
 class="mt-4 w-full">
 
-<img id="preview" class="hidden mt-4 rounded-xl"/>
+<img id="preview" class="hidden mt-4 rounded-xl max-h-80 object-cover"/>
 
 <button id="postBtn"
-class="mt-6 w-full bg-blue-600 text-white py-3 rounded-xl font-bold">
+class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-bold transition">
 Post Now
 </button>
 
@@ -44,12 +44,10 @@ Post Now
 
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { 
-  getAuth,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+/* ================= FIREBASE ================= */
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
 import {
   getFirestore,
   addDoc,
@@ -59,7 +57,7 @@ import {
   getDoc
 } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
-/* Firebase Config */
+/* CONFIG */
 const firebaseConfig = {
   apiKey: "AIzaSyCpNAu49OymCjNuRl7aRBRYQm0P6M0db0s",
   authDomain: "ynhosakote-community.firebaseapp.com",
@@ -73,77 +71,111 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-let currentUser = null;
-let authorName = "";
+/* ================= AUTH GUARD ================= */
 
-/* Require Login + Get User Name */
+let currentUser = null;
+let authorName = "Village Member";
+
 onAuthStateChanged(auth, async (user)=>{
   if(!user){
-    window.location="citizen_login.html";
+    window.location = "citizen_login.html";
     return;
   }
 
   currentUser = user;
 
-  const userDoc = await getDoc(doc(db,"users",user.uid));
-  authorName = userDoc.data().name;
+  try{
+    const userRef = doc(db,"members",user.uid);
+    const userDoc = await getDoc(userRef);
+
+    if(userDoc.exists()){
+      authorName = userDoc.data().name || user.email;
+    }else{
+      authorName = user.email;
+    }
+  }catch{
+    authorName = user.email;
+  }
 });
 
-/* Preview Image */
+/* ================= IMAGE PREVIEW ================= */
+
 const imageInput = document.getElementById("imageInput");
 const preview = document.getElementById("preview");
 
-imageInput.onchange = ()=>{
+imageInput.addEventListener("change", ()=>{
   const file = imageInput.files[0];
+  if(!file) return;
   preview.src = URL.createObjectURL(file);
   preview.classList.remove("hidden");
-};
+});
 
-/* POST BUTTON */
-document.getElementById("postBtn").onclick = async ()=>{
+/* ================= CREATE POST ================= */
 
-  const text = document.getElementById("postText").value;
+document.getElementById("postBtn").addEventListener("click", async ()=>{
+
+  const text = document.getElementById("postText").value.trim();
   const file = imageInput.files[0];
   const status = document.getElementById("status");
 
   if(!text && !file){
-    status.innerText="Write something or select image";
+    status.innerText="Write something or select an image.";
     return;
   }
 
-  status.innerText="Uploading image...";
+  if(!currentUser){
+    status.innerText="You must login first.";
+    return;
+  }
 
   let imageUrl = "";
 
-  /* Upload to Cloudinary */
-  if(file){
-    const formData = new FormData();
-    formData.append("file",file);
-    formData.append("upload_preset","ynhosakote_posts");
+  try{
 
-    const res = await fetch("https://api.cloudinary.com/v1_1/dnbfx0ynh/image/upload",{
-      method:"POST",
-      body:formData
+    /* UPLOAD IMAGE (Cloudinary Free Storage) */
+    if(file){
+
+      status.innerText="Uploading image...";
+
+      const formData = new FormData();
+      formData.append("file",file);
+      formData.append("upload_preset","ynhosakote_posts");
+
+      const res = await fetch("https://api.cloudinary.com/v1_1/dnbfx0ynh/image/upload",{
+        method:"POST",
+        body:formData
+      });
+
+      const data = await res.json();
+
+      if(!data.secure_url){
+        throw new Error("Image upload failed");
+      }
+
+      imageUrl = data.secure_url;
+    }
+
+    /* SAVE POST */
+    status.innerText="Publishing post...";
+
+    await addDoc(collection(db,"posts"),{
+      text:text,
+      imageUrl:imageUrl,
+      authorName:authorName,
+      uid:currentUser.uid,
+      likeCount:0,
+      createdAt:serverTimestamp()
     });
 
-    const data = await res.json();
-    imageUrl = data.secure_url;
+    status.innerText="Posted successfully!";
+    setTimeout(()=>window.location="feed.html",1200);
+
+  }catch(err){
+    status.innerText="Upload failed. Check internet or storage settings.";
+    console.error(err);
   }
 
-  status.innerText="Publishing post...";
-
-  /* Save Post in Firestore */
-  await addDoc(collection(db,"posts"),{
-    text:text,
-    imageUrl:imageUrl,
-    authorName:authorName,
-    uid:currentUser.uid,
-    createdAt:serverTimestamp()
-  });
-
-  status.innerText="Posted successfully!";
-  window.location="feed.html";
-};
+});
 
 </script>
 
