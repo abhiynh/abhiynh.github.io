@@ -171,8 +171,6 @@ reportsDiv.innerHTML+=`
 
 /* ================= MEMBERS ================= */
 
-const usersDiv=document.getElementById("users");
-
 onSnapshot(collection(db,"members"),snapshot=>{
 usersDiv.innerHTML="";
 
@@ -180,13 +178,29 @@ snapshot.forEach(d=>{
 const u=d.data();
 
 usersDiv.innerHTML+=`
-<div class="bg-white p-3 rounded-xl shadow flex justify-between items-center">
-<span>${u.name} (${u.role})</span>
+<div class="bg-white p-4 rounded-xl shadow flex justify-between items-center">
+<div>
+<p class="font-bold">${u.name}</p>
+<p class="text-sm text-gray-500">${u.email}</p>
+<p class="text-sm">Role: ${u.role}</p>
+<p class="text-sm">Approved: ${u.approved}</p>
+</div>
+
+<div class="flex gap-2">
+
+${u.approved === false ? `
+<button onclick="approveUser('${d.id}')"
+class="bg-green-600 text-white px-3 py-1 rounded">
+Approve
+</button>
+` : ""}
 
 <button onclick="banUser('${d.id}')"
 class="bg-red-500 text-white px-3 py-1 rounded">
 Ban
 </button>
+
+</div>
 </div>
 `;
 });
