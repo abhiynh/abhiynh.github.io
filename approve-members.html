@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Approve Members - YN Hosakote</title>
+<title>Member Approvals - Y N Hosakote</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
 
 <style>
 body{
@@ -16,22 +17,71 @@ body{
 </style>
 </head>
 
-<body class="p-6">
+<body class="min-h-screen p-6">
 
-<h1 class="text-3xl font-bold mb-6">Pending Member Approvals</h1>
+<!-- HEADER -->
+<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
 
+  <div class="flex items-center gap-4">
+    <div class="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center">
+      <span class="material-symbols-outlined text-blue-700 text-3xl">admin_panel_settings</span>
+    </div>
+    <div>
+      <h1 class="text-3xl font-bold text-gray-800">Member Approval Panel</h1>
+      <p class="text-gray-500 text-sm">Approve village members to access community posting</p>
+    </div>
+  </div>
+
+  <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg shadow">
+    Logout
+  </button>
+
+</div>
+
+<!-- COUNT BOX -->
+<div class="mb-6">
+  <div class="bg-white p-4 rounded-xl shadow flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-yellow-500 text-3xl">pending_actions</span>
+      <div>
+        <p class="text-gray-500 text-sm">Pending Requests</p>
+        <p id="pendingCount" class="text-2xl font-bold text-gray-800">0</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MEMBER LIST -->
 <div id="membersList" class="space-y-4"></div>
+
+<!-- DIALOG -->
+<div id="dialogBox" class="fixed inset-0 hidden items-center justify-center bg-black/40 z-50">
+  <div class="bg-white w-[92%] max-w-sm rounded-2xl shadow-2xl p-6 text-center">
+
+    <div id="dialogIcon" class="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4">
+      <span id="dialogIconSymbol" class="material-symbols-outlined text-4xl"></span>
+    </div>
+
+    <h3 id="dialogTitle" class="text-xl font-bold text-gray-800 mb-2"></h3>
+    <p id="dialogMessage" class="text-gray-600 text-sm mb-6"></p>
+
+    <button onclick="closeDialog()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold">
+      OK
+    </button>
+  </div>
+</div>
 
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
 import { 
   getFirestore, 
   collection, 
   getDocs, 
   doc, 
-  updateDoc 
+  updateDoc,
+  getDoc
 } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
 /* Firebase Config */
@@ -49,43 +99,78 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 const container = document.getElementById("membersList");
+const pendingCount = document.getElementById("pendingCount");
+
+/* Dialog */
+window.closeDialog = ()=> document.getElementById("dialogBox").classList.add("hidden");
+
+function showDialog(title,message,type="success"){
+  const box=document.getElementById("dialogBox");
+  const icon=document.getElementById("dialogIcon");
+  const sym=document.getElementById("dialogIconSymbol");
+
+  document.getElementById("dialogTitle").innerText=title;
+  document.getElementById("dialogMessage").innerText=message;
+
+  if(type==="success"){
+    icon.className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-green-100";
+    sym.innerText="check_circle";
+    sym.className="material-symbols-outlined text-4xl text-green-600";
+  }
+  else{
+    icon.className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-red-100";
+    sym.innerText="error";
+    sym.className="material-symbols-outlined text-4xl text-red-600";
+  }
+
+  box.classList.remove("hidden");
+  box.classList.add("flex");
+}
 
 /* Load pending users */
 async function loadMembers(){
 
-  const querySnapshot = await getDocs(collection(db,"users"));
+  const snapshot = await getDocs(collection(db,"users"));
 
   container.innerHTML="";
+  let count=0;
 
-  querySnapshot.forEach((docSnap)=>{
+  snapshot.forEach((docSnap)=>{
 
     const user = docSnap.data();
 
     if(user.approved === false){
 
-      const card = document.createElement("div");
+      count++;
 
-      card.className="bg-white p-5 rounded-xl shadow flex justify-between items-center";
+      const card=document.createElement("div");
+      card.className="bg-white p-5 rounded-xl shadow flex flex-col md:flex-row md:items-center md:justify-between gap-4";
 
       card.innerHTML=`
-        <div>
-          <p class="font-bold text-lg">${user.name || "No Name"}</p>
-          <p class="text-gray-500">${user.email}</p>
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
+            <span class="material-symbols-outlined text-blue-600">person</span>
+          </div>
+          <div>
+            <p class="font-bold text-lg text-gray-800">${user.name || "No Name"}</p>
+            <p class="text-gray-500 text-sm">${user.email}</p>
+          </div>
         </div>
 
-        <button class="approveBtn bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
-          Approve
-        </button>
+        <div class="flex gap-3">
+          <button class="approveBtn bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg shadow flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">check</span> Approve
+          </button>
+        </div>
       `;
 
       card.querySelector(".approveBtn").onclick = async ()=>{
-
         await updateDoc(doc(db,"users",docSnap.id),{
           approved:true,
           role:"member"
         });
 
-        alert("Member Approved!");
+        showDialog("Member Approved","The member can now login and post.");
         loadMembers();
       };
 
@@ -93,16 +178,32 @@ async function loadMembers(){
     }
   });
 
+  pendingCount.innerText=count;
 }
 
-/* Only admin allowed */
-onAuthStateChanged(auth,(user)=>{
+/* Admin Auth Guard */
+onAuthStateChanged(auth, async(user)=>{
+
   if(!user){
     window.location="citizen_login.html";
     return;
   }
+
+  const adminDoc = await getDoc(doc(db,"users",user.uid));
+
+  if(!adminDoc.exists() || adminDoc.data().role!=="admin"){
+    window.location="feed.html";
+    return;
+  }
+
   loadMembers();
 });
+
+/* Logout */
+document.getElementById("logoutBtn").onclick=async()=>{
+  await signOut(auth);
+  window.location="citizen_login.html";
+};
 
 </script>
 
