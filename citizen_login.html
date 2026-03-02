@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Y N Hosakote Community Login</title>
+<title>Y N Hosakote Community</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -12,19 +12,28 @@
 <style>
 body{
   font-family:'Lexend',sans-serif;
-  background: linear-gradient(135deg,#e8edf5,#dbe4f3);
+  background: linear-gradient(135deg,#e6edf7,#d7e1f2);
 }
 </style>
 </head>
 
-<body class="min-h-screen flex items-center justify-center px-4">
+<body class="min-h-screen flex items-center justify-center p-4">
 
-<div class="grid md:grid-cols-2 gap-8 max-w-5xl w-full">
+<div class="w-full max-w-6xl mx-auto">
 
-<!-- LEFT SIDE RULES -->
-<div class="bg-white rounded-2xl shadow-xl p-8">
+<!-- TITLE -->
+<div class="text-center mb-8">
+  <h1 class="text-3xl font-bold text-gray-800">Y N Hosakote Community Portal</h1>
+  <p class="text-gray-600 text-sm mt-1">Village Information & Social Connect Platform</p>
+</div>
 
-<h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+<!-- RESPONSIVE GRID -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+
+<!-- GUIDELINES CARD -->
+<div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+
+<h2 class="text-xl font-bold mb-5 flex items-center gap-2">
 <span class="material-symbols-outlined text-blue-600">shield</span>
 Community Guidelines
 </h2>
@@ -38,12 +47,12 @@ Community Guidelines
 
 <li class="flex gap-3">
 <span class="material-symbols-outlined text-red-500">block</span>
-<span>Abusive language, fake news and political fights are strictly banned.</span>
+<span>Abusive language, fake news and political arguments are strictly prohibited.</span>
 </li>
 
 <li class="flex gap-3">
 <span class="material-symbols-outlined text-yellow-500">report</span>
-<span>Citizens can report wrong posts to admin immediately.</span>
+<span>Citizens should report inappropriate posts immediately.</span>
 </li>
 
 <li class="flex gap-3">
@@ -53,22 +62,27 @@ Community Guidelines
 
 <li class="flex gap-3">
 <span class="material-symbols-outlined text-blue-600">gavel</span>
-<span>Admin may remove content or block users without warning.</span>
+<span>Admin may remove posts or block users without notice.</span>
+</li>
+
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-orange-600">groups</span>
+<span>This portal is for announcements, help, lost & found, events and village updates.</span>
 </li>
 
 </ul>
 
 <p class="text-xs text-gray-500 mt-6">
-By logging in you agree to community rules.
+By logging in you agree to community rules and moderation policy.
 </p>
 
 </div>
 
-<!-- RIGHT SIDE LOGIN -->
-<div class="bg-white rounded-2xl shadow-2xl p-8">
+<!-- LOGIN CARD -->
+<div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8">
 
 <h2 class="text-2xl font-bold text-center mb-6">
-Y N Hosakote Community
+Member Login
 </h2>
 
 <div class="space-y-4">
@@ -91,6 +105,12 @@ Sign In
 </button>
 
 <p id="loginError" class="text-red-500 text-sm text-center hidden"></p>
+
+</div>
+
+<div class="text-center mt-6 text-sm text-gray-500">
+Contact village admin if you don’t have an account.
+</div>
 
 </div>
 
@@ -119,6 +139,7 @@ const db = getFirestore(app);
 
 const errorBox=document.getElementById("loginError");
 
+/* LOGIN */
 document.getElementById("loginBtn").onclick=async()=>{
 
 const email=document.getElementById("email").value;
@@ -132,15 +153,15 @@ const user=cred.user;
 const userDoc=await getDoc(doc(db,"users",user.uid));
 
 if(!userDoc.exists()){
-errorBox.innerText="Account not registered by admin";
+errorBox.innerText="Account not approved by admin";
 errorBox.classList.remove("hidden");
 return;
 }
 
 const data=userDoc.data();
 
-if(data.approved===false){
-errorBox.innerText="Account blocked by admin";
+if(data.approved!==true){
+errorBox.innerText="Your account is blocked";
 errorBox.classList.remove("hidden");
 return;
 }
@@ -159,6 +180,7 @@ errorBox.classList.remove("hidden");
 
 };
 
+/* ALREADY LOGGED IN */
 onAuthStateChanged(auth,(user)=>{
 if(user) window.location="feed.html";
 });
