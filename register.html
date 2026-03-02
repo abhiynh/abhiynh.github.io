@@ -243,6 +243,13 @@ function hideProgress(){
   document.getElementById("progressBox").classList.add("hidden");
 }
 
+/* Clear Form */
+function clearForm(){
+  document.getElementById("name").value="";
+  document.getElementById("email").value="";
+  document.getElementById("password").value="";
+}
+
 /* Registration */
 document.getElementById("registerBtn").onclick = async ()=>{
 
@@ -280,12 +287,18 @@ await setDoc(doc(db,"users",user.uid),{
 await signOut(auth);
 
 hideProgress();
+clearForm();
 
 showDialog(
 "success",
 "Request Submitted",
-"Your membership request was sent successfully. Please wait for admin approval."
+"Your membership request was sent successfully. Redirecting to website..."
 );
+
+/* Redirect after 2.5 seconds */
+setTimeout(()=>{
+  window.location.href="https://ynhosakote.in";
+},2500);
 
 }catch(e){
 
