@@ -143,12 +143,32 @@ Already registered? Login here
 </div>
 
 
+<!-- ================= ERROR DIALOG ================= -->
+<div id="dialogBox" class="fixed inset-0 hidden items-center justify-center bg-black/40 z-50">
+  <div class="bg-white w-[92%] max-w-sm rounded-2xl shadow-2xl p-6 text-center animate-[fadeIn_.25s_ease]">
+
+    <div id="dialogIcon" class="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4">
+      <span id="dialogIconSymbol" class="material-symbols-outlined text-4xl"></span>
+    </div>
+
+    <h3 id="dialogTitle" class="text-xl font-bold text-gray-800 mb-2">Message</h3>
+    <p id="dialogMessage" class="text-gray-600 text-sm mb-6 leading-relaxed"></p>
+
+    <button onclick="closeDialog()"
+      class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold">
+      OK
+    </button>
+  </div>
+</div>
+
+
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
+/* Firebase Config */
 const firebaseConfig = {
   apiKey: "AIzaSyCpNAu49OymCjNuRl7aRBRYQm0P6M0db0s",
   authDomain: "ynhosakote-community.firebaseapp.com",
@@ -162,16 +182,60 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+/* ===== Dialog Controls ===== */
+
+window.closeDialog = ()=>{
+  document.getElementById("dialogBox").classList.add("hidden");
+};
+
+function showDialog(type,title,message){
+
+  const box = document.getElementById("dialogBox");
+  const icon = document.getElementById("dialogIcon");
+  const iconSymbol = document.getElementById("dialogIconSymbol");
+
+  document.getElementById("dialogTitle").innerText = title;
+  document.getElementById("dialogMessage").innerText = message;
+
+  if(type==="success"){
+    icon.className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-green-100";
+    iconSymbol.innerText="check_circle";
+    iconSymbol.className="material-symbols-outlined text-4xl text-green-600";
+  }
+
+  if(type==="error"){
+    icon.className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-red-100";
+    iconSymbol.innerText="error";
+    iconSymbol.className="material-symbols-outlined text-4xl text-red-600";
+  }
+
+  if(type==="warning"){
+    icon.className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-yellow-100";
+    iconSymbol.innerText="warning";
+    iconSymbol.className="material-symbols-outlined text-4xl text-yellow-600";
+  }
+
+  box.classList.remove("hidden");
+  box.classList.add("flex");
+}
+
+
+/* ===== Registration ===== */
+
 document.getElementById("registerBtn").onclick = async ()=>{
 
 const name = document.getElementById("name").value.trim();
 const email = document.getElementById("email").value.trim();
 const password = document.getElementById("password").value.trim();
-const msg = document.getElementById("msg");
 
 if(!name || !email || !password){
-msg.innerText="Please fill all fields";
-return;
+  showDialog("warning","Incomplete Form","Please fill all the required fields.");
+  return;
+}
+
+if(password.length < 6){
+  showDialog("warning","Weak Password","Password must be at least 6 characters long.");
+  return;
 }
 
 try{
@@ -179,7 +243,7 @@ try{
 const userCred = await createUserWithEmailAndPassword(auth,email,password);
 const user = userCred.user;
 
-/* SAVE USER */
+/* Save User Record */
 await setDoc(doc(db,"users",user.uid),{
   name:name,
   email:email,
@@ -188,13 +252,35 @@ await setDoc(doc(db,"users",user.uid),{
   createdAt:serverTimestamp()
 });
 
-msg.innerText="Request submitted! Wait for admin approval.";
-
-/* logout so they cannot login until approval */
+/* Sign out until approval */
 await signOut(auth);
 
+showDialog(
+"success",
+"Request Submitted",
+"Your membership request was sent successfully. Please wait for approval from village administration."
+);
+
 }catch(e){
-msg.innerText=e.message;
+
+/* Friendly error translation */
+
+let message="Something went wrong. Please try again later.";
+
+if(e.code==="auth/email-already-in-use")
+message="This email is already registered. Please login instead.";
+
+if(e.code==="auth/invalid-email")
+message="Please enter a valid email address.";
+
+if(e.code==="auth/weak-password")
+message="Password is too weak. Use letters and numbers.";
+
+if(e.code==="auth/network-request-failed")
+message="Network issue detected. Check your internet connection.";
+
+showDialog("error","Registration Failed",message);
+
 }
 
 };
