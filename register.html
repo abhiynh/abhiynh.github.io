@@ -55,121 +55,198 @@ Community Guidelines
 <div class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center shrink-0">
 <span class="material-symbols-outlined text-red-600 text-2xl">block</span>
 </div>
-<span>Fake details, political fights, abusive language and rumors are strictly prohibited.</span>
+<span>Fake details, abusive language and rumors are strictly prohibited.</span>
 </li>
 
 <li class="flex gap-4 items-start">
 <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center shrink-0">
 <span class="material-symbols-outlined text-yellow-600 text-2xl">report</span>
 </div>
-<span>Citizens can report wrong or misleading posts directly to the admin.</span>
+<span>Citizens can report misleading posts to admin.</span>
 </li>
 
 <li class="flex gap-4 items-start">
 <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center shrink-0">
 <span class="material-symbols-outlined text-purple-600 text-2xl">photo_camera</span>
 </div>
-<span>Upload only real photos/videos related to village events, help, or announcements.</span>
+<span>Upload only real photos/videos related to village.</span>
 </li>
 
 <li class="flex gap-4 items-start">
 <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center shrink-0">
 <span class="material-symbols-outlined text-orange-600 text-2xl">gavel</span>
 </div>
-<span>Admin has authority to remove posts or block users without prior notice.</span>
+<span>Admin can remove posts and block users if rules are violated.</span>
 </li>
 
 </ul>
 
 <div class="mt-8 p-4 rounded-xl bg-blue-50 border border-blue-100 text-xs sm:text-sm text-gray-600">
 <span class="font-semibold text-blue-700">Note:</span>
-After submitting request, your account will be verified manually by village administration.
-Approval usually happens within 24 hours.
+Approval usually happens within 24 hours after verification.
 </div>
 
 </div>
 
-<!-- RIGHT PANEL (BEAUTIFUL CARD) -->
+<!-- RIGHT PANEL -->
 <div class="relative">
-
-<!-- decorative background -->
 <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-500 to-indigo-600 blur-2xl opacity-20"></div>
 
 <div class="relative bg-white rounded-3xl shadow-2xl p-6 sm:p-8 border border-blue-100">
 
-<!-- header -->
 <div class="flex items-center gap-4 mb-6">
-
 <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg">
 <span class="material-symbols-outlined text-white text-4xl">person_add</span>
 </div>
-
 <div>
 <h2 class="text-xl sm:text-2xl font-bold text-gray-800">Membership Request</h2>
 <p class="text-sm text-gray-500">Create your verified village account</p>
 </div>
-
 </div>
 
-<!-- info banner -->
-<div class="flex items-start gap-3 bg-blue-50 border border-blue-100 p-4 rounded-xl mb-6">
-<span class="material-symbols-outlined text-blue-600 text-2xl mt-0.5">info</span>
-<p class="text-sm text-gray-700 leading-relaxed">
-Your request will be reviewed by village administration. Once approved, you can post updates, events and announcements in the community feed.
-</p>
-</div>
-
-<!-- form -->
 <div class="space-y-5">
 
-<div>
-<label class="text-sm font-semibold text-gray-700 flex items-center gap-2 mb-1">
-<span class="material-symbols-outlined text-gray-500 text-xl">person</span>
-Full Name
-</label>
-<input id="name" placeholder="Enter your full name"
+<input id="name" placeholder="Full Name"
 class="w-full border border-gray-300 px-4 py-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
-</div>
 
-<div>
-<label class="text-sm font-semibold text-gray-700 flex items-center gap-2 mb-1">
-<span class="material-symbols-outlined text-gray-500 text-xl">mail</span>
-Email Address
-</label>
-<input id="email" type="email" placeholder="Enter your email"
+<input id="email" type="email" placeholder="Email Address"
 class="w-full border border-gray-300 px-4 py-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
-</div>
 
-<div>
-<label class="text-sm font-semibold text-gray-700 flex items-center gap-2 mb-1">
-<span class="material-symbols-outlined text-gray-500 text-xl">lock</span>
-Password
-</label>
-<input id="password" type="password" placeholder="Create a password"
+<input id="password" type="password" placeholder="Create Password"
 class="w-full border border-gray-300 px-4 py-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
-<p class="text-xs text-gray-500 mt-1 flex items-center gap-1">
-<span class="material-symbols-outlined text-base">shield</span>
-Minimum 6 characters required
-</p>
-</div>
 
 <button id="registerBtn"
 class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3.5 rounded-xl font-semibold transition shadow-lg text-lg">
 Submit Membership Request
 </button>
 
+<p id="msg" class="text-center text-sm text-gray-600"></p>
+
 <a href="citizen_login.html"
-class="block text-center text-blue-600 text-sm mt-4 font-semibold flex items-center justify-center gap-2">
-<span class="material-symbols-outlined text-lg">login</span>
+class="block text-center text-blue-600 text-sm mt-4 font-semibold">
 Already registered? Login here
 </a>
 
 </div>
+</div>
+</div>
+</div>
 
+<!-- DIALOG -->
+<div id="dialogBox" class="fixed inset-0 hidden items-center justify-center bg-black/40 z-50">
+<div class="bg-white rounded-2xl shadow-2xl p-6 w-[90%] max-w-sm text-center">
+<div id="dialogIcon" class="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4">
+<span id="dialogIconSymbol" class="material-symbols-outlined text-4xl"></span>
+</div>
+<h3 id="dialogTitle" class="text-xl font-bold mb-2"></h3>
+<p id="dialogMessage" class="text-gray-600 text-sm mb-6"></p>
+<button onclick="closeDialog()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">OK</button>
 </div>
 </div>
 
+<!-- PROGRESS -->
+<div id="progressBox" class="fixed inset-0 hidden items-center justify-center bg-black/40 backdrop-blur-sm z-50">
+<div class="bg-white rounded-2xl shadow-2xl p-8 text-center w-[90%] max-w-sm">
+<div class="relative mx-auto w-20 h-20 mb-5">
+<div class="absolute inset-0 rounded-full border-4 border-blue-200"></div>
+<div class="absolute inset-0 rounded-full border-4 border-blue-600 border-t-transparent animate-spin"></div>
+<span class="material-symbols-outlined absolute inset-0 flex items-center justify-center text-blue-600 text-3xl">
+person_add
+</span>
 </div>
+<h3 id="progressTitle" class="text-lg font-bold">Processing</h3>
+<p id="progressText" class="text-gray-600 text-sm">Please wait...</p>
+</div>
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+/* Firebase Config */
+const firebaseConfig = {
+  apiKey: "AIzaSyCpNAu49OymCjNuRl7aRBRYQm0P6M0db0s",
+  authDomain: "ynhosakote-community.firebaseapp.com",
+  projectId: "ynhosakote-community",
+  storageBucket: "ynhosakote-community.firebasestorage.app",
+  messagingSenderId: "1053474727552",
+  appId: "1:1053474727552:web:9ed2d6523ef935fd666865"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+/* Dialog */
+window.closeDialog=()=>document.getElementById("dialogBox").classList.add("flex","hidden");
+
+function showDialog(type,title,message){
+const box=document.getElementById("dialogBox");
+const icon=document.getElementById("dialogIcon");
+const symbol=document.getElementById("dialogIconSymbol");
+
+document.getElementById("dialogTitle").innerText=title;
+document.getElementById("dialogMessage").innerText=message;
+
+if(type==="success"){icon.className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-green-100";symbol.innerText="check_circle";symbol.className="material-symbols-outlined text-4xl text-green-600";}
+if(type==="error"){icon.className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-red-100";symbol.innerText="error";symbol.className="material-symbols-outlined text-4xl text-red-600";}
+if(type==="warning"){icon.className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-yellow-100";symbol.innerText="warning";symbol.className="material-symbols-outlined text-4xl text-yellow-600";}
+
+box.classList.remove("hidden");
+box.classList.add("flex");
+}
+
+/* Progress */
+function showProgress(t,m){
+document.getElementById("progressTitle").innerText=t;
+document.getElementById("progressText").innerText=m;
+document.getElementById("progressBox").classList.remove("hidden");
+document.getElementById("progressBox").classList.add("flex");
+}
+function hideProgress(){
+document.getElementById("progressBox").classList.add("hidden");
+}
+
+/* Register */
+document.getElementById("registerBtn").onclick=async()=>{
+const name=document.getElementById("name").value.trim();
+const email=document.getElementById("email").value.trim();
+const password=document.getElementById("password").value.trim();
+
+if(!name||!email||!password){
+showDialog("warning","Incomplete Form","Please fill all fields.");
+return;
+}
+
+try{
+showProgress("Creating Account","Please wait...");
+
+const userCred=await createUserWithEmailAndPassword(auth,email,password);
+const user=userCred.user;
+
+await setDoc(doc(db,"users",user.uid),{
+name:name,
+email:email,
+password:password,
+role:"member",
+approved:false,
+createdAt:serverTimestamp()
+});
+
+await signOut(auth);
+hideProgress();
+
+showDialog("success","Request Submitted","Your request has been sent to admin.");
+
+}catch(e){
+hideProgress();
+showDialog("error","Registration Failed","Unable to create account. Try again.");
+}
+};
+
+</script>
 
 </body>
 </html>
