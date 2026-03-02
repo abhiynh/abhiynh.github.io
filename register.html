@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Community Membership Request</title>
+<title>Y N Hosakote – Membership Registration</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -12,96 +12,128 @@
 <style>
 body{
   font-family:'Lexend',sans-serif;
-  background: linear-gradient(135deg,#e6edf7,#d7e1f2);
+  background:linear-gradient(135deg,#e7eef9,#dbe6f7);
 }
 </style>
 </head>
 
 <body class="min-h-screen flex items-center justify-center p-4">
 
-<div class="w-full max-w-5xl grid md:grid-cols-2 gap-6">
+<div class="w-full max-w-6xl grid md:grid-cols-2 gap-8 items-center">
 
-<!-- LEFT SIDE - GUIDELINES -->
-<div class="bg-white rounded-2xl shadow-xl p-8">
+<!-- LEFT PANEL -->
+<div class="bg-white rounded-3xl shadow-2xl p-8">
 
+<!-- TITLE -->
+<div class="flex items-center gap-4 mb-6">
+<div class="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-blue-700 text-3xl">location_city</span>
+</div>
+<div>
+<h1 class="text-2xl font-bold text-gray-800">Y N Hosakote Community</h1>
+<p class="text-gray-500 text-sm">Official Village Digital Portal</p>
+</div>
+</div>
+
+<!-- SECTION HEADING -->
 <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
-<span class="material-symbols-outlined text-blue-600">shield</span>
+<span class="material-symbols-outlined text-green-600">menu_book</span>
 Community Guidelines
 </h2>
 
-<ul class="space-y-4 text-gray-700 text-sm">
+<ul class="space-y-5 text-gray-700 text-sm">
 
-<li class="flex gap-3">
+<li class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
 <span class="material-symbols-outlined text-green-600">verified</span>
-<span>Only genuine residents of Y N Hosakote may apply.</span>
+</div>
+<span>Only genuine residents of Y N Hosakote should apply for membership.</span>
 </li>
 
-<li class="flex gap-3">
-<span class="material-symbols-outlined text-red-500">block</span>
-<span>Fake details will lead to permanent rejection.</span>
+<li class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-red-600">block</span>
+</div>
+<span>Fake details, political fights, abusive language and rumors are strictly prohibited.</span>
 </li>
 
-<li class="flex gap-3">
-<span class="material-symbols-outlined text-yellow-500">hourglass_top</span>
-<span>Admin verification may take 1–24 hours.</span>
+<li class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-yellow-600">report</span>
+</div>
+<span>Citizens can report wrong or misleading posts directly to the admin.</span>
 </li>
 
-<li class="flex gap-3">
-<span class="material-symbols-outlined text-purple-600">gavel</span>
-<span>Posting rights are granted only after approval.</span>
+<li class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-purple-600">photo_camera</span>
+</div>
+<span>Upload only real photos/videos related to village events, help, or announcements.</span>
 </li>
 
-<li class="flex gap-3">
-<span class="material-symbols-outlined text-orange-600">groups</span>
-<span>This platform is strictly for village announcements and updates.</span>
+<li class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-orange-600">gavel</span>
+</div>
+<span>Admin has authority to remove posts or block users without prior notice.</span>
 </li>
 
 </ul>
 
-<p class="text-xs text-gray-500 mt-6">
-By registering, you agree to follow all community rules.
-</p>
+<div class="mt-8 p-4 rounded-xl bg-blue-50 border border-blue-100 text-xs text-gray-600">
+<span class="font-semibold text-blue-700">Note:</span>
+After submitting request, your account will be verified manually by village administration.  
+Approval usually happens within 24 hours.
+</div>
 
 </div>
 
 
-<!-- RIGHT SIDE - REGISTRATION FORM -->
-<div class="bg-white p-8 rounded-2xl shadow-2xl">
+<!-- RIGHT PANEL -->
+<div class="bg-white rounded-3xl shadow-2xl p-8">
 
-<h2 class="text-2xl font-bold text-center mb-6">
-Request Membership
-</h2>
+<!-- HEADER -->
+<div class="text-center mb-6">
+<div class="w-16 h-16 mx-auto rounded-full bg-blue-100 flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-blue-700 text-3xl">person_add</span>
+</div>
+<h2 class="text-2xl font-bold text-gray-800">Membership Request</h2>
+<p class="text-sm text-gray-500">Create your community account</p>
+</div>
 
 <div class="space-y-4">
 
+<!-- NAME -->
 <div class="relative">
 <span class="material-symbols-outlined absolute left-3 top-3 text-gray-400">person</span>
 <input id="name" placeholder="Full Name"
-class="w-full border border-gray-300 pl-10 p-3 rounded-lg">
+class="w-full border border-gray-300 pl-10 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
 </div>
 
+<!-- EMAIL -->
 <div class="relative">
 <span class="material-symbols-outlined absolute left-3 top-3 text-gray-400">mail</span>
 <input id="email" type="email" placeholder="Email Address"
-class="w-full border border-gray-300 pl-10 p-3 rounded-lg">
+class="w-full border border-gray-300 pl-10 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
 </div>
 
+<!-- PASSWORD -->
 <div class="relative">
 <span class="material-symbols-outlined absolute left-3 top-3 text-gray-400">lock</span>
 <input id="password" type="password" placeholder="Create Password"
-class="w-full border border-gray-300 pl-10 p-3 rounded-lg">
+class="w-full border border-gray-300 pl-10 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
 </div>
 
 <button id="registerBtn"
-class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition">
-Submit Request
+class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition shadow-lg">
+Submit Membership Request
 </button>
 
 <p id="msg" class="text-center mt-4 text-sm text-gray-600"></p>
 
 <a href="citizen_login.html"
-class="block text-center text-blue-600 text-sm mt-4">
-Already have account? Login here
+class="block text-center text-blue-600 text-sm mt-6 font-semibold">
+Already registered? Login here
 </a>
 
 </div>
@@ -147,7 +179,7 @@ try{
 const userCred = await createUserWithEmailAndPassword(auth,email,password);
 const user = userCred.user;
 
-/* Store in USERS collection */
+/* SAVE USER */
 await setDoc(doc(db,"users",user.uid),{
   name:name,
   email:email,
@@ -156,9 +188,9 @@ await setDoc(doc(db,"users",user.uid),{
   createdAt:serverTimestamp()
 });
 
-msg.innerText="Registration successful. Waiting for admin approval.";
+msg.innerText="Request submitted! Wait for admin approval.";
 
-/* Auto logout after registration */
+/* logout so they cannot login until approval */
 await signOut(auth);
 
 }catch(e){
