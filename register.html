@@ -39,8 +39,59 @@ body{
 
 <!-- LEFT PANEL (UNCHANGED) -->
 <div class="bg-white rounded-3xl shadow-2xl p-5 sm:p-8">
-<!-- left panel content unchanged -->
-...
+<!-- Your left panel remains exactly same -->
+<div class="flex items-center gap-4 mb-6">
+<div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-blue-700 text-3xl sm:text-4xl">location_city</span>
+</div>
+<div>
+<h1 class="text-lg sm:text-2xl font-bold text-gray-800">Y N Hosakote Community</h1>
+<p class="text-gray-500 text-xs sm:text-sm">Official Village Digital Portal</p>
+</div>
+</div>
+
+<h2 class="text-lg sm:text-xl font-bold mb-6 flex items-center gap-3">
+<span class="material-symbols-outlined text-green-600 text-2xl sm:text-3xl">menu_book</span>
+Community Guidelines
+</h2>
+
+<ul class="space-y-4 sm:space-y-5 text-gray-700 text-sm sm:text-base">
+<li class="flex gap-3 sm:gap-4 items-start">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-100 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-green-600 text-xl sm:text-2xl">verified</span>
+</div>
+<span>Only genuine residents of Y N Hosakote should apply for membership.</span>
+</li>
+<li class="flex gap-3 sm:gap-4 items-start">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-red-100 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-red-600 text-xl sm:text-2xl">block</span>
+</div>
+<span>Fake details, abusive language and rumors are strictly prohibited.</span>
+</li>
+<li class="flex gap-3 sm:gap-4 items-start">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-yellow-100 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-yellow-600 text-xl sm:text-2xl">report</span>
+</div>
+<span>Citizens can report misleading posts to admin.</span>
+</li>
+<li class="flex gap-3 sm:gap-4 items-start">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-purple-100 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-purple-600 text-xl sm:text-2xl">photo_camera</span>
+</div>
+<span>Upload only real photos/videos related to village.</span>
+</li>
+<li class="flex gap-3 sm:gap-4 items-start">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-orange-100 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-orange-600 text-xl sm:text-2xl">gavel</span>
+</div>
+<span>Admin can remove posts and block users if rules are violated.</span>
+</li>
+</ul>
+
+<div class="mt-8 p-4 rounded-xl bg-blue-50 border border-blue-100 text-xs sm:text-sm text-gray-600">
+<span class="font-semibold text-blue-700">Note:</span>
+Approval usually happens within 24 hours after verification.
+</div>
 </div>
 
 <!-- RIGHT PANEL -->
@@ -59,41 +110,38 @@ body{
 </div>
 </div>
 
-<div class="space-y-6">
+<div class="space-y-5">
 
-<!-- FULL NAME -->
+<!-- NAME -->
 <div class="relative">
-<span class="material-symbols-outlined absolute left-3 top-4 text-blue-500">person</span>
+<span class="material-symbols-outlined absolute left-3 top-3 text-blue-500">person</span>
 <input id="name" placeholder="Enter your full legal name"
-class="w-full border border-gray-300 pl-10 pr-4 py-3 rounded-xl input-focus focus:ring-2 focus:ring-blue-500 outline-none">
-<p class="text-xs text-gray-500 mt-1">Minimum 3 characters required.</p>
+class="w-full border border-gray-300 pl-10 pr-4 py-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none input-focus">
 </div>
 
 <!-- EMAIL -->
 <div class="relative">
-<span class="material-symbols-outlined absolute left-3 top-4 text-green-500">mail</span>
+<span class="material-symbols-outlined absolute left-3 top-3 text-green-500">mail</span>
 <input id="email" type="email" placeholder="Enter your active email address"
-class="w-full border border-gray-300 pl-10 pr-4 py-3 rounded-xl input-focus focus:ring-2 focus:ring-green-500 outline-none">
-<p class="text-xs text-gray-500 mt-1">Must be a valid email format.</p>
+class="w-full border border-gray-300 pl-10 pr-4 py-3 rounded-xl focus:ring-2 focus:ring-green-500 outline-none input-focus">
 </div>
 
 <!-- PASSWORD -->
 <div class="relative">
-<span class="material-symbols-outlined absolute left-3 top-4 text-purple-500">lock</span>
+<span class="material-symbols-outlined absolute left-3 top-3 text-purple-500">lock</span>
 <input id="password" type="password" placeholder="Minimum 6 characters"
-class="w-full border border-gray-300 pl-10 pr-10 py-3 rounded-xl input-focus focus:ring-2 focus:ring-purple-500 outline-none">
+class="w-full border border-gray-300 pl-10 pr-10 py-3 rounded-xl focus:ring-2 focus:ring-purple-500 outline-none input-focus">
 <button type="button" onclick="togglePassword()" class="absolute right-3 top-3 text-gray-500">
 <span class="material-symbols-outlined">visibility</span>
 </button>
-<p class="text-xs text-gray-500 mt-1">Use letters and numbers for stronger security.</p>
 </div>
 
 <!-- CONFIRM PASSWORD -->
 <div class="relative">
-<span class="material-symbols-outlined absolute left-3 top-4 text-indigo-500">verified</span>
-<input id="confirmPassword" type="password" placeholder="Confirm your password"
-class="w-full border border-gray-300 pl-10 pr-4 py-3 rounded-xl input-focus focus:ring-2 focus:ring-indigo-500 outline-none">
-<p id="matchText" class="text-xs text-gray-500 mt-1">Re-enter your password to confirm.</p>
+<span class="material-symbols-outlined absolute left-3 top-3 text-indigo-500">verified</span>
+<input id="confirmPassword" type="password" placeholder="Confirm password"
+class="w-full border border-gray-300 pl-10 pr-4 py-3 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none input-focus">
+<p id="matchText" class="text-xs text-gray-500 mt-1">Re-enter your password.</p>
 </div>
 
 <button id="registerBtn"
@@ -106,11 +154,11 @@ Submit Membership Request
 </div>
 </div>
 
-<!-- DIALOG + PROGRESS (UNCHANGED) -->
+<!-- DIALOG + PROGRESS remain unchanged -->
 
 <script type="module">
 
-// 🔒 YOUR FIREBASE CODE IS EXACTLY THE SAME (NOT MODIFIED)
+// 🔒 YOUR FIREBASE CODE BELOW IS EXACTLY SAME (UNCHANGED)
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
@@ -129,8 +177,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-/* Extra UI Validation (Does NOT modify your Firebase logic) */
-
+// Password Match Validation (UI only)
 const passwordInput=document.getElementById("password");
 const confirmInput=document.getElementById("confirmPassword");
 const matchText=document.getElementById("matchText");
@@ -149,9 +196,4 @@ window.togglePassword=()=>{
 passwordInput.type=passwordInput.type==="password"?"text":"password";
 };
 
-/* YOUR ORIGINAL REGISTER LOGIC BELOW (UNCHANGED) */
-...
-</script>
-
-</body>
-</html>
+// 🔒 Your original registerBtn logic continues unchanged below
