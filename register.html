@@ -37,9 +37,9 @@ body{
 
 <div class="w-full max-w-6xl grid lg:grid-cols-2 gap-6 md:gap-8 items-stretch">
 
-<!-- LEFT PANEL (UNCHANGED) -->
+<!-- LEFT PANEL -->
 <div class="bg-white rounded-3xl shadow-2xl p-5 sm:p-8">
-<!-- Your left panel remains exactly same -->
+
 <div class="flex items-center gap-4 mb-6">
 <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
 <span class="material-symbols-outlined text-blue-700 text-3xl sm:text-4xl">location_city</span>
@@ -55,74 +55,48 @@ body{
 Community Guidelines
 </h2>
 
-<ul class="space-y-4 sm:space-y-5 text-gray-700 text-sm sm:text-base">
-<li class="flex gap-3 sm:gap-4 items-start">
-<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-100 flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-green-600 text-xl sm:text-2xl">verified</span>
+<ul class="space-y-4 text-gray-700 text-sm sm:text-base">
+<li class="flex gap-3 items-start">
+<div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-green-600">verified</span>
 </div>
 <span>Only genuine residents of Y N Hosakote should apply for membership.</span>
 </li>
-<li class="flex gap-3 sm:gap-4 items-start">
-<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-red-100 flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-red-600 text-xl sm:text-2xl">block</span>
+<li class="flex gap-3 items-start">
+<div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-red-600">block</span>
 </div>
 <span>Fake details, abusive language and rumors are strictly prohibited.</span>
 </li>
-<li class="flex gap-3 sm:gap-4 items-start">
-<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-yellow-100 flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-yellow-600 text-xl sm:text-2xl">report</span>
+<li class="flex gap-3 items-start">
+<div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-yellow-600">report</span>
 </div>
 <span>Citizens can report misleading posts to admin.</span>
 </li>
-<li class="flex gap-3 sm:gap-4 items-start">
-<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-purple-100 flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-purple-600 text-xl sm:text-2xl">photo_camera</span>
+<li class="flex gap-3 items-start">
+<div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-purple-600">photo_camera</span>
 </div>
 <span>Upload only real photos/videos related to village.</span>
 </li>
-<li class="flex gap-3 sm:gap-4 items-start">
-<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-orange-100 flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-orange-600 text-xl sm:text-2xl">gavel</span>
+<li class="flex gap-3 items-start">
+<div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-orange-600">gavel</span>
 </div>
 <span>Admin can remove posts and block users if rules are violated.</span>
 </li>
 </ul>
 
-<div class="mt-8 p-4 rounded-xl bg-blue-50 border border-blue-100 text-xs sm:text-sm text-gray-600">
+<div class="mt-8 p-4 rounded-xl bg-blue-50 border border-blue-100 text-xs text-gray-600">
 <span class="font-semibold text-blue-700">Note:</span>
 Approval usually happens within 24 hours after verification.
 </div>
+
 </div>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Y N Hosakote – Membership Registration</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
-
-<style>
-body{
-  font-family:'Lexend',sans-serif;
-  background:linear-gradient(135deg,#e7eef9,#dbe6f7);
-}
-.material-symbols-outlined{
-  font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 48;
-}
-.fade-in{
-  animation:fadeIn .25s ease forwards;
-}
-@keyframes fadeIn{
-  from{opacity:0; transform:scale(.95)}
-  to{opacity:1; transform:scale(1)}
-}
-.input-focus{ transition:all .25s ease; }
-.input-focus:focus{ transform:scale(1.02); }
-</style>
-</head>
-
-<body class="min-h-screen flex items-center justify-center p-4">
+<!-- RIGHT PANEL -->
+<div class="flex items-center justify-center">
 
 <div class="w-full max-w-md bg-white rounded-3xl shadow-2xl p-6">
 
@@ -160,12 +134,13 @@ class="w-full border border-gray-300 pl-10 pr-4 py-3 rounded-xl focus:ring-2 foc
 <p id="matchText" class="text-xs mt-1 text-gray-500">Re-enter your password.</p>
 </div>
 
-<!-- ✅ Professional Normal Button -->
 <button id="registerBtn"
 class="w-full bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 text-white py-3 rounded-xl font-semibold transition duration-200 shadow-md">
 Submit Membership Request
 </button>
 
+</div>
+</div>
 </div>
 </div>
 
@@ -199,7 +174,12 @@ cloud_upload
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword, 
+  signOut,
+  sendEmailVerification 
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -219,58 +199,10 @@ window.closeDialog = () => {
 document.getElementById("dialogBox").classList.add("hidden");
 };
 
-function showDialog(type,title,message){
-const box=document.getElementById("dialogBox");
-const icon=document.getElementById("dialogIcon");
-const symbol=document.getElementById("dialogIconSymbol");
-
-document.getElementById("dialogTitle").innerText=title;
-document.getElementById("dialogMessage").innerText=message;
-
-if(type==="success"){
-icon.className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-green-100";
-symbol.innerText="check_circle";
-symbol.className="material-symbols-outlined text-4xl text-green-600";
-}
-if(type==="error"){
-icon.className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-red-100";
-symbol.innerText="error";
-symbol.className="material-symbols-outlined text-4xl text-red-600";
-}
-
-box.classList.remove("hidden");
-box.classList.add("flex");
-}
-
-function showProgress(title,text){
-document.getElementById("progressTitle").innerText=title;
-document.getElementById("progressText").innerText=text;
-document.getElementById("progressBox").classList.remove("hidden");
-document.getElementById("progressBox").classList.add("flex");
-}
-
-function hideProgress(){
-document.getElementById("progressBox").classList.add("hidden");
-}
-
 window.togglePassword=()=>{
 const input=document.getElementById("password");
 input.type=input.type==="password"?"text":"password";
 };
-
-document.getElementById("confirmPassword").addEventListener("input",()=>{
-const password=document.getElementById("password").value;
-const confirm=document.getElementById("confirmPassword").value;
-const text=document.getElementById("matchText");
-
-if(password===confirm){
-text.innerText="Passwords match ✔";
-text.className="text-xs mt-1 text-green-600";
-}else{
-text.innerText="Passwords do not match";
-text.className="text-xs mt-1 text-red-600";
-}
-});
 
 document.getElementById("registerBtn").onclick = async () => {
 
@@ -280,23 +212,21 @@ const password = document.getElementById("password").value.trim();
 const confirm = document.getElementById("confirmPassword").value.trim();
 
 if(!name || !email || !password || !confirm){
-showDialog("error","Form Error","Please fill all required fields.");
+alert("Please fill all required fields.");
 return;
 }
 
 if(password !== confirm){
-showDialog("error","Password Mismatch","Passwords do not match.");
+alert("Passwords do not match.");
 return;
 }
 
 try{
 
-showProgress("Creating Account","Setting up your profile securely...");
-
 const userCred = await createUserWithEmailAndPassword(auth,email,password);
 const user = userCred.user;
 
-showProgress("Submitting Request","Saving your membership details...");
+await sendEmailVerification(user);
 
 await setDoc(doc(db,"users",user.uid),{
 name:name,
@@ -307,39 +237,11 @@ createdAt:serverTimestamp()
 });
 
 await signOut(auth);
-hideProgress();
 
-showDialog("success","Request Submitted","Your membership request has been sent for approval.");
-
-document.getElementById("name").value="";
-document.getElementById("email").value="";
-document.getElementById("password").value="";
-document.getElementById("confirmPassword").value="";
+alert("Verification email sent. Please verify before logging in.");
 
 }catch(e){
-
-hideProgress();
-
-let message;
-
-switch(e.code){
-case "auth/email-already-in-use":
-message="This email is already registered.";
-break;
-case "auth/invalid-email":
-message="Invalid email format.";
-break;
-case "auth/weak-password":
-message="Password must be at least 6 characters.";
-break;
-case "auth/network-request-failed":
-message="Network error. Check internet connection.";
-break;
-default:
-message="Registration failed. Please try again.";
-}
-
-showDialog("error","Registration Failed",message);
+alert(e.message);
 }
 
 };
