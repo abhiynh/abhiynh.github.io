@@ -24,8 +24,6 @@ body{
   from{opacity:0; transform:scale(.95)}
   to{opacity:1; transform:scale(1)}
 }
-.input-focus{ transition:all .25s ease; }
-.input-focus:focus{ transform:scale(1.02); }
 </style>
 </head>
 
@@ -39,36 +37,39 @@ Membership Registration
 
 <div class="space-y-5">
 
+<!-- Name -->
 <div class="relative">
 <span class="material-symbols-outlined absolute left-3 top-3 text-blue-500">person</span>
 <input id="name" placeholder="Full Name"
-class="w-full border border-gray-300 pl-10 pr-4 py-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none input-focus">
+class="w-full border border-gray-300 pl-10 py-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
 </div>
 
+<!-- Email -->
 <div class="relative">
 <span class="material-symbols-outlined absolute left-3 top-3 text-green-500">mail</span>
 <input id="email" type="email" placeholder="Email Address"
-class="w-full border border-gray-300 pl-10 pr-4 py-3 rounded-xl focus:ring-2 focus:ring-green-500 outline-none input-focus">
+class="w-full border border-gray-300 pl-10 py-3 rounded-xl focus:ring-2 focus:ring-green-500 outline-none">
 </div>
 
+<!-- Aadhaar -->
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-3 text-orange-500">badge</span>
+<input id="aadhaar" type="text" maxlength="12" placeholder="Aadhaar Number (12 digits)"
+class="w-full border border-gray-300 pl-10 py-3 rounded-xl focus:ring-2 focus:ring-orange-500 outline-none">
+</div>
+
+<!-- Password -->
 <div class="relative">
 <span class="material-symbols-outlined absolute left-3 top-3 text-purple-500">lock</span>
 <input id="password" type="password" placeholder="Minimum 6 characters"
-class="w-full border border-gray-300 pl-10 pr-10 py-3 rounded-xl focus:ring-2 focus:ring-purple-500 outline-none input-focus">
+class="w-full border border-gray-300 pl-10 pr-10 py-3 rounded-xl focus:ring-2 focus:ring-purple-500 outline-none">
 <button type="button" onclick="togglePassword()" class="absolute right-3 top-3 text-gray-500">
 <span class="material-symbols-outlined">visibility</span>
 </button>
 </div>
 
-<div class="relative">
-<span class="material-symbols-outlined absolute left-3 top-3 text-indigo-500">verified</span>
-<input id="confirmPassword" type="password" placeholder="Confirm Password"
-class="w-full border border-gray-300 pl-10 pr-4 py-3 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none input-focus">
-<p id="matchText" class="text-xs mt-1 text-gray-500">Re-enter your password.</p>
-</div>
-
 <button id="registerBtn"
-class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3 rounded-xl font-semibold transition shadow-lg">
+class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-xl font-semibold shadow-lg">
 Submit Membership Request
 </button>
 
@@ -87,26 +88,11 @@ Submit Membership Request
 </div>
 </div>
 
-<!-- PROGRESS -->
-<div id="progressBox" class="fixed inset-0 hidden items-center justify-center bg-black/40 backdrop-blur-sm z-50">
-<div class="bg-white rounded-2xl shadow-2xl p-8 text-center w-[90%] max-w-sm fade-in">
-<div class="relative mx-auto w-20 h-20 mb-5">
-<div class="absolute inset-0 rounded-full border-4 border-blue-200"></div>
-<div class="absolute inset-0 rounded-full border-4 border-blue-600 border-t-transparent animate-spin"></div>
-<span class="material-symbols-outlined absolute inset-0 flex items-center justify-center text-blue-600 text-3xl">
-cloud_upload
-</span>
-</div>
-<h3 id="progressTitle" class="text-lg font-bold">Processing</h3>
-<p id="progressText" class="text-gray-600 text-sm">Please wait...</p>
-</div>
-</div>
-
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCpNAu49OymCjNuRl7aRBRYQm0P6M0db0s",
@@ -148,107 +134,80 @@ box.classList.remove("hidden");
 box.classList.add("flex");
 }
 
-function showProgress(title,text){
-document.getElementById("progressTitle").innerText=title;
-document.getElementById("progressText").innerText=text;
-document.getElementById("progressBox").classList.remove("hidden");
-document.getElementById("progressBox").classList.add("flex");
-}
-
-function hideProgress(){
-document.getElementById("progressBox").classList.add("hidden");
-}
-
 window.togglePassword=()=>{
 const input=document.getElementById("password");
 input.type=input.type==="password"?"text":"password";
 };
 
-document.getElementById("confirmPassword").addEventListener("input",()=>{
-const password=document.getElementById("password").value;
-const confirm=document.getElementById("confirmPassword").value;
-const text=document.getElementById("matchText");
-
-if(password===confirm){
-text.innerText="Passwords match ✔";
-text.className="text-xs mt-1 text-green-600";
-}else{
-text.innerText="Passwords do not match";
-text.className="text-xs mt-1 text-red-600";
-}
-});
-
 document.getElementById("registerBtn").onclick = async () => {
 
 const name = document.getElementById("name").value.trim();
 const email = document.getElementById("email").value.trim();
+const aadhaar = document.getElementById("aadhaar").value.trim();
 const password = document.getElementById("password").value.trim();
-const confirm = document.getElementById("confirmPassword").value.trim();
 
-if(!name || !email || !password || !confirm){
-showDialog("error","Form Error","Please fill all required fields.");
+if(!name || !email || !aadhaar || !password){
+showDialog("error","Form Error","All fields are required.");
 return;
 }
 
-if(password !== confirm){
-showDialog("error","Password Mismatch","Passwords do not match.");
+if(!/^\d{12}$/.test(aadhaar)){
+showDialog("error","Invalid Aadhaar","Aadhaar must be exactly 12 digits.");
 return;
 }
 
 try{
 
-showProgress("Creating Account","Setting up your profile securely...");
-
 const userCred = await createUserWithEmailAndPassword(auth,email,password);
 const user = userCred.user;
 
-showProgress("Submitting Request","Saving your membership details...");
+await sendEmailVerification(user);
 
 await setDoc(doc(db,"users",user.uid),{
-name:name,
-email:email,
+name,
+email,
+aadhaar,
 role:"member",
 approved:false,
+emailVerified:false,
 createdAt:serverTimestamp()
 });
 
 await signOut(auth);
-hideProgress();
 
-showDialog("success","Request Submitted","Your membership request has been sent for approval.");
-
-document.getElementById("name").value="";
-document.getElementById("email").value="";
-document.getElementById("password").value="";
-document.getElementById("confirmPassword").value="";
+showDialog("success","Verify Email",
+"Verification link sent to your email. Please verify before login.");
 
 }catch(e){
 
-hideProgress();
+showDialog("error","Registration Failed",e.message);
 
-let message;
-
-switch(e.code){
-case "auth/email-already-in-use":
-message="This email is already registered.";
-break;
-case "auth/invalid-email":
-message="Invalid email format.";
-break;
-case "auth/weak-password":
-message="Password must be at least 6 characters.";
-break;
-case "auth/network-request-failed":
-message="Network error. Check internet connection.";
-break;
-default:
-message="Registration failed. Please try again.";
-}
-
-showDialog("error","Registration Failed",message);
 }
 
 };
+
+/* AUTO REDIRECT AFTER APPROVAL */
+onAuthStateChanged(auth, async(user)=>{
+if(user){
+if(!user.emailVerified){
+showDialog("error","Email Not Verified","Please verify your email first.");
+await signOut(auth);
+return;
+}
+
+const docSnap = await getDoc(doc(db,"users",user.uid));
+if(docSnap.exists()){
+const data = docSnap.data();
+
+if(data.approved === true){
+window.location.href="homepage.html";
+}else{
+showDialog("error","Pending Approval","Your account is waiting for admin approval.");
+await signOut(auth);
+}
+}
+}
+});
 
 </script>
 </body>
