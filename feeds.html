@@ -1,249 +1,236 @@
 <!DOCTYPE html>
-
-<html lang="en"><head>
+<html lang="en">
+<head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Y N Hosakote Community Feed</title>
+
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
 <script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        primary: "#0f49bd",
-                        secondary: "#16a34a", // Green for FAB
-                        "background-light": "#f6f6f8",
-                        "background-dark": "#101622",
-                    },
-                    fontFamily: {
-                        display: ["Lexend", "sans-serif"]
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.5rem",
-                        "lg": "1rem",
-                        "xl": "1.5rem",
-                        "2xl": "2rem",
-                        "full": "9999px"
-                    },
-                },
-            },
-        }
-    </script>
+tailwind.config = {
+darkMode:"class",
+theme:{
+extend:{
+colors:{
+primary:"#0f49bd",
+secondary:"#16a34a",
+"background-light":"#f6f6f8",
+"background-dark":"#101622"
+},
+fontFamily:{display:["Lexend","sans-serif"]}
+}
+}
+}
+</script>
+
 <style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden min-h-screen pb-24">
-<!-- Sticky Header -->
-<header class="sticky top-0 z-40 bg-white/95 dark:bg-[#1a2332]/95 backdrop-blur-md shadow-sm border-b border-slate-200 dark:border-slate-700">
-<div class="px-4 py-3 flex items-center justify-between">
-<div class="flex items-center gap-3">
-<div class="h-10 w-10 rounded-full bg-cover bg-center border border-slate-200 dark:border-slate-600 shadow-sm" data-alt="Circular village logo showing a tree or emblem" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBMboBRbh1dU4sL2dGlbdRo1tiAWjJ4Ws3tfBIcPlfK525YD1X509YVzROvy--ERcRbGj2oj4evH1QPNAoqSAeYIU4F6N_7fQ-HryG6y3vaazXWei5uVhaqWGeXmZFbkh8DyExJPCoqKGHgEkMAV93FXdV0qGyySWFOZqbj_UJQDHP6Cyu6MCriC5aCCOVm2U1suufAwn80nOQL7nwKXevU6upk81hjclh4dvYCQf0L_Iv-iQeOM-dvWyABV3GGqU9jpC5Kb1YSx26f');"></div>
-<div>
-<h1 class="text-lg font-bold leading-tight text-primary dark:text-blue-400">Y N Hosakote</h1>
-<p class="text-xs font-medium text-slate-500 dark:text-slate-400">Community Feed</p>
+body{font-family:'Lexend',sans-serif;}
+</style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen pb-24">
+
+<!-- AUTH LOADER -->
+<div id="authLoader" class="fixed inset-0 bg-white flex items-center justify-center z-50">
+<div class="text-center">
+<div class="animate-spin rounded-full h-12 w-12 border-4 border-gray-300 border-t-gray-900 mx-auto"></div>
+<p class="mt-4 text-gray-600">Checking login...</p>
 </div>
 </div>
-<div class="flex items-center gap-2">
-<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors text-slate-600 dark:text-slate-300 relative">
-<span class="material-symbols-outlined !text-[28px]">notifications</span>
-<span class="absolute top-2 right-2 h-2.5 w-2.5 rounded-full bg-red-500 border-2 border-white dark:border-[#1a2332]"></span>
-</button>
-<button class="h-10 w-10 rounded-full bg-cover bg-center border border-slate-200 dark:border-slate-600" data-alt="User profile picture placeholder" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBv87AkQ-q9WGSKovCUoGH9QEBN6P8LR1Tl3bzmaJKIyL-0JgBLagI4S0NTry0xaR6XwkQ78ZORY6etT87NYAtZHTM7DUJhpjqvTMLAQcPrviACo6uhBn95oy5DiFwEAnlI6K0ASBzcedGpQbv2yeJXpA-mdNRj3PSfzqDmLGTUDiDxlPuh7vmDygLYdz3Frug7IYTntiV4VctSS87SPZ4NXqSIfBAhT1ugXJTGtobMg8xanWS1dLiQ3k2H7rnkrNLOkFce1nUmI1My');"></button>
-</div>
-</div>
+
+<!-- HEADER -->
+<header class="sticky top-0 z-40 bg-white shadow-sm border-b px-4 py-3 flex justify-between items-center">
+<h1 class="font-bold text-primary text-lg">Y N Hosakote Feed</h1>
+<button onclick="logout()" class="text-sm text-red-500 font-semibold">Logout</button>
 </header>
-<!-- Panchayat Announcement Banner -->
-<div class="bg-amber-100 dark:bg-amber-900/30 border-b border-amber-200 dark:border-amber-800/50 px-4 py-3 flex items-start gap-3">
-<div class="bg-amber-500/10 dark:bg-amber-500/20 p-2 rounded-full shrink-0 text-amber-700 dark:text-amber-400">
-<span class="material-symbols-outlined !text-[24px]">campaign</span>
-</div>
-<div class="flex-1">
-<h3 class="text-sm font-bold text-amber-900 dark:text-amber-200 mb-0.5">Panchayat Notice</h3>
-<p class="text-sm font-medium text-amber-800 dark:text-amber-300 leading-snug">
-                Water supply maintenance scheduled for tomorrow (Tuesday) from 10 AM to 2 PM. Please store water.
-            </p>
-</div>
-</div>
-<!-- Feed Content -->
-<main class="p-4 space-y-4">
-<!-- Post 1: Image Post -->
-<article class="bg-white dark:bg-[#1a2332] rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden">
-<!-- Header -->
-<div class="p-4 flex items-center justify-between">
-<div class="flex items-center gap-3">
-<div class="h-12 w-12 rounded-full bg-cover bg-center" data-alt="Portrait of Ramesh Gowda" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBCf1HlZxNiVYbJbcBg7Qsa10g7Ax0Bjb5Y54AGg3EsYTFDl3jb8BUyK6QlGC0B_osi9djM_vObiIZxkfqVXCJQoH055tSzw6dV5bnm2HrhwLUFbxBCP1r3hVb8tl2EdIN_qpF6IVW0FV5ZeT8WUnGVqoLCIM-PgcJzkPHohhw8-EjWNFdiQkd8NJ0RCZBzn6CN8aEG9c43DhMC7xzSLgL5Qhza7BQLAaDZVHkOteQdiku3JVHu7N6fHlH1lGmJSmbN_ijKPNeNTDFU');"></div>
-<div>
-<div class="flex items-center gap-1.5">
-<h3 class="font-bold text-base text-slate-900 dark:text-white">Ramesh Gowda</h3>
-<span class="material-symbols-outlined text-blue-500 !text-[16px]" title="Verified Member">verified</span>
-</div>
-<p class="text-xs text-slate-500 dark:text-slate-400 font-medium">2 hours ago</p>
-</div>
-</div>
-<button class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-<span class="material-symbols-outlined">more_horiz</span>
+
+<!-- FEED CONTAINER -->
+<main id="feed" class="p-4 space-y-4 max-w-2xl mx-auto"></main>
+
+<!-- FAB -->
+<button onclick="window.location='create-post.html'"
+class="fixed bottom-24 right-4 z-50 h-16 w-16 bg-secondary text-white rounded-full shadow-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">add</span>
 </button>
+
+<!-- FIREBASE -->
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import { 
+getAuth, 
+onAuthStateChanged, 
+signOut 
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+import {
+getFirestore,
+collection,
+query,
+orderBy,
+onSnapshot,
+doc,
+updateDoc,
+addDoc,
+serverTimestamp,
+where,
+getDocs,
+deleteDoc,
+getDoc
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+/* CONFIG */
+const firebaseConfig = {
+apiKey:"AIzaSyCpNAu49OymCjNuRl7aRBRYQm0P6M0db0s",
+authDomain:"ynhosakote-community.firebaseapp.com",
+projectId:"ynhosakote-community",
+storageBucket:"ynhosakote-community.firebasestorage.app",
+messagingSenderId:"1053474727552",
+appId:"1:1053474727552:web:9ed2d6523ef935fd666865"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+
+let currentUser;
+const feed=document.getElementById("feed");
+
+/* AUTH GUARD */
+onAuthStateChanged(auth, async(user)=>{
+
+if(!user){
+window.location="citizen_login.html";
+return;
+}
+
+currentUser=user;
+
+/* CHECK APPROVAL */
+const userDoc=await getDoc(doc(db,"users",user.uid));
+
+if(!userDoc.exists() || userDoc.data().approved!==true){
+await signOut(auth);
+alert("Account not approved");
+window.location="citizen_login.html";
+return;
+}
+
+document.getElementById("authLoader").style.display="none";
+loadPosts();
+
+});
+
+/* LOAD POSTS */
+function loadPosts(){
+
+const q=query(collection(db,"posts"),orderBy("createdAt","desc"));
+
+onSnapshot(q,(snapshot)=>{
+feed.innerHTML="";
+
+snapshot.forEach(docSnap=>{
+
+const p=docSnap.data();
+const id=docSnap.id;
+
+feed.innerHTML+=`
+
+<article class="bg-white rounded-2xl shadow border overflow-hidden">
+
+<div class="p-4">
+<h3 class="font-bold text-base">${p.authorName||"Member"}</h3>
+<p class="text-sm text-gray-500">${p.createdAt?.toDate().toLocaleString()||""}</p>
+<p class="mt-2 text-gray-800">${p.text||""}</p>
+${p.imageUrl?`<img src="${p.imageUrl}" class="mt-3 rounded-xl w-full">`:""}
 </div>
-<!-- Content -->
-<div class="px-4 pb-3">
-<p class="text-slate-800 dark:text-slate-200 text-lg leading-relaxed mb-3">
-                    The preparations for the annual Mariamma temple festival are starting this weekend. Everyone is invited to volunteer! 🙏🌸
-                </p>
-<div class="h-64 w-full rounded-xl bg-cover bg-center" data-alt="Colorful temple festival decorations with flowers" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDXRajwfJoxpqw0YG853eZymNOfuCqCGIuDOQqf0Hym19LtD8RBnHe8FN1EdUuIfEfnF7zQXK4ZQ-iCYUkiBXOGhyfmSO_R7TkQP8e_qozGVNtGmkvimvpRDe8YHIzUoIn3Ve7sPUbYutlg5wRMbNV-SFRZh67LYs7O6pnpynFO5JLoGdwd1YysjdeFt8zxHL2VHVAK7H5vWMrQIVURtUDlQk2u4TfdUYKiODUEBc3YuXiGZHD12UP2ZGmlKjYti1i-3gvpv5W-neSZ');"></div>
+
+<div class="px-4 py-2 border-t flex justify-between text-sm text-gray-500">
+<span>${p.likeCount||0} Likes</span>
 </div>
-<!-- Stats -->
-<div class="px-4 py-2 border-t border-slate-100 dark:border-slate-700/50 flex items-center justify-between text-sm text-slate-500 dark:text-slate-400 font-medium">
-<span>45 Likes</span>
-<div class="flex gap-3">
-<span>12 Comments</span>
-<span>5 Shares</span>
+
+<div class="flex border-t">
+<button onclick="likePost('${id}',${p.likeCount||0})" class="flex-1 py-3 font-semibold">👍 Like</button>
+<button onclick="commentPost('${id}')" class="flex-1 py-3 font-semibold">💬 Comment</button>
+<button onclick="reportPost('${id}')" class="flex-1 py-3 font-semibold text-red-500">🚩 Report</button>
 </div>
-</div>
-<!-- Actions -->
-<div class="flex items-center justify-between px-2 py-2 border-t border-slate-100 dark:border-slate-700">
-<button class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50 text-slate-600 dark:text-slate-300 transition-colors">
-<span class="material-symbols-outlined">thumb_up</span>
-<span class="font-bold">Like</span>
-</button>
-<button class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50 text-slate-600 dark:text-slate-300 transition-colors">
-<span class="material-symbols-outlined">chat_bubble</span>
-<span class="font-bold">Comment</span>
-</button>
-<button class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50 text-slate-600 dark:text-slate-300 transition-colors">
-<span class="material-symbols-outlined">share</span>
-<span class="font-bold">Share</span>
-</button>
-</div>
+
 </article>
-<!-- Post 2: Text Post -->
-<article class="bg-white dark:bg-[#1a2332] rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden">
-<div class="p-4 flex items-center justify-between">
-<div class="flex items-center gap-3">
-<div class="h-12 w-12 rounded-full bg-cover bg-center" data-alt="Portrait of Savitha Reddy" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDC4SSx0YJCW27gG1NxB0R0EB7wn2don7Gp1P-njdJCGDoWRBdoGsPE4Bk9dap2lqB4UU28n37AND_M2yRDQjkLFCzV3We1PI6Beq8YCOvOBymUvmU_4-v44DiR94BLu7qOHPqZlzYYiw5PNIZevbrQXpgWckwmY976GwublbQL81W-dgm92xArkLEazIBVbd8L9i-USZnZ_XFW1q3XLeJoLGWxGRPN283QTvqw_Inm3YulmznPm6m0mJQugnWvwjtKTvvNULQonVz-');"></div>
-<div>
-<div class="flex items-center gap-1.5">
-<h3 class="font-bold text-base text-slate-900 dark:text-white">Savitha Reddy</h3>
-<span class="material-symbols-outlined text-blue-500 !text-[16px]" title="Verified Member">verified</span>
-</div>
-<p class="text-xs text-slate-500 dark:text-slate-400 font-medium">5 hours ago</p>
-</div>
-</div>
-<button class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-<span class="material-symbols-outlined">more_horiz</span>
-</button>
-</div>
-<div class="px-4 pb-3">
-<p class="text-slate-800 dark:text-slate-200 text-lg leading-relaxed">
-                    Found a set of keys near the government school main gate this morning. It has a blue keychain. Please contact me if it's yours.
-                </p>
-</div>
-<!-- Stats -->
-<div class="px-4 py-2 border-t border-slate-100 dark:border-slate-700/50 flex items-center justify-between text-sm text-slate-500 dark:text-slate-400 font-medium">
-<span>18 Likes</span>
-<div class="flex gap-3">
-<span>4 Comments</span>
-<span>1 Share</span>
-</div>
-</div>
-<!-- Actions -->
-<div class="flex items-center justify-between px-2 py-2 border-t border-slate-100 dark:border-slate-700">
-<button class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50 text-slate-600 dark:text-slate-300 transition-colors">
-<span class="material-symbols-outlined">thumb_up</span>
-<span class="font-bold">Like</span>
-</button>
-<button class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50 text-slate-600 dark:text-slate-300 transition-colors">
-<span class="material-symbols-outlined">chat_bubble</span>
-<span class="font-bold">Comment</span>
-</button>
-<button class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50 text-slate-600 dark:text-slate-300 transition-colors">
-<span class="material-symbols-outlined">share</span>
-<span class="font-bold">Share</span>
-</button>
-</div>
-</article>
-<!-- Post 3: Image Gallery Post -->
-<article class="bg-white dark:bg-[#1a2332] rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden">
-<div class="p-4 flex items-center justify-between">
-<div class="flex items-center gap-3">
-<div class="h-12 w-12 rounded-full bg-cover bg-center" data-alt="Portrait of Gram Panchayat" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC28CdNIDrOkAYD4D4HKe0JD_Y0tZQhP2htK8wU7WKgRdb0MwGngBmCRXIkRLXw5873TU2qeBPaZMBFUQPc8p2niQTi7CjoXsA_m6kNeRwVlEHyBflQ7Z7g1ML9SbiB2W0WaxG2Cvus7JmeM9ZLRafs20gabjp8573lg8DqQWr0woS2SgZj_L5wnzxdP7eRjp2eZMZf-jC7BUR641WEONhzOkHlV72dTsimtwW4Sv_QUVb9RFMmiunCi5dfy2ZcKOP8tcfrFJ1eobmr');"></div>
-<div>
-<div class="flex items-center gap-1.5">
-<h3 class="font-bold text-base text-slate-900 dark:text-white">Gram Panchayat Office</h3>
-<span class="material-symbols-outlined text-blue-500 !text-[16px]" title="Official Account">verified</span>
-</div>
-<p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Yesterday</p>
-</div>
-</div>
-<button class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-<span class="material-symbols-outlined">more_horiz</span>
-</button>
-</div>
-<div class="px-4 pb-3">
-<p class="text-slate-800 dark:text-slate-200 text-lg leading-relaxed mb-3">
-                    New solar street lights have been installed in the 4th ward. This will improve safety at night. 💡
-                </p>
-<div class="grid grid-cols-2 gap-2">
-<div class="h-40 w-full rounded-lg bg-cover bg-center" data-alt="Workers installing solar street light pole" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBvMJJswsk_MisjziKxCxBWT1TW2U9RuGPbtPpSdQT9Exbc-qI7pcWSnV1szV7l1fAzsTmMNlLDCwRWFcDp7e7VNLo9DKFs9Ss1URjDJhUfxebXQ-f_ugoVPM_DjU_q-FcuMptIyLaqgerdaeptKc7TQ6_8aAPbIw9z9VLTqerw3E68FgQqLIA_9dn9w1Hpus_n7O09XkykYMGYqA6lY4FvWJkwBHNDPK_Wynv87gxcONIJfPFloiITVHV2P8Bx_VCc5awjquR1j-aZ');"></div>
-<div class="h-40 w-full rounded-lg bg-cover bg-center" data-alt="New solar street light illuminated at dusk" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBEBmgE5OZaCqEc2bmwTUGIUXpgPw7C-AfxjI1evW2AIbF-3LzMrTHXkxygZ7dxvCwdfv6pzbUesij728U5WyoM1BXFoM3PViKXVh5ftL01hiS-FTRDsVDJQaAEgKxta1-UhxfLtBAOYcT0yS2G8mH8V2d3MHVZ_PJzMPHxZfQuvKwQyPWNXcQ4buiTLTbz37g0nEugnUXyq3kHuRHCERMJSwYoE84clJp04KtnXSZvyqBE2qMN1GlWqBm5kGRWH1HypnhRdvZw1ZmE');"></div>
-</div>
-</div>
-<!-- Stats -->
-<div class="px-4 py-2 border-t border-slate-100 dark:border-slate-700/50 flex items-center justify-between text-sm text-slate-500 dark:text-slate-400 font-medium">
-<span>124 Likes</span>
-<div class="flex gap-3">
-<span>32 Comments</span>
-<span>18 Shares</span>
-</div>
-</div>
-<!-- Actions -->
-<div class="flex items-center justify-between px-2 py-2 border-t border-slate-100 dark:border-slate-700">
-<button class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50 text-slate-600 dark:text-slate-300 transition-colors">
-<span class="material-symbols-outlined">thumb_up</span>
-<span class="font-bold">Like</span>
-</button>
-<button class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50 text-slate-600 dark:text-slate-300 transition-colors">
-<span class="material-symbols-outlined">chat_bubble</span>
-<span class="font-bold">Comment</span>
-</button>
-<button class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50 text-slate-600 dark:text-slate-300 transition-colors">
-<span class="material-symbols-outlined">share</span>
-<span class="font-bold">Share</span>
-</button>
-</div>
-</article>
-</main>
-<!-- Floating Action Button -->
-<button class="fixed bottom-24 right-4 z-50 h-16 w-16 bg-secondary text-white rounded-full shadow-lg flex items-center justify-center hover:bg-green-700 hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-green-300">
-<span class="material-symbols-outlined !text-[36px]">add</span>
-</button>
-<!-- Bottom Navigation Bar -->
-<nav class="fixed bottom-0 left-0 w-full bg-white dark:bg-[#1a2332] border-t border-slate-200 dark:border-slate-700 pb-safe z-40">
-<div class="flex items-center justify-around px-2 py-3">
-<a class="flex flex-col items-center gap-1 w-16 text-primary" href="#">
-<span class="material-symbols-outlined !text-[28px] fill">home</span>
-<span class="text-xs font-bold">Feed</span>
-</a>
-<a class="flex flex-col items-center gap-1 w-16 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200" href="#">
-<span class="material-symbols-outlined !text-[28px]">event</span>
-<span class="text-xs font-medium">Events</span>
-</a>
-<a class="flex flex-col items-center gap-1 w-16 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200" href="#">
-<span class="material-symbols-outlined !text-[28px]">import_contacts</span>
-<span class="text-xs font-medium">Directory</span>
-</a>
-<a class="flex flex-col items-center gap-1 w-16 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200" href="#">
-<span class="material-symbols-outlined !text-[28px]">person</span>
-<span class="text-xs font-medium">Profile</span>
-</a>
-</div>
-<!-- iOS Home Indicator Spacing -->
-<div class="h-4 w-full bg-white dark:bg-[#1a2332]"></div>
-</nav>
-</body></html>
+`;
+
+});
+});
+}
+
+/* LIKE */
+window.likePost=async(postId,count)=>{
+
+const likeQuery=query(collection(db,"likes"),
+where("postId","==",postId),
+where("uid","==",currentUser.uid));
+
+const likeSnap=await getDocs(likeQuery);
+
+if(likeSnap.empty){
+
+await addDoc(collection(db,"likes"),{
+postId:postId,
+uid:currentUser.uid
+});
+
+await updateDoc(doc(db,"posts",postId),{
+likeCount:count+1
+});
+
+}else{
+
+likeSnap.forEach(async(d)=>{
+await deleteDoc(doc(db,"likes",d.id));
+});
+
+await updateDoc(doc(db,"posts",postId),{
+likeCount:count-1
+});
+}
+};
+
+/* COMMENT */
+window.commentPost=async(postId)=>{
+const text=prompt("Enter comment");
+if(!text) return;
+
+await addDoc(collection(db,"comments"),{
+postId:postId,
+uid:currentUser.uid,
+authorName:currentUser.email,
+text:text,
+createdAt:serverTimestamp()
+});
+};
+
+/* REPORT */
+window.reportPost=async(postId)=>{
+const reason=prompt("Report reason?");
+if(!reason) return;
+
+await addDoc(collection(db,"reports"),{
+postId:postId,
+reporterUid:currentUser.uid,
+reason:reason,
+createdAt:serverTimestamp()
+});
+
+alert("Reported to admin");
+};
+
+/* LOGOUT */
+window.logout=async()=>{
+await signOut(auth);
+window.location="citizen_login.html";
+};
+
+</script>
+</body>
+</html>
