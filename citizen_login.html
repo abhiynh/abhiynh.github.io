@@ -21,16 +21,13 @@ body{
 
 <div class="w-full max-w-6xl mx-auto">
 
-<!-- TITLE -->
 <div class="text-center mb-8">
   <h1 class="text-3xl font-bold text-gray-800">Y N Hosakote Community Portal</h1>
   <p class="text-gray-600 text-sm mt-1">Village Information & Social Connect Platform</p>
 </div>
 
-<!-- RESPONSIVE GRID -->
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
 
-<!-- GUIDELINES CARD -->
 <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">
 
 <h2 class="text-xl font-bold mb-5 flex items-center gap-2">
@@ -39,37 +36,30 @@ Community Guidelines
 </h2>
 
 <ul class="space-y-4 text-gray-700 text-sm">
-
 <li class="flex gap-3">
 <span class="material-symbols-outlined text-green-600">verified</span>
 <span>Only registered village members may create posts.</span>
 </li>
-
 <li class="flex gap-3">
 <span class="material-symbols-outlined text-red-500">block</span>
 <span>Abusive language, fake news and political arguments are strictly prohibited.</span>
 </li>
-
 <li class="flex gap-3">
 <span class="material-symbols-outlined text-yellow-500">report</span>
 <span>Citizens should report inappropriate posts immediately.</span>
 </li>
-
 <li class="flex gap-3">
 <span class="material-symbols-outlined text-purple-600">photo_camera</span>
 <span>Upload only real photos/videos related to Y N Hosakote.</span>
 </li>
-
 <li class="flex gap-3">
 <span class="material-symbols-outlined text-blue-600">gavel</span>
 <span>Admin may remove posts or block users without notice.</span>
 </li>
-
 <li class="flex gap-3">
 <span class="material-symbols-outlined text-orange-600">groups</span>
 <span>This portal is for announcements, help, lost & found, events and village updates.</span>
 </li>
-
 </ul>
 
 <p class="text-xs text-gray-500 mt-6">
@@ -78,7 +68,6 @@ By logging in you agree to community rules and moderation policy.
 
 </div>
 
-<!-- LOGIN CARD -->
 <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8">
 
 <h2 class="text-2xl font-bold text-center mb-6">
@@ -104,6 +93,11 @@ class="w-full py-3 rounded-lg text-white font-semibold bg-blue-600 hover:bg-blue
 Sign In
 </button>
 
+<button id="resendBtn"
+class="w-full py-2 rounded-lg text-white font-semibold bg-yellow-500 hover:bg-yellow-600 transition hidden">
+Resend Verification Email
+</button>
+
 <p id="loginError" class="text-red-500 text-sm text-center hidden"></p>
 
 </div>
@@ -117,11 +111,16 @@ Contact village admin if you don’t have an account.
 </div>
 </div>
 
-<!-- FIREBASE -->
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+import { 
+  getAuth, 
+  signInWithEmailAndPassword, 
+  onAuthStateChanged,
+  sendEmailVerification,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -138,31 +137,52 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 const errorBox=document.getElementById("loginError");
+const resendBtn=document.getElementById("resendBtn");
 
-/* LOGIN */
 document.getElementById("loginBtn").onclick=async()=>{
 
-const email=document.getElementById("email").value;
-const password=document.getElementById("password").value;
+const email=document.getElementById("email").value.trim();
+const password=document.getElementById("password").value.trim();
+
+errorBox.classList.add("hidden");
+resendBtn.classList.add("hidden");
+
+if(!email || !password){
+errorBox.innerText="Please enter email and password";
+errorBox.classList.remove("hidden");
+return;
+}
 
 try{
 
 const cred=await signInWithEmailAndPassword(auth,email,password);
 const user=cred.user;
 
+await user.reload();
+
+if(!user.emailVerified){
+errorBox.innerText="Email not verified. Please verify first.";
+errorBox.classList.remove("hidden");
+resendBtn.classList.remove("hidden");
+await signOut(auth);
+return;
+}
+
 const userDoc=await getDoc(doc(db,"users",user.uid));
 
 if(!userDoc.exists()){
-errorBox.innerText="Account not approved by admin";
+errorBox.innerText="User record not found.";
 errorBox.classList.remove("hidden");
+await signOut(auth);
 return;
 }
 
 const data=userDoc.data();
 
 if(data.approved!==true){
-errorBox.innerText="Your account is blocked";
+errorBox.innerText="Your account is pending admin approval.";
 errorBox.classList.remove("hidden");
+await signOut(auth);
 return;
 }
 
@@ -180,9 +200,65 @@ errorBox.classList.remove("hidden");
 
 };
 
-/* ALREADY LOGGED IN */
-onAuthStateChanged(auth,(user)=>{
-if(user) window.location="feed.html";
+resendBtn.onclick=async()=>{
+
+const email=document.getElementById("email").value.trim();
+const password=document.getElementById("password").value.trim();
+
+if(!email || !password){
+errorBox.innerText="Enter email and password first.";
+errorBox.classList.remove("hidden");
+return;
+}
+
+try{
+const cred=await signInWithEmailAndPassword(auth,email,password);
+const user=cred.user;
+
+if(!user.emailVerified){
+await sendEmailVerification(user);
+errorBox.innerText="Verification email sent. Check spam folder.";
+errorBox.classList.remove("hidden");
+}
+
+await signOut(auth);
+
+}catch(e){
+errorBox.innerText="Unable to resend email.";
+errorBox.classList.remove("hidden");
+}
+
+};
+
+onAuthStateChanged(auth, async (user)=>{
+
+if(user){
+
+await user.reload();
+
+if(user.emailVerified){
+
+const userDoc=await getDoc(doc(db,"users",user.uid));
+
+if(userDoc.exists() && userDoc.data().approved===true){
+
+if(userDoc.data().role==="admin")
+window.location="admin.html";
+else if(userDoc.data().role==="member")
+window.location="create-post.html";
+else
+window.location="feed.html";
+
+}else{
+await signOut(auth);
+}
+
+}else{
+await signOut(auth);
+}
+
+}
+
 });
 
 </script>
