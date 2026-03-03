@@ -27,72 +27,150 @@ body{
 </style>
 </head>
 
-<body class="min-h-screen flex items-center justify-center p-4">
+<body class="min-h-screen flex flex-col items-center justify-start py-6 px-4">
 
-<div class="bg-white w-full max-w-md rounded-3xl shadow-2xl p-8 space-y-5">
+<div class="w-full max-w-6xl grid lg:grid-cols-2 gap-6 md:gap-8 items-stretch">
 
-<h2 class="text-2xl font-bold text-center">Membership Request</h2>
+<!-- LEFT PANEL -->
+<div class="bg-white rounded-3xl shadow-2xl p-5 sm:p-8">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-blue-700 text-3xl sm:text-4xl">location_city</span>
+</div>
+<div>
+<h1 class="text-lg sm:text-2xl font-bold text-gray-800">Y N Hosakote Community</h1>
+<p class="text-gray-500 text-xs sm:text-sm">Official Village Digital Portal</p>
+</div>
+</div>
 
-<input id="name" placeholder="Full Name"
-class="w-full border px-4 py-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+<h2 class="text-lg sm:text-xl font-bold mb-6 flex items-center gap-3">
+<span class="material-symbols-outlined text-green-600 text-2xl sm:text-3xl">menu_book</span>
+Community Guidelines
+</h2>
 
-<input id="email" type="email" placeholder="Email Address"
-class="w-full border px-4 py-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+<ul class="space-y-4 sm:space-y-5 text-gray-700 text-sm sm:text-base">
+<li class="flex gap-3 sm:gap-4 items-start">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-100 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-green-600 text-xl sm:text-2xl">verified</span>
+</div>
+<span>Only genuine residents of Y N Hosakote should apply for membership.</span>
+</li>
+<li class="flex gap-3 sm:gap-4 items-start">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-red-100 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-red-600 text-xl sm:text-2xl">block</span>
+</div>
+<span>Fake details, abusive language and rumors are strictly prohibited.</span>
+</li>
+<li class="flex gap-3 sm:gap-4 items-start">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-yellow-100 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-yellow-600 text-xl sm:text-2xl">report</span>
+</div>
+<span>Citizens can report misleading posts to admin.</span>
+</li>
+<li class="flex gap-3 sm:gap-4 items-start">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-purple-100 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-purple-600 text-xl sm:text-2xl">photo_camera</span>
+</div>
+<span>Upload only real photos/videos related to village.</span>
+</li>
+<li class="flex gap-3 sm:gap-4 items-start">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-orange-100 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-orange-600 text-xl sm:text-2xl">gavel</span>
+</div>
+<span>Admin can remove posts and block users if rules are violated.</span>
+</li>
+</ul>
 
-<input id="password" type="password" placeholder="Password"
-class="w-full border px-4 py-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+<div class="mt-8 p-4 rounded-xl bg-blue-50 border border-blue-100 text-xs sm:text-sm text-gray-600">
+<span class="font-semibold text-blue-700">Note:</span>
+Approval usually happens within 24 hours after verification.
+</div>
+</div>
+
+<!-- RIGHT PANEL -->
+<div class="relative">
+<div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-500 to-indigo-600 blur-2xl opacity-20"></div>
+
+<div class="relative bg-white rounded-3xl shadow-2xl p-5 sm:p-8 border border-blue-100">
+
+<div class="flex items-center gap-4 mb-6">
+<div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shrink-0">
+<span class="material-symbols-outlined text-white text-3xl sm:text-4xl">person_add</span>
+</div>
+<div>
+<h2 class="text-lg sm:text-2xl font-bold text-gray-800">Membership Request</h2>
+<p class="text-xs sm:text-sm text-gray-500">Create your verified village account</p>
+</div>
+</div>
+
+<div class="space-y-5">
+<div>
+<label class="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-1">
+<span class="material-symbols-outlined text-blue-600 text-xl">badge</span>
+Full Name
+</label>
+<input id="name" placeholder="Enter your full legal name"
+class="w-full border border-gray-300 px-4 py-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+</div>
+
+<div>
+<label class="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-1">
+<span class="material-symbols-outlined text-green-600 text-xl">alternate_email</span>
+Email Address
+</label>
+<input id="email" type="email" placeholder="Enter your active email address"
+class="w-full border border-gray-300 px-4 py-3 rounded-xl focus:ring-2 focus:ring-green-500 outline-none">
+</div>
+
+<div>
+<label class="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-1">
+<span class="material-symbols-outlined text-purple-600 text-xl">lock</span>
+Create Password
+</label>
+<input id="password" type="password" placeholder="Minimum 6 characters"
+class="w-full border border-gray-300 px-4 py-3 rounded-xl focus:ring-2 focus:ring-purple-500 outline-none">
+</div>
 
 <button id="registerBtn"
-class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold">
-Submit Request
+class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3 rounded-xl font-semibold transition shadow-lg text-base sm:text-lg">
+Submit Membership Request
 </button>
 
+<a href="citizen_login.html"
+class="block text-center text-blue-600 text-sm mt-4 font-semibold">
+Already registered? Login here
+</a>
+
+</div>
+</div>
+</div>
 </div>
 
-<!-- DIALOG BOX -->
+<!-- DIALOG -->
 <div id="dialogBox" class="fixed inset-0 hidden items-center justify-center bg-black/40 z-50 px-4">
-  <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl p-6 text-center fade-in">
-
-    <div id="dialogIcon"
-    class="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4">
-      <span id="dialogIconSymbol"
-      class="material-symbols-outlined text-4xl"></span>
-    </div>
-
-    <h3 id="dialogTitle" class="text-xl font-bold mb-2"></h3>
-    <p id="dialogMessage" class="text-gray-600 text-sm mb-6"></p>
-
-    <button onclick="closeDialog()"
-    class="bg-blue-600 text-white px-6 py-2 rounded-lg">
-      OK
-    </button>
-
-  </div>
+<div class="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-sm text-center fade-in">
+<div id="dialogIcon" class="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4">
+<span id="dialogIconSymbol" class="material-symbols-outlined text-4xl"></span>
+</div>
+<h3 id="dialogTitle" class="text-xl font-bold mb-2"></h3>
+<p id="dialogMessage" class="text-gray-600 text-sm mb-6"></p>
+<button onclick="closeDialog()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">OK</button>
+</div>
 </div>
 
-<!-- PROGRESS BOX -->
-<div id="progressBox"
-class="fixed inset-0 hidden items-center justify-center bg-black/40 backdrop-blur-sm z-50">
-
-  <div class="bg-white rounded-2xl shadow-2xl p-8 text-center w-[90%] max-w-sm fade-in">
-
-    <div class="relative mx-auto w-20 h-20 mb-5">
-      <div class="absolute inset-0 rounded-full border-4 border-blue-200"></div>
-      <div class="absolute inset-0 rounded-full border-4 border-blue-600 border-t-transparent animate-spin"></div>
-      <span class="material-symbols-outlined absolute inset-0 flex items-center justify-center text-blue-600 text-3xl">
-        cloud_upload
-      </span>
-    </div>
-
-    <h3 id="progressTitle" class="text-lg font-bold mb-2">
-      Processing
-    </h3>
-
-    <p id="progressText" class="text-gray-600 text-sm">
-      Please wait...
-    </p>
-
-  </div>
+<!-- PROGRESS -->
+<div id="progressBox" class="fixed inset-0 hidden items-center justify-center bg-black/40 backdrop-blur-sm z-50">
+<div class="bg-white rounded-2xl shadow-2xl p-8 text-center w-[90%] max-w-sm fade-in">
+<div class="relative mx-auto w-20 h-20 mb-5">
+<div class="absolute inset-0 rounded-full border-4 border-blue-200"></div>
+<div class="absolute inset-0 rounded-full border-4 border-blue-600 border-t-transparent animate-spin"></div>
+<span class="material-symbols-outlined absolute inset-0 flex items-center justify-center text-blue-600 text-3xl">
+cloud_upload
+</span>
+</div>
+<h3 id="progressTitle" class="text-lg font-bold mb-2">Processing</h3>
+<p id="progressText" class="text-gray-600 text-sm">Please wait...</p>
+</div>
 </div>
 
 <script type="module">
@@ -114,13 +192,11 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-/* Dialog Controls */
-window.closeDialog = ()=>{
+window.closeDialog = () => {
 document.getElementById("dialogBox").classList.add("hidden");
 };
 
 function showDialog(type,title,message){
-
 const box=document.getElementById("dialogBox");
 const icon=document.getElementById("dialogIcon");
 const symbol=document.getElementById("dialogIconSymbol");
@@ -133,7 +209,6 @@ icon.className="mx-auto w-16 h-16 rounded-full flex items-center justify-center 
 symbol.innerText="check_circle";
 symbol.className="material-symbols-outlined text-4xl text-green-600";
 }
-
 if(type==="error"){
 icon.className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-red-100";
 symbol.innerText="error";
@@ -144,7 +219,6 @@ box.classList.remove("hidden");
 box.classList.add("flex");
 }
 
-/* Progress Controls */
 function showProgress(title,text){
 document.getElementById("progressTitle").innerText=title;
 document.getElementById("progressText").innerText=text;
@@ -156,15 +230,14 @@ function hideProgress(){
 document.getElementById("progressBox").classList.add("hidden");
 }
 
-/* Register */
-document.getElementById("registerBtn").onclick=async()=>{
+document.getElementById("registerBtn").onclick = async () => {
 
-const name=document.getElementById("name").value.trim();
-const email=document.getElementById("email").value.trim();
-const password=document.getElementById("password").value.trim();
+const name = document.getElementById("name").value.trim();
+const email = document.getElementById("email").value.trim();
+const password = document.getElementById("password").value.trim();
 
-if(!name||!email||!password){
-showDialog("error","Form Error","Please fill all required fields.");
+if(!name || !email || !password){
+showDialog("error","Form Error","Please fill all required fields before submitting.");
 return;
 }
 
@@ -172,10 +245,10 @@ try{
 
 showProgress("Connecting to Firebase","Creating authentication record...");
 
-const userCred=await createUserWithEmailAndPassword(auth,email,password);
-const user=userCred.user;
+const userCred = await createUserWithEmailAndPassword(auth,email,password);
+const user = userCred.user;
 
-showProgress("Saving to Firebase","Writing user profile to Firestore...");
+showProgress("Saving to Firebase","Storing member profile in Firestore...");
 
 await setDoc(doc(db,"users",user.uid),{
 name:name,
@@ -186,37 +259,34 @@ createdAt:serverTimestamp()
 });
 
 await signOut(auth);
-
 hideProgress();
 
-showDialog("success","Firebase Success",
-"Account successfully created and stored in Firebase database.");
+showDialog("success","Firebase Registration Successful",
+"Your membership request has been securely stored in Firebase and sent for admin approval.");
+
+document.getElementById("name").value="";
+document.getElementById("email").value="";
+document.getElementById("password").value="";
 
 }catch(e){
 
 hideProgress();
 
-/* Custom Firebase Error Handling */
 let customMessage="Firebase Error: ";
 
 switch(e.code){
-
 case "auth/email-already-in-use":
 customMessage+="This email is already registered in Firebase.";
 break;
-
 case "auth/invalid-email":
 customMessage+="Invalid email format detected by Firebase.";
 break;
-
 case "auth/weak-password":
-customMessage+="Password is too weak according to Firebase security rules.";
+customMessage+="Password is too weak according to Firebase security policy.";
 break;
-
 case "auth/network-request-failed":
-customMessage+="Network issue while connecting to Firebase servers.";
+customMessage+="Network connection failed while contacting Firebase servers.";
 break;
-
 default:
 customMessage+=e.message;
 }
