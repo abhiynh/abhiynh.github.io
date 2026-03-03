@@ -104,42 +104,19 @@ Approval usually happens within 24 hours after verification.
 </div>
 
 <div class="space-y-5">
-<div>
-<label class="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-1">
-<span class="material-symbols-outlined text-blue-600 text-xl">badge</span>
-Full Name
-</label>
 <input id="name" placeholder="Enter your full legal name"
 class="w-full border border-gray-300 px-4 py-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
-</div>
 
-<div>
-<label class="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-1">
-<span class="material-symbols-outlined text-green-600 text-xl">alternate_email</span>
-Email Address
-</label>
 <input id="email" type="email" placeholder="Enter your active email address"
 class="w-full border border-gray-300 px-4 py-3 rounded-xl focus:ring-2 focus:ring-green-500 outline-none">
-</div>
 
-<div>
-<label class="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-1">
-<span class="material-symbols-outlined text-purple-600 text-xl">lock</span>
-Create Password
-</label>
 <input id="password" type="password" placeholder="Minimum 6 characters"
 class="w-full border border-gray-300 px-4 py-3 rounded-xl focus:ring-2 focus:ring-purple-500 outline-none">
-</div>
 
 <button id="registerBtn"
 class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3 rounded-xl font-semibold transition shadow-lg text-base sm:text-lg">
 Submit Membership Request
 </button>
-
-<a href="citizen_login.html"
-class="block text-center text-blue-600 text-sm mt-4 font-semibold">
-Already registered? Login here
-</a>
 
 </div>
 </div>
@@ -243,12 +220,12 @@ return;
 
 try{
 
-showProgress("Connecting to Firebase","Creating authentication record...");
+showProgress("Creating Account","Setting up your profile securely...");
 
 const userCred = await createUserWithEmailAndPassword(auth,email,password);
 const user = userCred.user;
 
-showProgress("Saving to Firebase","Storing member profile in Firestore...");
+showProgress("Submitting Request","Saving your membership details...");
 
 await setDoc(doc(db,"users",user.uid),{
 name:name,
@@ -261,8 +238,8 @@ createdAt:serverTimestamp()
 await signOut(auth);
 hideProgress();
 
-showDialog("success","Firebase Registration Successful",
-"Your membership request has been securely stored in Firebase and sent for admin approval.");
+showDialog("success","Request Submitted",
+"Your membership request has been successfully sent for approval.");
 
 document.getElementById("name").value="";
 document.getElementById("email").value="";
@@ -272,26 +249,26 @@ document.getElementById("password").value="";
 
 hideProgress();
 
-let customMessage="Firebase Error: ";
+let message;
 
 switch(e.code){
 case "auth/email-already-in-use":
-customMessage+="This email is already registered in Firebase.";
+message="This email address is already registered. Please login instead.";
 break;
 case "auth/invalid-email":
-customMessage+="Invalid email format detected by Firebase.";
+message="The email address format is invalid. Please check and try again.";
 break;
 case "auth/weak-password":
-customMessage+="Password is too weak according to Firebase security policy.";
+message="Password is too weak. Please use at least 6 characters.";
 break;
 case "auth/network-request-failed":
-customMessage+="Network connection failed while contacting Firebase servers.";
+message="Network error occurred. Please check your internet connection.";
 break;
 default:
-customMessage+=e.message;
+message="Registration failed. Please try again later.";
 }
 
-showDialog("error","Firebase Registration Failed",customMessage);
+showDialog("error","Registration Failed",message);
 
 }
 
