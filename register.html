@@ -24,6 +24,99 @@ body{
   from{opacity:0; transform:scale(.95)}
   to{opacity:1; transform:scale(1)}
 }
+.input-focus{
+  transition:all .25s ease;
+}
+.input-focus:focus{
+  transform:scale(1.02);
+}
+</style>
+</head>
+
+<body class="min-h-screen flex flex-col items-center justify-start py-6 px-4">
+
+<div class="w-full max-w-6xl grid lg:grid-cols-2 gap-6 md:gap-8 items-stretch">
+
+<!-- LEFT PANEL (UNCHANGED) -->
+<div class="bg-white rounded-3xl shadow-2xl p-5 sm:p-8">
+<!-- Your left panel remains exactly same -->
+<div class="flex items-center gap-4 mb-6">
+<div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-blue-700 text-3xl sm:text-4xl">location_city</span>
+</div>
+<div>
+<h1 class="text-lg sm:text-2xl font-bold text-gray-800">Y N Hosakote Community</h1>
+<p class="text-gray-500 text-xs sm:text-sm">Official Village Digital Portal</p>
+</div>
+</div>
+
+<h2 class="text-lg sm:text-xl font-bold mb-6 flex items-center gap-3">
+<span class="material-symbols-outlined text-green-600 text-2xl sm:text-3xl">menu_book</span>
+Community Guidelines
+</h2>
+
+<ul class="space-y-4 sm:space-y-5 text-gray-700 text-sm sm:text-base">
+<li class="flex gap-3 sm:gap-4 items-start">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-100 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-green-600 text-xl sm:text-2xl">verified</span>
+</div>
+<span>Only genuine residents of Y N Hosakote should apply for membership.</span>
+</li>
+<li class="flex gap-3 sm:gap-4 items-start">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-red-100 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-red-600 text-xl sm:text-2xl">block</span>
+</div>
+<span>Fake details, abusive language and rumors are strictly prohibited.</span>
+</li>
+<li class="flex gap-3 sm:gap-4 items-start">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-yellow-100 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-yellow-600 text-xl sm:text-2xl">report</span>
+</div>
+<span>Citizens can report misleading posts to admin.</span>
+</li>
+<li class="flex gap-3 sm:gap-4 items-start">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-purple-100 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-purple-600 text-xl sm:text-2xl">photo_camera</span>
+</div>
+<span>Upload only real photos/videos related to village.</span>
+</li>
+<li class="flex gap-3 sm:gap-4 items-start">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-orange-100 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-orange-600 text-xl sm:text-2xl">gavel</span>
+</div>
+<span>Admin can remove posts and block users if rules are violated.</span>
+</li>
+</ul>
+
+<div class="mt-8 p-4 rounded-xl bg-blue-50 border border-blue-100 text-xs sm:text-sm text-gray-600">
+<span class="font-semibold text-blue-700">Note:</span>
+Approval usually happens within 24 hours after verification.
+</div>
+</div>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Y N Hosakote – Membership Registration</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<style>
+body{
+  font-family:'Lexend',sans-serif;
+  background:linear-gradient(135deg,#e7eef9,#dbe6f7);
+}
+.material-symbols-outlined{
+  font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 48;
+}
+.fade-in{
+  animation:fadeIn .25s ease forwards;
+}
+@keyframes fadeIn{
+  from{opacity:0; transform:scale(.95)}
+  to{opacity:1; transform:scale(1)}
+}
 .input-focus{ transition:all .25s ease; }
 .input-focus:focus{ transform:scale(1.02); }
 </style>
