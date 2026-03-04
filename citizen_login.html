@@ -29,9 +29,9 @@ to{opacity:1;transform:scale(1)}
 
 <body class="min-h-screen flex items-center justify-center p-4">
 
-<!-- TOP HEADER SECTION -->
+<div class="w-full max-w-xl mx-auto space-y-6">
 
-<div class="w-full max-w-xl mx-auto mb-8">
+<!-- TOP HEADER SECTION -->
 
 <div class="bg-white rounded-3xl shadow-xl p-6 flex items-center gap-4">
 
@@ -57,17 +57,15 @@ Online
 
 </div>
 
-<div class="mt-4 text-center text-gray-600 text-sm px-2">
+<div class="text-center text-gray-600 text-sm px-2">
 Connect with residents, share village updates, report issues, and stay informed about events in
 <span class="font-semibold text-gray-800">Y N Hosakote</span>.
-</div>
-
 </div>
 
 
 <!-- LOGIN -->
 
-<div class="bg-white rounded-2xl shadow-2xl p-6 mb-6">
+<div class="bg-white rounded-2xl shadow-2xl p-6">
 
 <h2 class="text-2xl font-bold text-center mb-6">
 Member Login
@@ -240,25 +238,18 @@ const db=getFirestore(app);
 
 let tempUser=null;
 
-
-
 function showProgress(title,text){
-
 document.getElementById("progressTitle").innerText=title;
 document.getElementById("progressText").innerText=text;
 
 const box=document.getElementById("progressBox");
-
 box.classList.remove("hidden");
 box.classList.add("flex");
-
 }
 
 function hideProgress(){
 document.getElementById("progressBox").classList.add("hidden");
 }
-
-
 
 function showDialog(type,title,message,resend=false){
 
@@ -271,7 +262,6 @@ document.getElementById("dialogTitle").innerText=title;
 document.getElementById("dialogMessage").innerText=message;
 
 resendBtn.classList.add("hidden");
-
 if(resend) resendBtn.classList.remove("hidden");
 
 if(type==="success"){
@@ -288,14 +278,11 @@ symbol.className="material-symbols-outlined text-4xl text-red-600";
 
 box.classList.remove("hidden");
 box.classList.add("flex");
-
 }
 
 window.closeDialog=()=>{
 document.getElementById("dialogBox").classList.add("hidden");
 };
-
-
 
 document.getElementById("loginBtn").onclick=async()=>{
 
@@ -312,7 +299,6 @@ try{
 showProgress("Connecting","Contacting secure login server...");
 
 const cred=await signInWithEmailAndPassword(auth,email,password);
-
 const user=cred.user;
 tempUser=user;
 
@@ -333,7 +319,6 @@ true
 
 await signOut(auth);
 return;
-
 }
 
 showProgress("Checking Approval","Verifying membership approval...");
@@ -341,27 +326,19 @@ showProgress("Checking Approval","Verifying membership approval...");
 const userDoc=await getDoc(doc(db,"users",user.uid));
 
 if(!userDoc.exists()){
-
 hideProgress();
-
 showDialog("error","User Not Found","No membership record found.");
-
 await signOut(auth);
 return;
-
 }
 
 const data=userDoc.data();
 
 if(data.approved!==true){
-
 hideProgress();
-
 showDialog("error","Pending Approval","Your account is awaiting admin approval.");
-
 await signOut(auth);
 return;
-
 }
 
 showProgress("Login Successful","Redirecting...");
@@ -415,8 +392,6 @@ showDialog("error","Login Failed",message);
 }
 
 };
-
-
 
 document.getElementById("resendVerifyBtn").onclick=async()=>{
 
