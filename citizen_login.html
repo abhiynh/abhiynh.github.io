@@ -37,7 +37,7 @@ to{opacity:1;transform:scale(1)}
 </div>
 
 
-<!-- LOGIN CARD -->
+<!-- LOGIN -->
 
 <div class="bg-white rounded-2xl shadow-2xl p-6 mb-6">
 
@@ -64,13 +64,6 @@ class="w-full py-3 rounded-lg text-white font-semibold bg-blue-600 hover:bg-blue
 Sign In
 </button>
 
-<button id="resendBtn"
-class="w-full py-2 rounded-lg text-white font-semibold bg-yellow-500 hover:bg-yellow-600 transition hidden">
-Resend Verification Email
-</button>
-
-<p id="loginError" class="text-red-500 text-sm text-center hidden"></p>
-
 </div>
 
 <div class="text-center mt-6 text-sm text-gray-500">
@@ -80,7 +73,7 @@ Contact village admin if you don’t have an account.
 </div>
 
 
-<!-- COMMUNITY GUIDELINES BELOW LOGIN -->
+<!-- COMMUNITY GUIDELINES -->
 
 <div class="bg-white rounded-2xl shadow-xl p-6">
 
@@ -123,17 +116,13 @@ Community Guidelines
 
 </ul>
 
-<p class="text-xs text-gray-500 mt-6">
-By logging in you agree to community rules and moderation policy.
-</p>
-
 </div>
 
 </div>
 
 
 
-<!-- PROGRESS DIALOG -->
+<!-- PROGRESS -->
 
 <div id="progressBox" class="fixed inset-0 hidden items-center justify-center bg-black/40 backdrop-blur-sm z-50">
 
@@ -163,7 +152,7 @@ Connecting to server...
 
 
 
-<!-- RESULT DIALOG -->
+<!-- DIALOG -->
 
 <div id="dialogBox" class="fixed inset-0 hidden items-center justify-center bg-black/40 z-50">
 
@@ -177,9 +166,18 @@ Connecting to server...
 
 <p id="dialogMessage" class="text-gray-600 text-sm mb-6"></p>
 
+<div id="dialogActions" class="flex flex-col gap-2">
+
 <button onclick="closeDialog()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">
 OK
 </button>
+
+<button id="resendVerifyBtn"
+class="hidden bg-yellow-500 text-white px-6 py-2 rounded-lg">
+Resend Verification Email
+</button>
+
+</div>
 
 </div>
 
@@ -190,16 +188,14 @@ OK
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { 
+import {
 getAuth,
 signInWithEmailAndPassword,
-onAuthStateChanged,
 sendEmailVerification,
 signOut
 } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
 
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
-
 
 const firebaseConfig = {
 apiKey:"AIzaSyCpNAu49OymCjNuRl7aRBRYQm0P6M0db0s",
@@ -210,12 +206,12 @@ messagingSenderId:"1053474727552",
 appId:"1:1053474727552:web:9ed2d6523ef935fd666865"
 };
 
-
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const db=getFirestore(app);
 
-const resendBtn=document.getElementById("resendBtn");
+let tempUser=null;
+
 
 
 function showProgress(title,text){
@@ -235,14 +231,20 @@ document.getElementById("progressBox").classList.add("hidden");
 }
 
 
-function showDialog(type,title,message){
+
+function showDialog(type,title,message,resend=false){
 
 const box=document.getElementById("dialogBox");
 const icon=document.getElementById("dialogIcon");
 const symbol=document.getElementById("dialogIconSymbol");
+const resendBtn=document.getElementById("resendVerifyBtn");
 
 document.getElementById("dialogTitle").innerText=title;
 document.getElementById("dialogMessage").innerText=message;
+
+resendBtn.classList.add("hidden");
+
+if(resend) resendBtn.classList.remove("hidden");
 
 if(type==="success"){
 icon.className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-green-100";
@@ -280,25 +282,30 @@ return;
 try{
 
 showProgress("Connecting","Contacting secure login server...");
-await new Promise(r=>setTimeout(r,700));
 
 const cred=await signInWithEmailAndPassword(auth,email,password);
-const user=cred.user;
 
-showProgress("Verifying Email","Checking email verification...");
+const user=cred.user;
+tempUser=user;
+
+showProgress("Checking Email","Verifying email status...");
+
 await user.reload();
 
 if(!user.emailVerified){
 
 hideProgress();
 
-showDialog("error","Email Not Verified","Please verify your email before login.");
-
-resendBtn.classList.remove("hidden");
+showDialog(
+"error",
+"Email Not Verified",
+"Please verify your email before login.",
+true
+);
 
 await signOut(auth);
-
 return;
+
 }
 
 showProgress("Checking Approval","Verifying membership approval...");
@@ -312,8 +319,8 @@ hideProgress();
 showDialog("error","User Not Found","No membership record found.");
 
 await signOut(auth);
-
 return;
+
 }
 
 const data=userDoc.data();
@@ -325,11 +332,11 @@ hideProgress();
 showDialog("error","Pending Approval","Your account is awaiting admin approval.");
 
 await signOut(auth);
-
 return;
+
 }
 
-showProgress("Login Successful","Redirecting to community portal...");
+showProgress("Login Successful","Redirecting...");
 
 setTimeout(()=>{
 
@@ -346,7 +353,36 @@ window.location="feed.html";
 
 hideProgress();
 
-showDialog("error","Login Failed","Invalid email or password.");
+let message;
+
+switch(e.code){
+
+case "auth/invalid-email":
+message="Invalid email address format.";
+break;
+
+case "auth/user-not-found":
+message="No account found with this email.";
+break;
+
+case "auth/wrong-password":
+message="Incorrect password.";
+break;
+
+case "auth/too-many-requests":
+message="Too many attempts. Try again later.";
+break;
+
+case "auth/network-request-failed":
+message="Network error. Check internet connection.";
+break;
+
+default:
+message="Login failed. Please try again.";
+
+}
+
+showDialog("error","Login Failed",message);
 
 }
 
@@ -354,67 +390,31 @@ showDialog("error","Login Failed","Invalid email or password.");
 
 
 
-resendBtn.onclick=async()=>{
+document.getElementById("resendVerifyBtn").onclick=async()=>{
 
-const email=document.getElementById("email").value.trim();
-const password=document.getElementById("password").value.trim();
-
-if(!email||!password){
-showDialog("error","Missing Fields","Enter email and password first.");
-return;
-}
+if(!tempUser) return;
 
 try{
 
-const cred=await signInWithEmailAndPassword(auth,email,password);
+await sendEmailVerification(tempUser);
 
-const user=cred.user;
-
-if(!user.emailVerified){
-await sendEmailVerification(user);
-showDialog("success","Verification Sent","Check your inbox or spam folder.");
-}
-
-await signOut(auth);
+showDialog(
+"success",
+"Verification Sent",
+"Verification email sent again. Check your inbox or spam folder."
+);
 
 }catch(e){
-showDialog("error","Error","Unable to resend verification email.");
+
+showDialog(
+"error",
+"Error",
+"Unable to resend verification email."
+);
+
 }
 
 };
-
-
-
-onAuthStateChanged(auth,async(user)=>{
-
-if(user){
-
-await user.reload();
-
-if(user.emailVerified){
-
-const userDoc=await getDoc(doc(db,"users",user.uid));
-
-if(userDoc.exists()&&userDoc.data().approved===true){
-
-if(userDoc.data().role==="admin")
-window.location="admin.html";
-else if(userDoc.data().role==="member")
-window.location="create-post.html";
-else
-window.location="feed.html";
-
-}else{
-await signOut(auth);
-}
-
-}else{
-await signOut(auth);
-}
-
-}
-
-});
 
 </script>
 
