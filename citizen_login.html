@@ -29,16 +29,60 @@ to{opacity:1;transform:scale(1)}
 
 <body class="min-h-screen flex items-center justify-center p-4">
 
-<div class="w-full max-w-6xl mx-auto">
+<div class="w-full max-w-xl mx-auto">
 
 <div class="text-center mb-8">
 <h1 class="text-3xl font-bold text-gray-800">Y N Hosakote Community Portal</h1>
 <p class="text-gray-600 text-sm mt-1">Village Information & Social Connect Platform</p>
 </div>
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
 
-<div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+<!-- LOGIN CARD -->
+
+<div class="bg-white rounded-2xl shadow-2xl p-6 mb-6">
+
+<h2 class="text-2xl font-bold text-center mb-6">
+Member Login
+</h2>
+
+<div class="space-y-4">
+
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-3 text-gray-400">mail</span>
+<input id="email" type="email" placeholder="Email Address"
+class="w-full border border-gray-300 pl-10 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+</div>
+
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-3 text-gray-400">lock</span>
+<input id="password" type="password" placeholder="Password"
+class="w-full border border-gray-300 pl-10 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+</div>
+
+<button id="loginBtn"
+class="w-full py-3 rounded-lg text-white font-semibold bg-blue-600 hover:bg-blue-700 transition">
+Sign In
+</button>
+
+<button id="resendBtn"
+class="w-full py-2 rounded-lg text-white font-semibold bg-yellow-500 hover:bg-yellow-600 transition hidden">
+Resend Verification Email
+</button>
+
+<p id="loginError" class="text-red-500 text-sm text-center hidden"></p>
+
+</div>
+
+<div class="text-center mt-6 text-sm text-gray-500">
+Contact village admin if you don’t have an account.
+</div>
+
+</div>
+
+
+<!-- COMMUNITY GUIDELINES BELOW LOGIN -->
+
+<div class="bg-white rounded-2xl shadow-xl p-6">
 
 <h2 class="text-xl font-bold mb-5 flex items-center gap-2">
 <span class="material-symbols-outlined text-blue-600">shield</span>
@@ -85,48 +129,8 @@ By logging in you agree to community rules and moderation policy.
 
 </div>
 
-<div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8">
-
-<h2 class="text-2xl font-bold text-center mb-6">
-Member Login
-</h2>
-
-<div class="space-y-4">
-
-<div class="relative">
-<span class="material-symbols-outlined absolute left-3 top-3 text-gray-400">mail</span>
-<input id="email" type="email" placeholder="Email Address"
-class="w-full border border-gray-300 pl-10 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
 </div>
 
-<div class="relative">
-<span class="material-symbols-outlined absolute left-3 top-3 text-gray-400">lock</span>
-<input id="password" type="password" placeholder="Password"
-class="w-full border border-gray-300 pl-10 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-</div>
-
-<button id="loginBtn"
-class="w-full py-3 rounded-lg text-white font-semibold bg-blue-600 hover:bg-blue-700 transition">
-Sign In
-</button>
-
-<button id="resendBtn"
-class="w-full py-2 rounded-lg text-white font-semibold bg-yellow-500 hover:bg-yellow-600 transition hidden">
-Resend Verification Email
-</button>
-
-<p id="loginError" class="text-red-500 text-sm text-center hidden"></p>
-
-</div>
-
-<div class="text-center mt-6 text-sm text-gray-500">
-Contact village admin if you don’t have an account.
-</div>
-
-</div>
-
-</div>
-</div>
 
 
 <!-- PROGRESS DIALOG -->
@@ -158,6 +162,7 @@ Connecting to server...
 </div>
 
 
+
 <!-- RESULT DIALOG -->
 
 <div id="dialogBox" class="fixed inset-0 hidden items-center justify-center bg-black/40 z-50">
@@ -179,6 +184,7 @@ OK
 </div>
 
 </div>
+
 
 
 <script type="module">
