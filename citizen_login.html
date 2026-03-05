@@ -73,16 +73,22 @@ Member Login
 
 <div class="space-y-4">
 
+<div>
 <div class="relative">
 <span class="material-symbols-outlined absolute left-3 top-3 text-gray-400">mail</span>
-<input id="email" type="email" placeholder="Email Address"
+<input id="email" type="text" placeholder="Email Address"
 class="w-full border border-gray-300 pl-10 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
 </div>
+<p id="emailError" class="text-red-500 text-xs mt-1 hidden"></p>
+</div>
 
+<div>
 <div class="relative">
 <span class="material-symbols-outlined absolute left-3 top-3 text-gray-400">lock</span>
 <input id="password" type="password" placeholder="Password"
 class="w-full border border-gray-300 pl-10 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+</div>
+<p id="passwordError" class="text-red-500 text-xs mt-1 hidden"></p>
 </div>
 
 <button id="loginBtn"
@@ -284,13 +290,42 @@ window.closeDialog=()=>{
 document.getElementById("dialogBox").classList.add("hidden");
 };
 
+function validateEmail(email){
+return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
 document.getElementById("loginBtn").onclick=async()=>{
 
 const email=document.getElementById("email").value.trim();
 const password=document.getElementById("password").value.trim();
 
-if(!email||!password){
-showDialog("error","Missing Fields","Please enter email and password.");
+const emailError=document.getElementById("emailError");
+const passwordError=document.getElementById("passwordError");
+
+emailError.classList.add("hidden");
+passwordError.classList.add("hidden");
+
+if(!email){
+emailError.innerText="Email is required.";
+emailError.classList.remove("hidden");
+return;
+}
+
+if(!validateEmail(email)){
+emailError.innerText="Enter a valid email address.";
+emailError.classList.remove("hidden");
+return;
+}
+
+if(!password){
+passwordError.innerText="Password is required.";
+passwordError.classList.remove("hidden");
+return;
+}
+
+if(password.length<6){
+passwordError.innerText="Password must be at least 6 characters.";
+passwordError.classList.remove("hidden");
 return;
 }
 
@@ -358,34 +393,7 @@ window.location="feed.html";
 
 hideProgress();
 
-let message;
-
-switch(e.code){
-
-case "auth/invalid-email":
-message="Invalid email address format.";
-break;
-
-case "auth/user-not-found":
-message="No account found with this email.";
-break;
-
-case "auth/wrong-password":
-message="Incorrect password.";
-break;
-
-case "auth/too-many-requests":
-message="Too many attempts. Try again later.";
-break;
-
-case "auth/network-request-failed":
-message="Network error. Check internet connection.";
-break;
-
-default:
-message="Login failed. Please try again.";
-
-}
+let message=e.message;
 
 showDialog("error","Login Failed",message);
 
