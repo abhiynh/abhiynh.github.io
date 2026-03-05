@@ -31,23 +31,15 @@ to{opacity:1;transform:scale(1)}
 
 <div class="w-full max-w-xl mx-auto space-y-6">
 
-<!-- TOP HEADER SECTION -->
-
 <div class="bg-white rounded-3xl shadow-xl p-6 flex items-center gap-4">
 
 <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center shadow-inner">
-<span class="material-symbols-outlined text-blue-700 text-4xl">
-location_city
-</span>
+<span class="material-symbols-outlined text-blue-700 text-4xl">location_city</span>
 </div>
 
 <div class="flex-1">
-<h1 class="text-2xl font-bold text-gray-800 leading-tight">
-Y N Hosakote
-</h1>
-<p class="text-sm text-gray-500">
-Village Community Portal
-</p>
+<h1 class="text-2xl font-bold text-gray-800 leading-tight">Y N Hosakote</h1>
+<p class="text-sm text-gray-500">Village Community Portal</p>
 </div>
 
 <div class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full flex items-center gap-1">
@@ -62,14 +54,9 @@ Connect with residents, share village updates, report issues, and stay informed 
 <span class="font-semibold text-gray-800">Y N Hosakote</span>.
 </div>
 
-
-<!-- LOGIN -->
-
 <div class="bg-white rounded-2xl shadow-2xl p-6">
 
-<h2 class="text-2xl font-bold text-center mb-6">
-Member Login
-</h2>
+<h2 class="text-2xl font-bold text-center mb-6">Member Login</h2>
 
 <div class="space-y-4">
 
@@ -79,7 +66,10 @@ Member Login
 <input id="email" type="text" placeholder="Email Address"
 class="w-full border border-gray-300 pl-10 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
 </div>
-<p id="emailError" class="text-red-500 text-xs mt-1 hidden"></p>
+<p id="emailError" class="text-red-500 text-xs mt-1 hidden flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">error</span>
+<span id="emailErrorText"></span>
+</p>
 </div>
 
 <div>
@@ -88,11 +78,15 @@ class="w-full border border-gray-300 pl-10 p-3 rounded-lg focus:ring-2 focus:rin
 <input id="password" type="password" placeholder="Password"
 class="w-full border border-gray-300 pl-10 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
 </div>
-<p id="passwordError" class="text-red-500 text-xs mt-1 hidden"></p>
+<p id="passwordError" class="text-red-500 text-xs mt-1 hidden flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">error</span>
+<span id="passwordErrorText"></span>
+</p>
 </div>
 
 <button id="loginBtn"
-class="w-full py-3 rounded-lg text-white font-semibold bg-blue-600 hover:bg-blue-700 transition">
+class="w-full py-3 rounded-lg text-white font-semibold bg-blue-600 hover:bg-blue-700 transition flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">login</span>
 Sign In
 </button>
 
@@ -103,9 +97,6 @@ Contact village admin if you don’t have an account.
 </div>
 
 </div>
-
-
-<!-- COMMUNITY GUIDELINES -->
 
 <div class="bg-white rounded-2xl shadow-xl p-6">
 
@@ -153,9 +144,6 @@ Community Guidelines
 </div>
 
 
-
-<!-- PROGRESS -->
-
 <div id="progressBox" class="fixed inset-0 hidden items-center justify-center bg-black/40 backdrop-blur-sm z-50">
 
 <div class="bg-white rounded-2xl shadow-2xl p-8 text-center w-[90%] max-w-sm fade-in">
@@ -166,25 +154,18 @@ Community Guidelines
 
 <div class="absolute inset-0 rounded-full border-4 border-blue-600 border-t-transparent animate-spin"></div>
 
-<span class="material-symbols-outlined absolute inset-0 flex items-center justify-center text-blue-600 text-3xl">
-login
-</span>
+<span class="material-symbols-outlined absolute inset-0 flex items-center justify-center text-blue-600 text-3xl">login</span>
 
 </div>
 
 <h3 id="progressTitle" class="text-lg font-bold">Logging in</h3>
 
-<p id="progressText" class="text-gray-600 text-sm mt-2">
-Connecting to server...
-</p>
+<p id="progressText" class="text-gray-600 text-sm mt-2">Connecting securely...</p>
 
 </div>
 
 </div>
 
-
-
-<!-- DIALOG -->
 
 <div id="dialogBox" class="fixed inset-0 hidden items-center justify-center bg-black/40 z-50">
 
@@ -198,14 +179,12 @@ Connecting to server...
 
 <p id="dialogMessage" class="text-gray-600 text-sm mb-6"></p>
 
-<div id="dialogActions" class="flex flex-col gap-2">
+<div class="flex flex-col gap-2">
 
-<button onclick="closeDialog()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">
-OK
-</button>
+<button onclick="closeDialog()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">OK</button>
 
-<button id="resendVerifyBtn"
-class="hidden bg-yellow-500 text-white px-6 py-2 rounded-lg">
+<button id="resendVerifyBtn" class="hidden bg-yellow-500 text-white px-6 py-2 rounded-lg flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">mail</span>
 Resend Verification Email
 </button>
 
@@ -216,17 +195,10 @@ Resend Verification Email
 </div>
 
 
-
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import {
-getAuth,
-signInWithEmailAndPassword,
-sendEmailVerification,
-signOut
-} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
-
+import { getAuth, signInWithEmailAndPassword, sendEmailVerification, signOut } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -247,7 +219,6 @@ let tempUser=null;
 function showProgress(title,text){
 document.getElementById("progressTitle").innerText=title;
 document.getElementById("progressText").innerText=text;
-
 const box=document.getElementById("progressBox");
 box.classList.remove("hidden");
 box.classList.add("flex");
@@ -302,67 +273,62 @@ const password=document.getElementById("password").value.trim();
 const emailError=document.getElementById("emailError");
 const passwordError=document.getElementById("passwordError");
 
+const emailErrorText=document.getElementById("emailErrorText");
+const passwordErrorText=document.getElementById("passwordErrorText");
+
 emailError.classList.add("hidden");
 passwordError.classList.add("hidden");
 
 if(!email){
-emailError.innerText="Email is required.";
+emailErrorText.innerText="Please enter your email address.";
 emailError.classList.remove("hidden");
 return;
 }
 
 if(!validateEmail(email)){
-emailError.innerText="Enter a valid email address.";
+emailErrorText.innerText="Enter a valid email format (example@email.com).";
 emailError.classList.remove("hidden");
 return;
 }
 
 if(!password){
-passwordError.innerText="Password is required.";
+passwordErrorText.innerText="Password field cannot be empty.";
 passwordError.classList.remove("hidden");
 return;
 }
 
 if(password.length<6){
-passwordError.innerText="Password must be at least 6 characters.";
+passwordErrorText.innerText="Password must contain at least 6 characters.";
 passwordError.classList.remove("hidden");
 return;
 }
 
 try{
 
-showProgress("Connecting","Contacting secure login server...");
+showProgress("Connecting","Establishing secure session...");
 
 const cred=await signInWithEmailAndPassword(auth,email,password);
 const user=cred.user;
 tempUser=user;
 
-showProgress("Checking Email","Verifying email status...");
+showProgress("Checking Email","Validating email verification...");
 
 await user.reload();
 
 if(!user.emailVerified){
-
 hideProgress();
-
-showDialog(
-"error",
-"Email Not Verified",
-"Please verify your email before login.",
-true
-);
-
+showDialog("error","Email Not Verified","Your email is not verified. Please verify your email to continue.",true);
 await signOut(auth);
 return;
 }
 
-showProgress("Checking Approval","Verifying membership approval...");
+showProgress("Checking Membership","Verifying community membership approval...");
 
 const userDoc=await getDoc(doc(db,"users",user.uid));
 
 if(!userDoc.exists()){
 hideProgress();
-showDialog("error","User Not Found","No membership record found.");
+showDialog("error","Account Not Found","No membership record exists for this account.");
 await signOut(auth);
 return;
 }
@@ -371,12 +337,12 @@ const data=userDoc.data();
 
 if(data.approved!==true){
 hideProgress();
-showDialog("error","Pending Approval","Your account is awaiting admin approval.");
+showDialog("error","Approval Pending","Your membership request is waiting for admin approval.");
 await signOut(auth);
 return;
 }
 
-showProgress("Login Successful","Redirecting...");
+showProgress("Login Successful","Preparing your community dashboard...");
 
 setTimeout(()=>{
 
@@ -393,7 +359,7 @@ window.location="feed.html";
 
 hideProgress();
 
-let message=e.message;
+let message="Unable to sign in. Please check your email and password and try again.";
 
 showDialog("error","Login Failed",message);
 
@@ -409,19 +375,11 @@ try{
 
 await sendEmailVerification(tempUser);
 
-showDialog(
-"success",
-"Verification Sent",
-"Verification email sent again. Check your inbox or spam folder."
-);
+showDialog("success","Verification Sent","A new verification email has been sent. Please check your inbox or spam folder.");
 
 }catch(e){
 
-showDialog(
-"error",
-"Error",
-"Unable to resend verification email."
-);
+showDialog("error","Error","Unable to resend verification email right now.");
 
 }
 
