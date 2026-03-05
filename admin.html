@@ -2,17 +2,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel • Y N Hosakote</title><script src="https://cdn.tailwindcss.com"></script><link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Y N Hosakote Admin Panel</title><script src="https://cdn.tailwindcss.com"></script><link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"><style>
 body{
 font-family:'Lexend',sans-serif;
 background:#f4f7fc;
 }
-</style></head><body class="min-h-screen flex"><!-- SIDEBAR --><aside class="w-64 bg-white border-r shadow-lg flex flex-col"><div class="p-6 border-b flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+</style></head><body class="min-h-screen flex"><!-- MOBILE MENU BUTTON --><button id="menuBtn"
+class="lg:hidden fixed top-4 left-4 z-50 bg-white shadow p-2 rounded-lg">
+<span class="material-symbols-outlined">menu</span>
+</button>
+
+<!-- SIDEBAR --><aside id="sidebar"
+class="fixed lg:static top-0 left-0 h-full w-64 bg-white border-r shadow-lg transform -translate-x-full lg:translate-x-0 transition-transform duration-300 z-40 flex flex-col"><div class="p-6 border-b flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
 <span class="material-symbols-outlined text-blue-700">location_city</span>
 </div><div>
 <h1 class="font-bold text-gray-800">Admin Panel</h1>
-<p class="text-xs text-gray-500">Y N Hosakote Portal</p>
+<p class="text-xs text-gray-500">Y N Hosakote</p>
 </div></div><nav class="flex-1 p-4 space-y-2 text-sm"><button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">
 <span class="material-symbols-outlined">dashboard</span>
 Dashboard
@@ -34,63 +40,53 @@ Settings
 </button></nav><div class="p-4 border-t"><button class="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg flex items-center justify-center gap-2">
 <span class="material-symbols-outlined">logout</span>
 Logout
-</button></div></aside><!-- MAIN CONTENT --><main class="flex-1 p-8 space-y-8"><!-- HEADER --><div class="flex justify-between items-center"><div>
+</button></div></aside><!-- MAIN CONTENT --><main class="flex-1 p-6 lg:p-8 space-y-8 w-full"><!-- HEADER --><div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"><div>
 <h2 class="text-2xl font-bold text-gray-800">Dashboard</h2>
 <p class="text-gray-500 text-sm">Community Portal Administration</p>
-</div><div class="flex items-center gap-3"><div class="bg-gray-200 w-10 h-10 rounded-full"></div></div></div><!-- STATS --><div class="grid grid-cols-1 md:grid-cols-4 gap-6"><div class="bg-white rounded-xl p-6 shadow"><span class="material-symbols-outlined text-blue-600 text-3xl">
+</div><div class="flex items-center gap-3"><div class="w-10 h-10 bg-gray-300 rounded-full"></div></div></div><!-- STATS --><div class="grid grid-cols-2 md:grid-cols-4 gap-4"><div class="bg-white rounded-xl p-5 shadow"><span class="material-symbols-outlined text-blue-600 text-3xl">
 group
-</span><p class="text-gray-500 text-sm mt-3">Total Members</p><h3 class="text-2xl font-bold">128</h3></div><div class="bg-white rounded-xl p-6 shadow"><span class="material-symbols-outlined text-green-600 text-3xl">
+</span><p class="text-gray-500 text-xs mt-2">Members</p><h3 class="text-xl font-bold">128</h3></div><div class="bg-white rounded-xl p-5 shadow"><span class="material-symbols-outlined text-green-600 text-3xl">
 article
-</span><p class="text-gray-500 text-sm mt-3">Total Posts</p><h3 class="text-2xl font-bold">342</h3></div><div class="bg-white rounded-xl p-6 shadow"><span class="material-symbols-outlined text-yellow-500 text-3xl">
+</span><p class="text-gray-500 text-xs mt-2">Posts</p><h3 class="text-xl font-bold">342</h3></div><div class="bg-white rounded-xl p-5 shadow"><span class="material-symbols-outlined text-yellow-500 text-3xl">
 pending
-</span><p class="text-gray-500 text-sm mt-3">Pending Requests</p><h3 class="text-2xl font-bold">6</h3></div><div class="bg-white rounded-xl p-6 shadow"><span class="material-symbols-outlined text-red-500 text-3xl">
+</span><p class="text-gray-500 text-xs mt-2">Pending</p><h3 class="text-xl font-bold">6</h3></div><div class="bg-white rounded-xl p-5 shadow"><span class="material-symbols-outlined text-red-500 text-3xl">
 flag
-</span><p class="text-gray-500 text-sm mt-3">Reports</p><h3 class="text-2xl font-bold">2</h3></div></div><!-- MEMBER APPROVAL TABLE --><div class="bg-white rounded-xl shadow"><div class="p-6 border-b flex justify-between items-center"><h3 class="font-bold text-gray-800">
+</span><p class="text-gray-500 text-xs mt-2">Reports</p><h3 class="text-xl font-bold">2</h3></div></div><!-- MEMBERS TABLE --><div class="bg-white rounded-xl shadow overflow-x-auto"><div class="p-5 border-b"><h3 class="font-bold text-gray-800">
 Pending Membership Requests
-</h3></div><div class="overflow-x-auto"><table class="w-full text-sm"><thead class="bg-gray-50 text-gray-600"><tr>
-<th class="p-4 text-left">Name</th>
+</h3></div><table class="w-full text-sm"><thead class="bg-gray-50 text-gray-600"><tr><th class="p-4 text-left">Name</th>
 <th class="p-4 text-left">Email</th>
 <th class="p-4 text-left">Requested</th>
-<th class="p-4 text-left">Actions</th>
-</tr></thead><tbody><tr class="border-t"><td class="p-4">Ravi Kumar</td>
+<th class="p-4 text-left">Actions</th></tr></thead><tbody><tr class="border-t"><td class="p-4">Ravi Kumar</td>
 <td class="p-4">ravi@email.com</td>
-<td class="p-4">Today</td><td class="p-4 flex gap-2"><button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded flex items-center gap-1">
+<td class="p-4">Today</td><td class="p-4 flex flex-wrap gap-2"><button class="bg-green-500 text-white px-3 py-1 rounded flex items-center gap-1">
 <span class="material-symbols-outlined text-sm">check</span>
 Approve
-</button><button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded flex items-center gap-1">
+</button><button class="bg-red-500 text-white px-3 py-1 rounded flex items-center gap-1">
 <span class="material-symbols-outlined text-sm">close</span>
 Reject
 </button></td></tr><tr class="border-t"><td class="p-4">Lakshmi Devi</td>
 <td class="p-4">lakshmi@email.com</td>
-<td class="p-4">Yesterday</td><td class="p-4 flex gap-2"><button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded flex items-center gap-1">
+<td class="p-4">Yesterday</td><td class="p-4 flex flex-wrap gap-2"><button class="bg-green-500 text-white px-3 py-1 rounded flex items-center gap-1">
 <span class="material-symbols-outlined text-sm">check</span>
 Approve
-</button><button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded flex items-center gap-1">
+</button><button class="bg-red-500 text-white px-3 py-1 rounded flex items-center gap-1">
 <span class="material-symbols-outlined text-sm">close</span>
 Reject
-</button></td></tr></tbody></table></div></div><!-- POSTS MANAGEMENT --><div class="bg-white rounded-xl shadow"><div class="p-6 border-b"><h3 class="font-bold text-gray-800">
-Recent Posts
-</h3></div><div class="p-6 space-y-4"><div class="border rounded-lg p-4 flex justify-between items-center"><div><p class="font-semibold">
-Temple Festival Announcement
-</p><p class="text-sm text-gray-500">
-Posted by Ramesh
-</p></div><div class="flex gap-2"><button class="bg-blue-500 text-white px-3 py-1 rounded flex items-center gap-1">
+</button></td></tr></tbody></table></div><!-- POSTS MANAGEMENT --><div class="bg-white rounded-xl shadow p-5 space-y-4"><h3 class="font-bold text-gray-800">Recent Posts</h3><div class="border rounded-lg p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"><div><p class="font-semibold">Temple Festival Announcement</p>
+<p class="text-sm text-gray-500">Posted by Ramesh</p></div><div class="flex gap-2"><button class="bg-blue-500 text-white px-3 py-1 rounded flex items-center gap-1">
 <span class="material-symbols-outlined text-sm">visibility</span>
 View
 </button><button class="bg-red-500 text-white px-3 py-1 rounded flex items-center gap-1">
 <span class="material-symbols-outlined text-sm">delete</span>
 Delete
-</button></div></div><div class="border rounded-lg p-4 flex justify-between items-center"><div><p class="font-semibold">
-Lost Phone near Bus Stand
-</p><p class="text-sm text-gray-500">
-Posted by Savitha
-</p></div><div class="flex gap-2"><button class="bg-blue-500 text-white px-3 py-1 rounded flex items-center gap-1">
+</button></div></div><div class="border rounded-lg p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"><div><p class="font-semibold">Lost Phone near Bus Stand</p>
+<p class="text-sm text-gray-500">Posted by Savitha</p></div><div class="flex gap-2"><button class="bg-blue-500 text-white px-3 py-1 rounded flex items-center gap-1">
 <span class="material-symbols-outlined text-sm">visibility</span>
 View
 </button><button class="bg-red-500 text-white px-3 py-1 rounded flex items-center gap-1">
 <span class="material-symbols-outlined text-sm">delete</span>
 Delete
-</button></div></div></div></div><!-- ANNOUNCEMENT CREATOR --><div class="bg-white rounded-xl shadow p-6 space-y-4"><h3 class="font-bold text-gray-800 flex items-center gap-2"><span class="material-symbols-outlined text-blue-600">
+</button></div></div></div><!-- ANNOUNCEMENT --><div class="bg-white rounded-xl shadow p-5 space-y-4"><h3 class="font-bold text-gray-800 flex items-center gap-2"><span class="material-symbols-outlined text-blue-600">
 campaign
 </span>Create Announcement
 
@@ -104,5 +100,14 @@ class="w-full border p-3 rounded-lg"></textarea><button class="bg-blue-600 hover
 send
 </span>Publish Announcement
 
-</button></div></main></body>
+</button></div></main><script>
+
+const menuBtn=document.getElementById("menuBtn")
+const sidebar=document.getElementById("sidebar")
+
+menuBtn.onclick=()=>{
+sidebar.classList.toggle("-translate-x-full")
+}
+
+</script></body>
 </html>
