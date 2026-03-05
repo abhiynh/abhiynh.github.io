@@ -1,229 +1,108 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Y N Hosakote Admin Panel</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-<style>
-body{font-family:'Lexend',sans-serif;background:#eef2f7;}
-</style>
-</head>
-
-<body>
-
-<!-- HEADER -->
-<header class="bg-black text-white p-4 flex justify-between items-center">
-<h1 class="font-bold text-lg">Y N Hosakote Admin Panel</h1>
-<button id="logoutBtn" class="bg-red-500 px-4 py-2 rounded-lg">Logout</button>
-</header>
-
-<div class="max-w-5xl mx-auto mt-8 space-y-12">
-
-<!-- REPORTS -->
-<section>
-<h2 class="text-2xl font-bold mb-4">🚩 Reports</h2>
-<div id="reports" class="space-y-4"></div>
-</section>
-
-<!-- POSTS -->
-<section>
-<h2 class="text-2xl font-bold mb-4">📝 All Posts</h2>
-<div id="posts" class="space-y-6"></div>
-</section>
-
-<!-- MEMBERS -->
-<section>
-<h2 class="text-2xl font-bold mb-4">👤 Members</h2>
-<div id="users" class="space-y-3"></div>
-</section>
-
-</div>
-
-
-<script type="module">
-
-/* Firebase Imports */
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
-import {
-getFirestore,
-collection,
-onSnapshot,
-doc,
-deleteDoc,
-getDoc
-} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
-
-/* Firebase Config */
-const firebaseConfig = {
-  apiKey: "AIzaSyCpNAu49OymCjNuRl7aRBRYQm0P6M0db0s",
-  authDomain: "ynhosakote-community.firebaseapp.com",
-  projectId: "ynhosakote-community",
-  storageBucket: "ynhosakote-community.firebasestorage.app",
-  messagingSenderId: "1053474727552",
-  appId: "1:1053474727552:web:9ed2d6523ef935fd666865"
-};
-
-import { updateDoc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
-
-window.approveUser = async(uid)=>{
-await updateDoc(doc(db,"members",uid),{
-approved:true
-});
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-
-/* ================= ADMIN AUTH GUARD ================= */
-
-onAuthStateChanged(auth, async (user)=>{
-
-  if(!user){
-    window.location="citizen_login.html";
-    return;
-  }
-
-  const userRef = doc(db,"members",user.uid);
-  const userDoc = await getDoc(userRef);
-
-  if(!userDoc.exists()){
-    alert("User record not found");
-    window.location="feed.html";
-    return;
-  }
-
-  const role = userDoc.data().role;
-  const approved = userDoc.data().approved;
-
-  if(role !== "admin" || approved !== true){
-    alert("Access Denied");
-    window.location="feed.html";
-    return;
-  }
-
-});
-
-
-/* ================= LOGOUT ================= */
-
-document.getElementById("logoutBtn").onclick = async ()=>{
-  await signOut(auth);
-  window.location="citizen_login.html";
-};
-
-
-/* ================= LOAD POSTS ================= */
-
-const postsDiv=document.getElementById("posts");
-
-onSnapshot(collection(db,"posts"),snapshot=>{
-postsDiv.innerHTML="";
-
-snapshot.forEach(d=>{
-const p=d.data();
-
-postsDiv.innerHTML+=`
-<div class="bg-white p-4 rounded-xl shadow">
-<h3 class="font-bold">${p.authorName}</h3>
-<p class="mt-2">${p.text||""}</p>
-
-${p.imageUrl?`<img src="${p.imageUrl}" class="mt-3 rounded-xl">`:""}
-
-<button onclick="deletePost('${d.id}')"
-class="mt-4 bg-red-600 text-white px-4 py-2 rounded-lg">
-Delete Post
-</button>
-</div>
-`;
-});
-});
-
-
-/* DELETE POST */
-
-window.deletePost=async(id)=>{
-if(confirm("Delete this post?")){
-await deleteDoc(doc(db,"posts",id));
+<title>Admin Panel • Y N Hosakote</title><script src="https://cdn.tailwindcss.com"></script><link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"><style>
+body{
+font-family:'Lexend',sans-serif;
+background:#f4f7fc;
 }
-};
-
-
-
-/* ================= REPORTS ================= */
-
-const reportsDiv=document.getElementById("reports");
-
-onSnapshot(collection(db,"reports"),snapshot=>{
-reportsDiv.innerHTML="";
-
-snapshot.forEach(d=>{
-const r=d.data();
-
-reportsDiv.innerHTML+=`
-<div class="bg-yellow-100 p-4 rounded-xl shadow">
-<p><b>Post ID:</b> ${r.postId}</p>
-<p><b>Reason:</b> ${r.reason}</p>
-</div>
-`;
-});
-});
-
-
-
-/* ================= MEMBERS ================= */
-
-onSnapshot(collection(db,"members"),snapshot=>{
-usersDiv.innerHTML="";
-
-snapshot.forEach(d=>{
-const u=d.data();
-
-usersDiv.innerHTML+=`
-<div class="bg-white p-4 rounded-xl shadow flex justify-between items-center">
-<div>
-<p class="font-bold">${u.name}</p>
-<p class="text-sm text-gray-500">${u.email}</p>
-<p class="text-sm">Role: ${u.role}</p>
-<p class="text-sm">Approved: ${u.approved}</p>
-</div>
-
-<div class="flex gap-2">
-
-${u.approved === false ? `
-<button onclick="approveUser('${d.id}')"
-class="bg-green-600 text-white px-3 py-1 rounded">
+</style></head><body class="min-h-screen flex"><!-- SIDEBAR --><aside class="w-64 bg-white border-r shadow-lg flex flex-col"><div class="p-6 border-b flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-blue-700">location_city</span>
+</div><div>
+<h1 class="font-bold text-gray-800">Admin Panel</h1>
+<p class="text-xs text-gray-500">Y N Hosakote Portal</p>
+</div></div><nav class="flex-1 p-4 space-y-2 text-sm"><button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">
+<span class="material-symbols-outlined">dashboard</span>
+Dashboard
+</button><button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">
+<span class="material-symbols-outlined">group</span>
+Members
+</button><button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">
+<span class="material-symbols-outlined">article</span>
+Posts
+</button><button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">
+<span class="material-symbols-outlined">flag</span>
+Reports
+</button><button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">
+<span class="material-symbols-outlined">campaign</span>
+Announcements
+</button><button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">
+<span class="material-symbols-outlined">settings</span>
+Settings
+</button></nav><div class="p-4 border-t"><button class="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">logout</span>
+Logout
+</button></div></aside><!-- MAIN CONTENT --><main class="flex-1 p-8 space-y-8"><!-- HEADER --><div class="flex justify-between items-center"><div>
+<h2 class="text-2xl font-bold text-gray-800">Dashboard</h2>
+<p class="text-gray-500 text-sm">Community Portal Administration</p>
+</div><div class="flex items-center gap-3"><div class="bg-gray-200 w-10 h-10 rounded-full"></div></div></div><!-- STATS --><div class="grid grid-cols-1 md:grid-cols-4 gap-6"><div class="bg-white rounded-xl p-6 shadow"><span class="material-symbols-outlined text-blue-600 text-3xl">
+group
+</span><p class="text-gray-500 text-sm mt-3">Total Members</p><h3 class="text-2xl font-bold">128</h3></div><div class="bg-white rounded-xl p-6 shadow"><span class="material-symbols-outlined text-green-600 text-3xl">
+article
+</span><p class="text-gray-500 text-sm mt-3">Total Posts</p><h3 class="text-2xl font-bold">342</h3></div><div class="bg-white rounded-xl p-6 shadow"><span class="material-symbols-outlined text-yellow-500 text-3xl">
+pending
+</span><p class="text-gray-500 text-sm mt-3">Pending Requests</p><h3 class="text-2xl font-bold">6</h3></div><div class="bg-white rounded-xl p-6 shadow"><span class="material-symbols-outlined text-red-500 text-3xl">
+flag
+</span><p class="text-gray-500 text-sm mt-3">Reports</p><h3 class="text-2xl font-bold">2</h3></div></div><!-- MEMBER APPROVAL TABLE --><div class="bg-white rounded-xl shadow"><div class="p-6 border-b flex justify-between items-center"><h3 class="font-bold text-gray-800">
+Pending Membership Requests
+</h3></div><div class="overflow-x-auto"><table class="w-full text-sm"><thead class="bg-gray-50 text-gray-600"><tr>
+<th class="p-4 text-left">Name</th>
+<th class="p-4 text-left">Email</th>
+<th class="p-4 text-left">Requested</th>
+<th class="p-4 text-left">Actions</th>
+</tr></thead><tbody><tr class="border-t"><td class="p-4">Ravi Kumar</td>
+<td class="p-4">ravi@email.com</td>
+<td class="p-4">Today</td><td class="p-4 flex gap-2"><button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">check</span>
 Approve
-</button>
-` : ""}
+</button><button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">close</span>
+Reject
+</button></td></tr><tr class="border-t"><td class="p-4">Lakshmi Devi</td>
+<td class="p-4">lakshmi@email.com</td>
+<td class="p-4">Yesterday</td><td class="p-4 flex gap-2"><button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">check</span>
+Approve
+</button><button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">close</span>
+Reject
+</button></td></tr></tbody></table></div></div><!-- POSTS MANAGEMENT --><div class="bg-white rounded-xl shadow"><div class="p-6 border-b"><h3 class="font-bold text-gray-800">
+Recent Posts
+</h3></div><div class="p-6 space-y-4"><div class="border rounded-lg p-4 flex justify-between items-center"><div><p class="font-semibold">
+Temple Festival Announcement
+</p><p class="text-sm text-gray-500">
+Posted by Ramesh
+</p></div><div class="flex gap-2"><button class="bg-blue-500 text-white px-3 py-1 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">visibility</span>
+View
+</button><button class="bg-red-500 text-white px-3 py-1 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">delete</span>
+Delete
+</button></div></div><div class="border rounded-lg p-4 flex justify-between items-center"><div><p class="font-semibold">
+Lost Phone near Bus Stand
+</p><p class="text-sm text-gray-500">
+Posted by Savitha
+</p></div><div class="flex gap-2"><button class="bg-blue-500 text-white px-3 py-1 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">visibility</span>
+View
+</button><button class="bg-red-500 text-white px-3 py-1 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">delete</span>
+Delete
+</button></div></div></div></div><!-- ANNOUNCEMENT CREATOR --><div class="bg-white rounded-xl shadow p-6 space-y-4"><h3 class="font-bold text-gray-800 flex items-center gap-2"><span class="material-symbols-outlined text-blue-600">
+campaign
+</span>Create Announcement
 
-<button onclick="banUser('${d.id}')"
-class="bg-red-500 text-white px-3 py-1 rounded">
-Ban
-</button>
+</h3><input type="text"
+placeholder="Announcement Title"
+class="w-full border p-3 rounded-lg">
 
-</div>
-</div>
-`;
-});
-});
+<textarea
+placeholder="Announcement Message"
+class="w-full border p-3 rounded-lg"></textarea><button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center gap-2"><span class="material-symbols-outlined">
+send
+</span>Publish Announcement
 
-
-/* BAN USER */
-
-window.banUser=async(uid)=>{
-if(confirm("Ban this user?")){
-await deleteDoc(doc(db,"members",uid));
-}
-};
-
-</script>
-
-</body>
+</button></div></main></body>
 </html>
