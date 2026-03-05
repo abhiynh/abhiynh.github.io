@@ -8,12 +8,7 @@ body{
 font-family:'Lexend',sans-serif;
 background:#f4f7fc;
 }
-</style></head><body class="min-h-screen flex"><!-- MOBILE MENU BUTTON --><button id="menuBtn"
-class="lg:hidden fixed top-4 left-4 z-50 bg-white shadow p-2 rounded-lg">
-<span class="material-symbols-outlined">menu</span>
-</button>
-
-<!-- SIDEBAR --><aside id="sidebar"
+</style></head><body class="min-h-screen flex"><!-- SIDEBAR --><aside id="sidebar"
 class="fixed lg:static top-0 left-0 h-full w-64 bg-white border-r shadow-lg transform -translate-x-full lg:translate-x-0 transition-transform duration-300 z-40 flex flex-col"><div class="p-6 border-b flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
 <span class="material-symbols-outlined text-blue-700">location_city</span>
 </div><div>
@@ -34,80 +29,251 @@ Reports
 </button><button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">
 <span class="material-symbols-outlined">campaign</span>
 Announcements
-</button><button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">
-<span class="material-symbols-outlined">settings</span>
-Settings
-</button></nav><div class="p-4 border-t"><button class="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg flex items-center justify-center gap-2">
+</button></nav><div class="p-4 border-t"><button id="logoutBtn"
+class="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg flex items-center justify-center gap-2">
 <span class="material-symbols-outlined">logout</span>
 Logout
-</button></div></aside><!-- MAIN CONTENT --><main class="flex-1 p-6 lg:p-8 space-y-8 w-full"><!-- HEADER --><div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"><div>
-<h2 class="text-2xl font-bold text-gray-800">Dashboard</h2>
-<p class="text-gray-500 text-sm">Community Portal Administration</p>
-</div><div class="flex items-center gap-3"><div class="w-10 h-10 bg-gray-300 rounded-full"></div></div></div><!-- STATS --><div class="grid grid-cols-2 md:grid-cols-4 gap-4"><div class="bg-white rounded-xl p-5 shadow"><span class="material-symbols-outlined text-blue-600 text-3xl">
-group
-</span><p class="text-gray-500 text-xs mt-2">Members</p><h3 class="text-xl font-bold">128</h3></div><div class="bg-white rounded-xl p-5 shadow"><span class="material-symbols-outlined text-green-600 text-3xl">
-article
-</span><p class="text-gray-500 text-xs mt-2">Posts</p><h3 class="text-xl font-bold">342</h3></div><div class="bg-white rounded-xl p-5 shadow"><span class="material-symbols-outlined text-yellow-500 text-3xl">
-pending
-</span><p class="text-gray-500 text-xs mt-2">Pending</p><h3 class="text-xl font-bold">6</h3></div><div class="bg-white rounded-xl p-5 shadow"><span class="material-symbols-outlined text-red-500 text-3xl">
-flag
-</span><p class="text-gray-500 text-xs mt-2">Reports</p><h3 class="text-xl font-bold">2</h3></div></div><!-- MEMBERS TABLE --><div class="bg-white rounded-xl shadow overflow-x-auto"><div class="p-5 border-b"><h3 class="font-bold text-gray-800">
-Pending Membership Requests
-</h3></div><table class="w-full text-sm"><thead class="bg-gray-50 text-gray-600"><tr><th class="p-4 text-left">Name</th>
+</button>
+
+</div></aside><!-- MAIN --><main class="flex-1 w-full"><div class="lg:hidden bg-white shadow flex items-center gap-3 p-4"><button id="menuBtn" class="bg-gray-100 p-2 rounded-lg">
+<span class="material-symbols-outlined">menu</span>
+</button><h2 class="text-lg font-bold text-gray-800">
+Admin Dashboard
+</h2></div><div class="p-6 lg:p-8 space-y-8"><!-- STATS --><div class="grid grid-cols-2 md:grid-cols-4 gap-4"><div class="bg-white rounded-xl p-5 shadow">
+<span class="material-symbols-outlined text-blue-600 text-3xl">group</span>
+<p class="text-gray-500 text-xs mt-2">Members</p>
+<h3 id="totalMembers" class="text-xl font-bold">0</h3>
+</div><div class="bg-white rounded-xl p-5 shadow">
+<span class="material-symbols-outlined text-green-600 text-3xl">article</span>
+<p class="text-gray-500 text-xs mt-2">Posts</p>
+<h3 id="totalPosts" class="text-xl font-bold">0</h3>
+</div><div class="bg-white rounded-xl p-5 shadow">
+<span class="material-symbols-outlined text-yellow-500 text-3xl">pending</span>
+<p class="text-gray-500 text-xs mt-2">Pending</p>
+<h3 id="totalPending" class="text-xl font-bold">0</h3>
+</div><div class="bg-white rounded-xl p-5 shadow">
+<span class="material-symbols-outlined text-red-500 text-3xl">flag</span>
+<p class="text-gray-500 text-xs mt-2">Reports</p>
+<h3 id="totalReports" class="text-xl font-bold">0</h3>
+</div></div><!-- MEMBERS --><div class="bg-white rounded-xl shadow overflow-x-auto"><div class="p-5 border-b">
+<h3 class="font-bold text-gray-800">Pending Membership Requests</h3>
+</div><table class="w-full text-sm"><thead class="bg-gray-50 text-gray-600"><tr>
+<th class="p-4 text-left">Name</th>
 <th class="p-4 text-left">Email</th>
-<th class="p-4 text-left">Requested</th>
-<th class="p-4 text-left">Actions</th></tr></thead><tbody><tr class="border-t"><td class="p-4">Ravi Kumar</td>
-<td class="p-4">ravi@email.com</td>
-<td class="p-4">Today</td><td class="p-4 flex flex-wrap gap-2"><button class="bg-green-500 text-white px-3 py-1 rounded flex items-center gap-1">
-<span class="material-symbols-outlined text-sm">check</span>
-Approve
-</button><button class="bg-red-500 text-white px-3 py-1 rounded flex items-center gap-1">
-<span class="material-symbols-outlined text-sm">close</span>
-Reject
-</button></td></tr><tr class="border-t"><td class="p-4">Lakshmi Devi</td>
-<td class="p-4">lakshmi@email.com</td>
-<td class="p-4">Yesterday</td><td class="p-4 flex flex-wrap gap-2"><button class="bg-green-500 text-white px-3 py-1 rounded flex items-center gap-1">
-<span class="material-symbols-outlined text-sm">check</span>
-Approve
-</button><button class="bg-red-500 text-white px-3 py-1 rounded flex items-center gap-1">
-<span class="material-symbols-outlined text-sm">close</span>
-Reject
-</button></td></tr></tbody></table></div><!-- POSTS MANAGEMENT --><div class="bg-white rounded-xl shadow p-5 space-y-4"><h3 class="font-bold text-gray-800">Recent Posts</h3><div class="border rounded-lg p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"><div><p class="font-semibold">Temple Festival Announcement</p>
-<p class="text-sm text-gray-500">Posted by Ramesh</p></div><div class="flex gap-2"><button class="bg-blue-500 text-white px-3 py-1 rounded flex items-center gap-1">
-<span class="material-symbols-outlined text-sm">visibility</span>
-View
-</button><button class="bg-red-500 text-white px-3 py-1 rounded flex items-center gap-1">
-<span class="material-symbols-outlined text-sm">delete</span>
-Delete
-</button></div></div><div class="border rounded-lg p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"><div><p class="font-semibold">Lost Phone near Bus Stand</p>
-<p class="text-sm text-gray-500">Posted by Savitha</p></div><div class="flex gap-2"><button class="bg-blue-500 text-white px-3 py-1 rounded flex items-center gap-1">
-<span class="material-symbols-outlined text-sm">visibility</span>
-View
-</button><button class="bg-red-500 text-white px-3 py-1 rounded flex items-center gap-1">
-<span class="material-symbols-outlined text-sm">delete</span>
-Delete
-</button></div></div></div><!-- ANNOUNCEMENT --><div class="bg-white rounded-xl shadow p-5 space-y-4"><h3 class="font-bold text-gray-800 flex items-center gap-2"><span class="material-symbols-outlined text-blue-600">
+<th class="p-4 text-left">Action</th>
+</tr></thead><tbody id="memberTable"></tbody></table></div><!-- ANNOUNCEMENT --><div class="bg-white rounded-xl shadow p-5 space-y-4"><h3 class="font-bold text-gray-800 flex items-center gap-2"><span class="material-symbols-outlined text-blue-600">
 campaign
 </span>Create Announcement
 
-</h3><input type="text"
+</h3><input id="announceTitle"
+type="text"
 placeholder="Announcement Title"
 class="w-full border p-3 rounded-lg">
 
-<textarea
+<textarea id="announceMsg"
 placeholder="Announcement Message"
-class="w-full border p-3 rounded-lg"></textarea><button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center gap-2"><span class="material-symbols-outlined">
+class="w-full border p-3 rounded-lg"></textarea><button id="publishBtn"
+class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center gap-2">
+
+<span class="material-symbols-outlined">
 send
 </span>Publish Announcement
 
-</button></div></main><script>
+</button></div></div></main><script type="module">
 
-const menuBtn=document.getElementById("menuBtn")
-const sidebar=document.getElementById("sidebar")
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged,
+signOut
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+
+import {
+getFirestore,
+collection,
+doc,
+getDoc,
+getDocs,
+query,
+where,
+updateDoc,
+deleteDoc,
+onSnapshot,
+addDoc,
+serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+const firebaseConfig={
+apiKey:"AIzaSyCpNAu49OymCjNuRl7aRBRYQm0P6M0db0s",
+authDomain:"ynhosakote-community.firebaseapp.com",
+projectId:"ynhosakote-community",
+storageBucket:"ynhosakote-community.firebasestorage.app",
+messagingSenderId:"1053474727552",
+appId:"1:1053474727552:web:9ed2d6523ef935fd666865"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+
+
+
+/* ADMIN GUARD */
+
+onAuthStateChanged(auth,async(user)=>{
+
+if(!user){
+window.location="citizen_login.html";
+return;
+}
+
+const docSnap=await getDoc(doc(db,"users",user.uid));
+
+if(!docSnap.exists() || docSnap.data().role!=="admin"){
+window.location="feed.html";
+}
+
+});
+
+
+
+/* DASHBOARD STATS */
+
+async function loadStats(){
+
+const users=await getDocs(collection(db,"users"));
+const posts=await getDocs(collection(db,"posts"));
+const reports=await getDocs(collection(db,"reports"));
+
+document.getElementById("totalMembers").innerText=users.size;
+document.getElementById("totalPosts").innerText=posts.size;
+document.getElementById("totalReports").innerText=reports.size;
+
+}
+
+loadStats();
+
+
+
+/* LOAD PENDING MEMBERS */
+
+const table=document.getElementById("memberTable");
+
+const q=query(
+collection(db,"users"),
+where("approved","==",false)
+);
+
+onSnapshot(q,(snapshot)=>{
+
+table.innerHTML="";
+
+document.getElementById("totalPending").innerText=snapshot.size;
+
+snapshot.forEach(docSnap=>{
+
+const u=docSnap.data();
+const uid=docSnap.id;
+
+table.innerHTML+=`
+
+<tr class="border-t">
+
+<td class="p-4">${u.name||"Member"}</td>
+
+<td class="p-4">${u.email}</td>
+
+<td class="p-4 flex gap-2">
+
+<button onclick="approveUser('${uid}')"
+class="bg-green-500 text-white px-3 py-1 rounded">
+
+Approve
+
+</button>
+
+<button onclick="rejectUser('${uid}')"
+class="bg-red-500 text-white px-3 py-1 rounded">
+
+Reject
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+});
+
+
+
+/* APPROVE */
+
+window.approveUser=async(uid)=>{
+
+await updateDoc(doc(db,"users",uid),{
+approved:true
+});
+
+};
+
+
+
+/* REJECT */
+
+window.rejectUser=async(uid)=>{
+
+await deleteDoc(doc(db,"users",uid));
+
+};
+
+
+
+/* ANNOUNCEMENT */
+
+document.getElementById("publishBtn").onclick=async()=>{
+
+const title=document.getElementById("announceTitle").value;
+const msg=document.getElementById("announceMsg").value;
+
+if(!title||!msg) return;
+
+await addDoc(collection(db,"announcements"),{
+
+title:title,
+message:msg,
+createdAt:serverTimestamp()
+
+});
+
+alert("Announcement published");
+
+};
+
+
+
+/* LOGOUT */
+
+document.getElementById("logoutBtn").onclick=()=>{
+signOut(auth);
+window.location="citizen_login.html";
+};
+
+
+
+/* MOBILE MENU */
+
+const menuBtn=document.getElementById("menuBtn");
+const sidebar=document.getElementById("sidebar");
 
 menuBtn.onclick=()=>{
-sidebar.classList.toggle("-translate-x-full")
-}
+sidebar.classList.toggle("-translate-x-full");
+};
 
 </script></body>
 </html>
