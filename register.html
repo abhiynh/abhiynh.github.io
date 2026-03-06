@@ -96,10 +96,50 @@ margin:auto;
 100%{transform:rotate(360deg)}
 }
 
+.hero{
+background:linear-gradient(120deg,#2563eb,#4f46e5);
+border-radius:22px;
+padding:28px;
+color:white;
+box-shadow:0 20px 45px rgba(0,0,0,.15);
+}
+
+.hero-icon{
+width:60px;
+height:60px;
+border-radius:50%;
+background:rgba(255,255,255,.2);
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
 </style>
 </head>
 
-<body class="min-h-screen flex items-center justify-center p-4">
+<body class="min-h-screen flex flex-col items-center justify-start p-4 gap-6">
+
+<!-- HERO -->
+<div class="hero w-full max-w-6xl flex items-center gap-5 fade">
+
+<div class="hero-icon">
+<span class="material-symbols-outlined text-white text-3xl">
+groups
+</span>
+</div>
+
+<div>
+<h1 class="text-2xl font-bold">
+Welcome to Y N Hosakote Community
+</h1>
+<p class="text-blue-100 text-sm mt-1">
+Register to access the official digital portal of the village.
+Stay connected with announcements, community updates and local discussions.
+</p>
+</div>
+
+</div>
+
 
 <div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
 
