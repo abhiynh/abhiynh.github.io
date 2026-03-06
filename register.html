@@ -11,216 +11,217 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
 
 <style>
+
 body{
-  font-family:'Lexend',sans-serif;
-  background:linear-gradient(135deg,#e7eef9,#dbe6f7);
+font-family:'Lexend',sans-serif;
+background:linear-gradient(135deg,#e9f0fb,#dde7f7);
 }
 
 .material-symbols-outlined{
-  font-size:22px;
-  line-height:1;
+font-size:22px;
 }
 
-.fade-in{
-  animation:fadeIn .25s ease forwards;
+.fade{
+animation:fade .25s ease;
 }
 
-@keyframes fadeIn{
-  from{opacity:0; transform:scale(.95)}
-  to{opacity:1; transform:scale(1)}
+@keyframes fade{
+from{opacity:0;transform:scale(.96)}
+to{opacity:1;transform:scale(1)}
 }
 
-.input-focus{
-  transition:all .25s ease;
+.input{
+width:100%;
+padding:14px 14px 14px 42px;
+border-radius:12px;
+border:1px solid #d1d5db;
+transition:.2s;
+background:#fff;
 }
 
-.input-focus:focus{
-  transform:scale(1.01);
+.input:focus{
+outline:none;
+border-color:#2563eb;
+box-shadow:0 0 0 3px rgba(37,99,235,.15);
 }
 
-.icon-box{
-  width:40px;
-  height:40px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:999px;
+.icon{
+position:absolute;
+left:12px;
+top:50%;
+transform:translateY(-50%);
 }
 
-@media (max-width:768px){
+.card{
+background:white;
+border-radius:22px;
+box-shadow:0 15px 40px rgba(0,0,0,.08);
+}
 
-.icon-box{
+.btn{
+background:#2563eb;
+color:white;
+padding:14px;
+border-radius:12px;
+font-weight:600;
+width:100%;
+transition:.2s;
+}
+
+.btn:hover{
+background:#1e4ed8;
+}
+
+.guideline-icon{
 width:36px;
 height:36px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
 }
 
-.material-symbols-outlined{
-font-size:20px;
+.progress-ring{
+width:70px;
+height:70px;
+border-radius:50%;
+border:4px solid #bfdbfe;
+border-top:4px solid #2563eb;
+animation:spin 1s linear infinite;
+margin:auto;
 }
 
+@keyframes spin{
+0%{transform:rotate(0deg)}
+100%{transform:rotate(360deg)}
 }
+
 </style>
 </head>
 
-<body class="min-h-screen flex flex-col items-center justify-start py-4 px-4">
+<body class="min-h-screen flex items-center justify-center p-4">
 
-<div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start">
+<div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
 
-<!-- RIGHT PANEL (FORM FIRST ON MOBILE) -->
-<div class="flex items-center justify-center order-1 lg:order-2">
+<!-- FORM -->
+<div class="order-1 lg:order-2 flex justify-center">
 
-<div class="w-full max-w-md bg-white rounded-3xl shadow-2xl p-6 sm:p-7">
+<div class="card p-7 w-full max-w-md fade">
 
-<h2 class="text-xl sm:text-2xl font-bold mb-6 text-center text-gray-800">
+<h2 class="text-2xl font-bold text-center text-gray-800 mb-6">
 Membership Registration
 </h2>
 
 <div class="space-y-5">
 
-<!-- NAME -->
 <div class="relative">
-
-<span class="material-symbols-outlined absolute left-3 top-[50%] -translate-y-1/2 text-blue-500">
-person
-</span>
-
-<input id="name"
-placeholder="Full Name"
-class="w-full border border-gray-300 pl-10 pr-4 py-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none input-focus">
-
+<span class="material-symbols-outlined text-blue-500 icon">person</span>
+<input id="name" class="input" placeholder="Full Name">
 </div>
 
-<!-- EMAIL -->
 <div class="relative">
-
-<span class="material-symbols-outlined absolute left-3 top-[50%] -translate-y-1/2 text-green-500">
-mail
-</span>
-
-<input id="email"
-type="email"
-placeholder="Email Address"
-class="w-full border border-gray-300 pl-10 pr-4 py-3 rounded-xl focus:ring-2 focus:ring-green-500 outline-none input-focus">
-
+<span class="material-symbols-outlined text-green-600 icon">mail</span>
+<input id="email" type="email" class="input" placeholder="Email Address">
 </div>
 
-<!-- PASSWORD -->
 <div class="relative">
+<span class="material-symbols-outlined text-purple-600 icon">lock</span>
+<input id="password" type="password" class="input pr-10" placeholder="Minimum 6 characters">
 
-<span class="material-symbols-outlined absolute left-3 top-[50%] -translate-y-1/2 text-purple-500">
-lock
-</span>
-
-<input id="password"
-type="password"
-placeholder="Minimum 6 characters"
-class="w-full border border-gray-300 pl-10 pr-10 py-3 rounded-xl focus:ring-2 focus:ring-purple-500 outline-none input-focus">
-
-<button type="button"
-onclick="togglePassword()"
-class="absolute right-3 top-[50%] -translate-y-1/2 text-gray-500">
-
-<span class="material-symbols-outlined text-[20px]">
-visibility
-</span>
-
+<button onclick="togglePassword()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+<span class="material-symbols-outlined">visibility</span>
 </button>
-
 </div>
 
-<!-- CONFIRM PASSWORD -->
 <div class="relative">
+<span class="material-symbols-outlined text-indigo-600 icon">verified</span>
+<input id="confirmPassword" type="password" class="input" placeholder="Confirm Password">
 
-<span class="material-symbols-outlined absolute left-3 top-[50%] -translate-y-1/2 text-indigo-500">
-verified
-</span>
-
-<input id="confirmPassword"
-type="password"
-placeholder="Confirm Password"
-class="w-full border border-gray-300 pl-10 pr-4 py-3 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none input-focus">
-
-<p id="matchText" class="text-xs mt-1 text-gray-500">
+<p id="matchText" class="text-xs text-gray-500 mt-1">
 Re-enter your password.
 </p>
-
 </div>
 
-<button id="registerBtn"
-class="w-full bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 text-white py-3 rounded-xl font-semibold transition duration-200 shadow-md">
+<button id="registerBtn" class="btn">
 Submit Membership Request
 </button>
 
 </div>
-</div>
+
 </div>
 
-<!-- LEFT PANEL -->
-<div class="bg-white rounded-3xl shadow-2xl p-6 sm:p-8 order-2 lg:order-1">
+</div>
+
+<!-- GUIDELINES -->
+<div class="card p-7 order-2 lg:order-1 fade">
 
 <div class="flex items-center gap-4 mb-6">
 
-<div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-blue-700 text-[28px] sm:text-[32px]">location_city</span>
+<div class="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-blue-700 text-3xl">
+location_city
+</span>
 </div>
 
 <div>
-<h1 class="text-lg sm:text-2xl font-bold text-gray-800 leading-tight">
+<h1 class="text-xl font-bold text-gray-800">
 Y N Hosakote Community
 </h1>
-<p class="text-gray-500 text-xs sm:text-sm">
+<p class="text-gray-500 text-sm">
 Official Village Digital Portal
 </p>
 </div>
 
 </div>
 
-<h2 class="text-lg sm:text-xl font-bold mb-6 flex items-center gap-3">
-<span class="material-symbols-outlined text-green-600 text-[26px]">menu_book</span>
+<h2 class="text-lg font-semibold flex items-center gap-2 mb-5">
+<span class="material-symbols-outlined text-green-600">
+menu_book
+</span>
 Community Guidelines
 </h2>
 
-<ul class="space-y-4 text-gray-700 text-sm sm:text-base">
+<ul class="space-y-4 text-gray-700 text-sm">
 
-<li class="flex gap-3 items-start">
-<div class="icon-box bg-green-100">
+<li class="flex gap-3">
+<div class="guideline-icon bg-green-100">
 <span class="material-symbols-outlined text-green-600">verified</span>
 </div>
-<span>Only genuine residents of Y N Hosakote should apply for membership.</span>
+Only genuine residents of Y N Hosakote should apply.
 </li>
 
-<li class="flex gap-3 items-start">
-<div class="icon-box bg-red-100">
+<li class="flex gap-3">
+<div class="guideline-icon bg-red-100">
 <span class="material-symbols-outlined text-red-600">block</span>
 </div>
-<span>Fake details, abusive language and rumors are strictly prohibited.</span>
+Fake details, abusive language and rumors are prohibited.
 </li>
 
-<li class="flex gap-3 items-start">
-<div class="icon-box bg-yellow-100">
+<li class="flex gap-3">
+<div class="guideline-icon bg-yellow-100">
 <span class="material-symbols-outlined text-yellow-600">report</span>
 </div>
-<span>Citizens can report misleading posts to admin.</span>
+Citizens can report misleading posts to admin.
 </li>
 
-<li class="flex gap-3 items-start">
-<div class="icon-box bg-purple-100">
+<li class="flex gap-3">
+<div class="guideline-icon bg-purple-100">
 <span class="material-symbols-outlined text-purple-600">photo_camera</span>
 </div>
-<span>Upload only real photos/videos related to village.</span>
+Upload only real photos or videos related to the village.
 </li>
 
-<li class="flex gap-3 items-start">
-<div class="icon-box bg-orange-100">
+<li class="flex gap-3">
+<div class="guideline-icon bg-orange-100">
 <span class="material-symbols-outlined text-orange-600">gavel</span>
 </div>
-<span>Admin can remove posts and block users if rules are violated.</span>
+Admin may remove posts or block users violating rules.
 </li>
 
 </ul>
 
-<div class="mt-8 p-4 rounded-xl bg-blue-50 border border-blue-100 text-xs sm:text-sm text-gray-600 leading-relaxed">
-<span class="font-semibold text-blue-700">Note:</span>
+<div class="mt-6 text-xs text-gray-600 bg-blue-50 border border-blue-100 p-3 rounded-lg">
+<b class="text-blue-700">Note:</b>
 Approval usually happens within 24 hours after verification.
 </div>
 
@@ -228,20 +229,33 @@ Approval usually happens within 24 hours after verification.
 
 </div>
 
-<!-- DIALOG -->
-<div id="dialogBox" class="fixed inset-0 hidden items-center justify-center bg-black/40 z-50">
 
-<div class="bg-white rounded-2xl shadow-2xl p-6 w-[90%] max-w-sm text-center fade-in">
+<!-- PROGRESS BOX -->
+<div id="progressBox" class="fixed inset-0 hidden items-center justify-center bg-black/40 z-50">
 
-<div id="dialogIcon" class="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4">
-<span id="dialogIconSymbol" class="material-symbols-outlined text-4xl"></span>
+<div class="bg-white rounded-xl p-6 text-center w-[90%] max-w-sm fade">
+
+<div class="progress-ring mb-4"></div>
+
+<h3 id="progressTitle" class="font-bold text-lg">Processing</h3>
+<p id="progressText" class="text-sm text-gray-500">Please wait...</p>
+
 </div>
 
-<h3 id="dialogTitle" class="text-xl font-bold mb-2"></h3>
+</div>
 
-<p id="dialogMessage" class="text-gray-600 text-sm mb-6"></p>
 
-<button onclick="closeDialog()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">
+<!-- RESULT BOX -->
+<div id="resultBox" class="fixed inset-0 hidden items-center justify-center bg-black/40 z-50">
+
+<div class="bg-white rounded-xl p-6 text-center w-[90%] max-w-sm fade">
+
+<div id="resultIcon" class="w-14 h-14 rounded-full mx-auto flex items-center justify-center mb-3"></div>
+
+<h3 id="resultTitle" class="font-bold text-lg"></h3>
+<p id="resultText" class="text-sm text-gray-500 mt-1"></p>
+
+<button onclick="closeResult()" class="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg">
 OK
 </button>
 
@@ -249,53 +263,14 @@ OK
 
 </div>
 
-<!-- PROGRESS -->
-<div id="progressBox" class="fixed inset-0 hidden items-center justify-center bg-black/40 backdrop-blur-sm z-50">
-
-<div class="bg-white rounded-2xl shadow-2xl p-8 text-center w-[90%] max-w-sm fade-in">
-
-<div class="relative mx-auto w-20 h-20 mb-5">
-
-<div class="absolute inset-0 rounded-full border-4 border-blue-200"></div>
-
-<div class="absolute inset-0 rounded-full border-4 border-blue-600 border-t-transparent animate-spin"></div>
-
-<span class="material-symbols-outlined absolute inset-0 flex items-center justify-center text-blue-600 text-[30px]">
-cloud_upload
-</span>
-
-</div>
-
-<h3 id="progressTitle" class="text-lg font-bold">
-Processing
-</h3>
-
-<p id="progressText" class="text-gray-600 text-sm">
-Please wait...
-</p>
-
-</div>
-
-</div>
 
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { 
-  getAuth, 
-  createUserWithEmailAndPassword, 
-  signOut,
-  sendEmailVerification 
-} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+import { getAuth,createUserWithEmailAndPassword,signOut,sendEmailVerification } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+import { getFirestore,doc,setDoc,serverTimestamp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
-import { 
-  getFirestore, 
-  doc, 
-  setDoc, 
-  serverTimestamp 
-} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
-
-const firebaseConfig = {
+const firebaseConfig={
 apiKey:"AIzaSyCpNAu49OymCjNuRl7aRBRYQm0P6M0db0s",
 authDomain:"ynhosakote-community.firebaseapp.com",
 projectId:"ynhosakote-community",
@@ -308,14 +283,55 @@ const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const db=getFirestore(app);
 
-window.closeDialog=()=>{
-document.getElementById("dialogBox").classList.add("hidden");
+
+function showProcess(title,text){
+
+document.getElementById("progressTitle").innerText=title;
+document.getElementById("progressText").innerText=text;
+
+document.getElementById("progressBox").classList.remove("hidden");
+document.getElementById("progressBox").classList.add("flex");
+
+}
+
+function hideProcess(){
+document.getElementById("progressBox").classList.add("hidden");
+}
+
+
+function showResult(type,title,msg){
+
+const box=document.getElementById("resultBox");
+const icon=document.getElementById("resultIcon");
+
+document.getElementById("resultTitle").innerText=title;
+document.getElementById("resultText").innerText=msg;
+
+if(type==="success"){
+icon.className="w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-3";
+icon.innerHTML='<span class="material-symbols-outlined">check_circle</span>';
+}
+
+if(type==="error"){
+icon.className="w-14 h-14 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-3";
+icon.innerHTML='<span class="material-symbols-outlined">error</span>';
+}
+
+box.classList.remove("hidden");
+box.classList.add("flex");
+
+}
+
+window.closeResult=()=>{
+document.getElementById("resultBox").classList.add("hidden");
 };
+
 
 window.togglePassword=()=>{
 const input=document.getElementById("password");
 input.type=input.type==="password"?"text":"password";
 };
+
 
 document.getElementById("registerBtn").onclick=async()=>{
 
@@ -325,16 +341,18 @@ const password=document.getElementById("password").value.trim();
 const confirm=document.getElementById("confirmPassword").value.trim();
 
 if(!name||!email||!password||!confirm){
-alert("Please fill all required fields.");
+showResult("error","Missing Fields","Please fill all required fields.");
 return;
 }
 
 if(password!==confirm){
-alert("Passwords do not match.");
+showResult("error","Password Mismatch","Passwords do not match.");
 return;
 }
 
 try{
+
+showProcess("Creating Account","Registering membership...");
 
 const userCred=await createUserWithEmailAndPassword(auth,email,password);
 const user=userCred.user;
@@ -351,10 +369,24 @@ createdAt:serverTimestamp()
 
 await signOut(auth);
 
-alert("Verification email sent. Please verify before logging in.");
+hideProcess();
+
+showResult(
+"success",
+"Verification Email Sent",
+"Please verify your email before logging in."
+);
 
 }catch(e){
-alert(e.message);
+
+hideProcess();
+
+showResult(
+"error",
+"Registration Failed",
+e.message
+);
+
 }
 
 };
