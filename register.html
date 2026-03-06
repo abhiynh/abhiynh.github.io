@@ -62,83 +62,12 @@ font-size:20px;
 </style>
 </head>
 
-<body class="min-h-screen flex flex-col items-center justify-start py-6 px-4">
+<body class="min-h-screen flex flex-col items-center justify-start py-4 px-4">
 
-<div class="w-full max-w-6xl grid lg:grid-cols-2 gap-6 md:gap-8 items-stretch">
+<div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start">
 
-<!-- LEFT PANEL -->
-<div class="bg-white rounded-3xl shadow-2xl p-6 sm:p-8">
-
-<div class="flex items-center gap-4 mb-6">
-
-<div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-blue-700 text-[28px] sm:text-[32px]">location_city</span>
-</div>
-
-<div>
-<h1 class="text-lg sm:text-2xl font-bold text-gray-800 leading-tight">
-Y N Hosakote Community
-</h1>
-<p class="text-gray-500 text-xs sm:text-sm">
-Official Village Digital Portal
-</p>
-</div>
-
-</div>
-
-<h2 class="text-lg sm:text-xl font-bold mb-6 flex items-center gap-3">
-<span class="material-symbols-outlined text-green-600 text-[26px]">menu_book</span>
-Community Guidelines
-</h2>
-
-<ul class="space-y-4 text-gray-700 text-sm sm:text-base">
-
-<li class="flex gap-3 items-start">
-<div class="icon-box bg-green-100">
-<span class="material-symbols-outlined text-green-600">verified</span>
-</div>
-<span>Only genuine residents of Y N Hosakote should apply for membership.</span>
-</li>
-
-<li class="flex gap-3 items-start">
-<div class="icon-box bg-red-100">
-<span class="material-symbols-outlined text-red-600">block</span>
-</div>
-<span>Fake details, abusive language and rumors are strictly prohibited.</span>
-</li>
-
-<li class="flex gap-3 items-start">
-<div class="icon-box bg-yellow-100">
-<span class="material-symbols-outlined text-yellow-600">report</span>
-</div>
-<span>Citizens can report misleading posts to admin.</span>
-</li>
-
-<li class="flex gap-3 items-start">
-<div class="icon-box bg-purple-100">
-<span class="material-symbols-outlined text-purple-600">photo_camera</span>
-</div>
-<span>Upload only real photos/videos related to village.</span>
-</li>
-
-<li class="flex gap-3 items-start">
-<div class="icon-box bg-orange-100">
-<span class="material-symbols-outlined text-orange-600">gavel</span>
-</div>
-<span>Admin can remove posts and block users if rules are violated.</span>
-</li>
-
-</ul>
-
-<div class="mt-8 p-4 rounded-xl bg-blue-50 border border-blue-100 text-xs sm:text-sm text-gray-600 leading-relaxed">
-<span class="font-semibold text-blue-700">Note:</span>
-Approval usually happens within 24 hours after verification.
-</div>
-
-</div>
-
-<!-- RIGHT PANEL -->
-<div class="flex items-center justify-center">
+<!-- RIGHT PANEL (FORM FIRST ON MOBILE) -->
+<div class="flex items-center justify-center order-1 lg:order-2">
 
 <div class="w-full max-w-md bg-white rounded-3xl shadow-2xl p-6 sm:p-7">
 
@@ -225,6 +154,78 @@ Submit Membership Request
 </div>
 </div>
 </div>
+
+<!-- LEFT PANEL -->
+<div class="bg-white rounded-3xl shadow-2xl p-6 sm:p-8 order-2 lg:order-1">
+
+<div class="flex items-center gap-4 mb-6">
+
+<div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-blue-700 text-[28px] sm:text-[32px]">location_city</span>
+</div>
+
+<div>
+<h1 class="text-lg sm:text-2xl font-bold text-gray-800 leading-tight">
+Y N Hosakote Community
+</h1>
+<p class="text-gray-500 text-xs sm:text-sm">
+Official Village Digital Portal
+</p>
+</div>
+
+</div>
+
+<h2 class="text-lg sm:text-xl font-bold mb-6 flex items-center gap-3">
+<span class="material-symbols-outlined text-green-600 text-[26px]">menu_book</span>
+Community Guidelines
+</h2>
+
+<ul class="space-y-4 text-gray-700 text-sm sm:text-base">
+
+<li class="flex gap-3 items-start">
+<div class="icon-box bg-green-100">
+<span class="material-symbols-outlined text-green-600">verified</span>
+</div>
+<span>Only genuine residents of Y N Hosakote should apply for membership.</span>
+</li>
+
+<li class="flex gap-3 items-start">
+<div class="icon-box bg-red-100">
+<span class="material-symbols-outlined text-red-600">block</span>
+</div>
+<span>Fake details, abusive language and rumors are strictly prohibited.</span>
+</li>
+
+<li class="flex gap-3 items-start">
+<div class="icon-box bg-yellow-100">
+<span class="material-symbols-outlined text-yellow-600">report</span>
+</div>
+<span>Citizens can report misleading posts to admin.</span>
+</li>
+
+<li class="flex gap-3 items-start">
+<div class="icon-box bg-purple-100">
+<span class="material-symbols-outlined text-purple-600">photo_camera</span>
+</div>
+<span>Upload only real photos/videos related to village.</span>
+</li>
+
+<li class="flex gap-3 items-start">
+<div class="icon-box bg-orange-100">
+<span class="material-symbols-outlined text-orange-600">gavel</span>
+</div>
+<span>Admin can remove posts and block users if rules are violated.</span>
+</li>
+
+</ul>
+
+<div class="mt-8 p-4 rounded-xl bg-blue-50 border border-blue-100 text-xs sm:text-sm text-gray-600 leading-relaxed">
+<span class="font-semibold text-blue-700">Note:</span>
+Approval usually happens within 24 hours after verification.
+</div>
+
+</div>
+
 </div>
 
 <!-- DIALOG -->
