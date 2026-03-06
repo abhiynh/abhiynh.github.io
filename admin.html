@@ -24,9 +24,6 @@ animation:fade .25s ease;
 from{opacity:0;transform:scale(.95)}
 to{opacity:1;transform:scale(1)}
 }
-
-.section{display:none}
-.section.active{display:block}
 </style>
 </head>
 
@@ -58,6 +55,7 @@ class="fixed lg:static top-0 left-0 h-full w-64 bg-white border-r shadow-lg tran
 <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
 <span class="material-symbols-outlined text-blue-700">location_city</span>
 </div>
+
 <div>
 <h1 class="font-bold text-gray-800">Admin Panel</h1>
 <p class="text-xs text-gray-500">Y N Hosakote</p>
@@ -66,27 +64,27 @@ class="fixed lg:static top-0 left-0 h-full w-64 bg-white border-r shadow-lg tran
 
 <nav class="flex-1 p-4 space-y-2 text-sm">
 
-<button onclick="showSection('dashboard')" class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">
+<button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">
 <span class="material-symbols-outlined text-blue-600">dashboard</span>
 Dashboard
 </button>
 
-<button onclick="showSection('members')" class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">
+<button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">
 <span class="material-symbols-outlined text-green-600">group</span>
 Members
 </button>
 
-<button onclick="showSection('posts')" class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">
+<button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">
 <span class="material-symbols-outlined text-purple-600">article</span>
 Posts
 </button>
 
-<button onclick="showSection('reports')" class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">
+<button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">
 <span class="material-symbols-outlined text-red-500">flag</span>
 Reports
 </button>
 
-<button onclick="showSection('announcements')" class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">
+<button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">
 <span class="material-symbols-outlined text-orange-500">campaign</span>
 Announcements
 </button>
@@ -109,12 +107,13 @@ Logout
 <button id="menuBtn" class="bg-gray-100 p-2 rounded-lg">
 <span class="material-symbols-outlined">menu</span>
 </button>
-<h2 class="text-lg font-bold text-gray-800">Admin Dashboard</h2>
+
+<h2 class="text-lg font-bold text-gray-800">
+Admin Dashboard
+</h2>
 </div>
 
 <div class="p-6 lg:p-8 space-y-8">
-
-<div id="dashboard" class="section active">
 
 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
 
@@ -144,14 +143,12 @@ Logout
 
 </div>
 
-</div>
-
-<div id="members" class="section">
-
 <div class="bg-white rounded-xl shadow overflow-x-auto">
 
 <div class="p-5 border-b">
-<h3 class="font-bold text-gray-800">Pending Membership Requests</h3>
+<h3 class="font-bold text-gray-800">
+Pending Membership Requests
+</h3>
 </div>
 
 <table class="w-full text-sm">
@@ -169,24 +166,6 @@ Logout
 </table>
 
 </div>
-
-</div>
-
-<div id="posts" class="section">
-<div class="bg-white p-6 rounded-xl shadow">
-<h3 class="font-bold text-lg">Posts Moderation</h3>
-<p class="text-gray-500 text-sm mt-2">Posts management will appear here.</p>
-</div>
-</div>
-
-<div id="reports" class="section">
-<div class="bg-white p-6 rounded-xl shadow">
-<h3 class="font-bold text-lg">Reports Center</h3>
-<p class="text-gray-500 text-sm mt-2">User reports and flagged posts.</p>
-</div>
-</div>
-
-<div id="announcements" class="section">
 
 <div class="bg-white rounded-xl shadow p-5 space-y-4">
 
@@ -206,13 +185,9 @@ class="w-full border p-3 rounded-lg"></textarea>
 
 <button id="publishBtn"
 class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center gap-2">
-
 <span class="material-symbols-outlined">send</span>
 Publish Announcement
-
 </button>
-
-</div>
 
 </div>
 
@@ -332,6 +307,7 @@ const q=query(collection(db,"users"),where("approved","==",false));
 onSnapshot(q,(snapshot)=>{
 
 table.innerHTML="";
+
 document.getElementById("totalPending").innerText=snapshot.size;
 
 snapshot.forEach(docSnap=>{
@@ -340,48 +316,101 @@ const u=docSnap.data();
 const uid=docSnap.id;
 
 table.innerHTML+=`
+
 <tr class="border-t">
+
 <td class="p-4">${u.name||"Member"}</td>
+
 <td class="p-4">${u.email}</td>
+
 <td class="p-4 flex gap-2">
+
 <button onclick="approveUser('${uid}')"
 class="bg-green-500 text-white px-3 py-1 rounded flex items-center gap-1">
+
 <span class="material-symbols-outlined text-sm">check</span>
 Approve
+
 </button>
+
 <button onclick="rejectUser('${uid}')"
 class="bg-red-500 text-white px-3 py-1 rounded flex items-center gap-1">
+
 <span class="material-symbols-outlined text-sm">close</span>
 Reject
+
 </button>
+
 </td>
-</tr>`;
+
+</tr>
+
+`;
+
 });
 
 });
 
 window.approveUser=async(uid)=>{
+
 try{
+
 showProcess("Approving Member","Updating membership status...");
-await updateDoc(doc(db,"users",uid),{approved:true});
+
+await updateDoc(doc(db,"users",uid),{
+approved:true
+});
+
 hideProcess();
-showResult("success","Member Approved","User has been successfully approved.");
+
+showResult(
+"success",
+"Member Approved",
+"User has been successfully approved."
+);
+
 }catch(e){
+
 hideProcess();
-showResult("error","Approval Failed","Unable to approve the member.");
+
+showResult(
+"error",
+"Approval Failed",
+"Unable to approve the member."
+);
+
 }
+
 };
 
 window.rejectUser=async(uid)=>{
+
 try{
+
 showProcess("Rejecting Member","Removing membership request...");
+
 await deleteDoc(doc(db,"users",uid));
+
 hideProcess();
-showResult("success","Member Rejected","User request has been removed.");
+
+showResult(
+"success",
+"Member Rejected",
+"User request has been removed."
+);
+
 }catch(e){
+
 hideProcess();
-showResult("error","Rejection Failed","Unable to remove member.");
+
+showResult(
+"error",
+"Rejection Failed",
+"Unable to remove member."
+);
+
 }
+
 };
 
 document.getElementById("publishBtn").onclick=async()=>{
@@ -406,7 +435,11 @@ createdAt:serverTimestamp()
 
 hideProcess();
 
-showResult("success","Announcement Published","Community announcement sent successfully.");
+showResult(
+"success",
+"Announcement Published",
+"Community announcement sent successfully."
+);
 
 document.getElementById("announceTitle").value="";
 document.getElementById("announceMsg").value="";
@@ -415,7 +448,11 @@ document.getElementById("announceMsg").value="";
 
 hideProcess();
 
-showResult("error","Publish Failed","Unable to publish announcement.");
+showResult(
+"error",
+"Publish Failed",
+"Unable to publish announcement."
+);
 
 }
 
@@ -438,11 +475,6 @@ overlay.classList.toggle("hidden");
 overlay.onclick=()=>{
 sidebar.classList.add("-translate-x-full");
 overlay.classList.add("hidden");
-};
-
-window.showSection=(id)=>{
-document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
-document.getElementById(id).classList.add("active");
 };
 
 </script>
