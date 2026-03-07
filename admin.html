@@ -191,6 +191,31 @@ Publish Announcement
 
 </div>
 
+<div class="bg-white rounded-xl shadow overflow-x-auto">
+
+<div class="p-5 border-b">
+<h3 class="font-bold text-gray-800 flex items-center gap-2">
+<span class="material-symbols-outlined text-orange-500">campaign</span>
+Manage Announcements
+</h3>
+</div>
+
+<table class="w-full text-sm">
+
+<thead class="bg-gray-50 text-gray-600">
+<tr>
+<th class="p-4 text-left">Title</th>
+<th class="p-4 text-left">Message</th>
+<th class="p-4 text-left">Action</th>
+</tr>
+</thead>
+
+<tbody id="announcementTable"></tbody>
+
+</table>
+
+</div>
+
 </div>
 
 </main>
@@ -217,7 +242,8 @@ updateDoc,
 deleteDoc,
 onSnapshot,
 addDoc,
-serverTimestamp
+serverTimestamp,
+orderBy
 } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
 const firebaseConfig={
@@ -452,6 +478,77 @@ showResult(
 "error",
 "Publish Failed",
 "Unable to publish announcement."
+);
+
+}
+
+};
+
+const announceTable=document.getElementById("announcementTable");
+
+const announceQuery=query(collection(db,"announcements"),orderBy("createdAt","desc"));
+
+onSnapshot(announceQuery,(snapshot)=>{
+
+announceTable.innerHTML="";
+
+snapshot.forEach(docSnap=>{
+
+const a=docSnap.data();
+const id=docSnap.id;
+
+announceTable.innerHTML+=`
+
+<tr class="border-t">
+
+<td class="p-4">${a.title}</td>
+
+<td class="p-4">${a.message}</td>
+
+<td class="p-4">
+
+<button onclick="deleteAnnouncement('${id}')"
+class="bg-red-500 text-white px-3 py-1 rounded flex items-center gap-1">
+
+<span class="material-symbols-outlined text-sm">delete</span>
+Delete
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+});
+
+window.deleteAnnouncement=async(id)=>{
+
+try{
+
+showProcess("Deleting","Removing announcement...");
+
+await deleteDoc(doc(db,"announcements",id));
+
+hideProcess();
+
+showResult(
+"success",
+"Announcement Deleted",
+"Announcement removed successfully."
+);
+
+}catch(e){
+
+hideProcess();
+
+showResult(
+"error",
+"Delete Failed",
+"Unable to delete announcement."
 );
 
 }
