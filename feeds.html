@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 
 <script>
-tailwind.config = {
+tailwind.config={
 darkMode:"class",
 theme:{
 extend:{
@@ -30,12 +30,26 @@ fontFamily:{display:["Lexend","sans-serif"]}
 <style>
 body{font-family:'Lexend',sans-serif;}
 
+.feed-container{max-width:680px;margin:auto;}
+
 .post-card{
 background:white;
-border-radius:18px;
-box-shadow:0 6px 18px rgba(0,0,0,.08);
+border-radius:16px;
 border:1px solid #e5e7eb;
+box-shadow:0 4px 14px rgba(0,0,0,.06);
 overflow:hidden;
+}
+
+.author-avatar{
+width:40px;
+height:40px;
+border-radius:50%;
+background:#0f49bd;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:600;
 }
 
 .post-btn{
@@ -47,75 +61,79 @@ gap:6px;
 padding:12px;
 font-weight:600;
 font-size:14px;
+transition:.2s;
 }
 
-.post-btn:hover{
-background:#f3f4f6;
-}
+.post-btn:hover{background:#f3f4f6}
 
-.feed-container{
-max-width:680px;
-margin:auto;
-}
-
-.author-avatar{
-width:38px;
-height:38px;
-border-radius:50%;
-background:#0f49bd;
-color:white;
-display:flex;
+.image-viewer{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.85);
+display:none;
 align-items:center;
 justify-content:center;
-font-size:14px;
-font-weight:600;
+z-index:60;
+}
+
+.image-viewer img{
+max-width:95%;
+max-height:95%;
+border-radius:10px;
+}
+
+.comment-modal{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:white;
+border-top-left-radius:16px;
+border-top-right-radius:16px;
+box-shadow:0 -4px 20px rgba(0,0,0,.15);
+max-height:80%;
+overflow:auto;
+transform:translateY(100%);
+transition:.3s;
+z-index:60;
+}
+
+.comment-modal.show{
+transform:translateY(0);
 }
 
 </style>
 </head>
 
-<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen pb-28">
+<body class="bg-background-light font-display text-slate-900 min-h-screen pb-28">
 
 <!-- AUTH LOADER -->
 <div id="authLoader" class="fixed inset-0 bg-white flex items-center justify-center z-50">
-
 <div class="text-center">
-
 <div class="animate-spin rounded-full h-12 w-12 border-4 border-gray-300 border-t-gray-900 mx-auto"></div>
-
 <p class="mt-4 text-gray-600">Checking login...</p>
-
 </div>
-
 </div>
 
 <!-- HEADER -->
 <header class="sticky top-0 z-40 bg-white shadow-sm border-b px-4 py-3 flex justify-between items-center">
 
 <div class="flex items-center gap-3">
-
 <span class="material-symbols-outlined text-primary text-2xl">groups</span>
-
-<h1 class="font-bold text-primary text-lg">
-Y N Hosakote Feed
-</h1>
-
+<h1 class="font-bold text-primary text-lg">Y N Hosakote Feed</h1>
 </div>
 
 <button onclick="logout()" class="flex items-center gap-1 text-sm text-red-500 font-semibold">
-
 <span class="material-symbols-outlined text-sm">logout</span>
-
 Logout
-
 </button>
 
 </header>
 
-<!-- FEED CONTAINER -->
+<!-- FEED -->
 <main id="feed" class="feed-container p-4 space-y-5"></main>
 
-<!-- FLOAT CREATE POST -->
+<!-- FAB -->
 <button onclick="window.location='create-post.html'"
 class="fixed bottom-24 right-4 z-50 h-16 w-16 bg-secondary text-white rounded-full shadow-xl flex items-center justify-center hover:scale-105 transition">
 
@@ -123,7 +141,28 @@ class="fixed bottom-24 right-4 z-50 h-16 w-16 bg-secondary text-white rounded-fu
 
 </button>
 
-<!-- FIREBASE -->
+<!-- IMAGE VIEWER -->
+<div id="imageViewer" class="image-viewer" onclick="closeImage()">
+<img id="viewerImg">
+</div>
+
+<!-- COMMENT MODAL -->
+<div id="commentModal" class="comment-modal p-4">
+
+<div class="flex justify-between items-center mb-3">
+<h3 class="font-semibold">Comments</h3>
+<button onclick="closeComments()">✕</button>
+</div>
+
+<div id="commentList" class="space-y-2 text-sm mb-4"></div>
+
+<div class="flex gap-2">
+<input id="commentInput" class="flex-1 border rounded-lg px-3 py-2 text-sm" placeholder="Write a comment"/>
+<button onclick="submitComment()" class="bg-primary text-white px-4 rounded-lg text-sm">Send</button>
+</div>
+
+</div>
+
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
@@ -150,8 +189,6 @@ deleteDoc,
 getDoc
 } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
-/* CONFIG */
-
 const firebaseConfig={
 apiKey:"AIzaSyCpNAu49OymCjNuRl7aRBRYQm0P6M0db0s",
 authDomain:"ynhosakote-community.firebaseapp.com",
@@ -166,18 +203,17 @@ const auth=getAuth(app);
 const db=getFirestore(app);
 
 let currentUser;
+let activePost=null;
 
 const feed=document.getElementById("feed");
 
-/* AUTH CHECK */
+/* AUTH */
 
 onAuthStateChanged(auth, async(user)=>{
 
 if(!user){
-
 window.location="citizen_login.html";
 return;
-
 }
 
 currentUser=user;
@@ -185,15 +221,10 @@ currentUser=user;
 const userDoc=await getDoc(doc(db,"users",user.uid));
 
 if(!userDoc.exists() || userDoc.data().approved!==true){
-
 await signOut(auth);
-
 alert("Account not approved");
-
 window.location="citizen_login.html";
-
 return;
-
 }
 
 document.getElementById("authLoader").style.display="none";
@@ -202,7 +233,7 @@ loadPosts();
 
 });
 
-/* LOAD POSTS */
+/* POSTS */
 
 function loadPosts(){
 
@@ -226,34 +257,23 @@ feed.innerHTML+=`
 <div class="flex items-center gap-3">
 
 <div class="author-avatar">
-
 ${(p.authorName||"M").charAt(0).toUpperCase()}
-
 </div>
 
 <div>
-
-<h3 class="font-semibold text-sm">
-${p.authorName||"Member"}
-</h3>
-
-<p class="text-xs text-gray-500">
-${p.createdAt?.toDate().toLocaleString()||""}
-</p>
-
+<h3 class="font-semibold text-sm">${p.authorName||"Member"}</h3>
+<p class="text-xs text-gray-500">${p.createdAt?.toDate().toLocaleString()||""}</p>
 </div>
 
 </div>
 
-<p class="mt-3 text-gray-800 text-sm leading-relaxed">
-${p.text||""}
-</p>
+<p class="mt-3 text-gray-800 text-sm">${p.text||""}</p>
 
-${p.imageUrl?`<img src="${p.imageUrl}" class="mt-3 rounded-xl w-full">`:""}
+${p.imageUrl?`<img src="${p.imageUrl}" onclick="openImage('${p.imageUrl}')" class="mt-3 rounded-xl w-full cursor-pointer">`:""}
 
 </div>
 
-<div class="px-4 py-2 border-t flex justify-between text-xs text-gray-500">
+<div class="px-4 py-2 border-t text-xs text-gray-500 flex justify-between">
 
 <span class="flex items-center gap-1">
 <span class="material-symbols-outlined text-sm text-pink-500">favorite</span>
@@ -265,27 +285,23 @@ ${p.likeCount||0} Likes
 <div class="flex border-t">
 
 <button onclick="likePost('${id}',${p.likeCount||0})" class="post-btn">
-
-<span class="material-symbols-outlined text-blue-600 text-[20px]">thumb_up</span>
-
+<span class="material-symbols-outlined text-blue-600">thumb_up</span>
 Like
-
 </button>
 
-<button onclick="commentPost('${id}')" class="post-btn">
-
-<span class="material-symbols-outlined text-green-600 text-[20px]">chat_bubble</span>
-
+<button onclick="openComments('${id}')" class="post-btn">
+<span class="material-symbols-outlined text-green-600">chat_bubble</span>
 Comment
+</button>
 
+<button onclick="sharePost('${id}')" class="post-btn">
+<span class="material-symbols-outlined">share</span>
+Share
 </button>
 
 <button onclick="reportPost('${id}')" class="post-btn text-red-500">
-
-<span class="material-symbols-outlined text-[20px]">flag</span>
-
+<span class="material-symbols-outlined">flag</span>
 Report
-
 </button>
 
 </div>
@@ -305,11 +321,9 @@ Report
 window.likePost=async(postId,count)=>{
 
 const likeQuery=query(
-
 collection(db,"likes"),
 where("postId","==",postId),
 where("uid","==",currentUser.uid)
-
 );
 
 const likeSnap=await getDocs(likeQuery);
@@ -317,53 +331,77 @@ const likeSnap=await getDocs(likeQuery);
 if(likeSnap.empty){
 
 await addDoc(collection(db,"likes"),{
-
 postId:postId,
 uid:currentUser.uid
-
 });
 
 await updateDoc(doc(db,"posts",postId),{
-
 likeCount:count+1
-
 });
 
 }else{
 
 likeSnap.forEach(async(d)=>{
-
 await deleteDoc(doc(db,"likes",d.id));
-
 });
 
 await updateDoc(doc(db,"posts",postId),{
-
 likeCount:count-1
-
 });
 
 }
 
 };
 
-/* COMMENT */
+/* IMAGE */
 
-window.commentPost=async(postId)=>{
+window.openImage=(src)=>{
+document.getElementById("viewerImg").src=src;
+document.getElementById("imageViewer").style.display="flex";
+};
 
-const text=prompt("Enter comment");
+window.closeImage=()=>{
+document.getElementById("imageViewer").style.display="none";
+};
+
+/* COMMENTS */
+
+window.openComments=(postId)=>{
+activePost=postId;
+document.getElementById("commentModal").classList.add("show");
+};
+
+window.closeComments=()=>{
+document.getElementById("commentModal").classList.remove("show");
+};
+
+window.submitComment=async()=>{
+
+const text=document.getElementById("commentInput").value;
 
 if(!text) return;
 
 await addDoc(collection(db,"comments"),{
-
-postId:postId,
+postId:activePost,
 uid:currentUser.uid,
 authorName:currentUser.email,
 text:text,
 createdAt:serverTimestamp()
-
 });
+
+document.getElementById("commentInput").value="";
+
+};
+
+/* SHARE */
+
+window.sharePost=(postId)=>{
+
+const url=location.origin+"/post/"+postId;
+
+navigator.clipboard.writeText(url);
+
+alert("Link copied");
 
 };
 
@@ -372,16 +410,13 @@ createdAt:serverTimestamp()
 window.reportPost=async(postId)=>{
 
 const reason=prompt("Report reason?");
-
 if(!reason) return;
 
 await addDoc(collection(db,"reports"),{
-
 postId:postId,
 reporterUid:currentUser.uid,
 reason:reason,
 createdAt:serverTimestamp()
-
 });
 
 alert("Reported to admin");
@@ -391,11 +426,8 @@ alert("Reported to admin");
 /* LOGOUT */
 
 window.logout=async()=>{
-
 await signOut(auth);
-
 window.location="citizen_login.html";
-
 };
 
 </script>
