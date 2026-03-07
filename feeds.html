@@ -101,13 +101,11 @@ z-index:60;
 .comment-modal.show{
 transform:translateY(0);
 }
-
 </style>
 </head>
 
 <body class="bg-background-light font-display text-slate-900 min-h-screen pb-28">
 
-<!-- AUTH LOADER -->
 <div id="authLoader" class="fixed inset-0 bg-white flex items-center justify-center z-50">
 <div class="text-center">
 <div class="animate-spin rounded-full h-12 w-12 border-4 border-gray-300 border-t-gray-900 mx-auto"></div>
@@ -115,7 +113,6 @@ transform:translateY(0);
 </div>
 </div>
 
-<!-- HEADER -->
 <header class="sticky top-0 z-40 bg-white shadow-sm border-b px-4 py-3 flex justify-between items-center">
 
 <div class="flex items-center gap-3">
@@ -130,23 +127,17 @@ Logout
 
 </header>
 
-<!-- FEED -->
 <main id="feed" class="feed-container p-4 space-y-5"></main>
 
-<!-- FAB -->
 <button onclick="window.location='create-post.html'"
 class="fixed bottom-24 right-4 z-50 h-16 w-16 bg-secondary text-white rounded-full shadow-xl flex items-center justify-center hover:scale-105 transition">
-
 <span class="material-symbols-outlined text-3xl">add</span>
-
 </button>
 
-<!-- IMAGE VIEWER -->
 <div id="imageViewer" class="image-viewer" onclick="closeImage()">
 <img id="viewerImg">
 </div>
 
-<!-- COMMENT MODAL -->
 <div id="commentModal" class="comment-modal p-4">
 
 <div class="flex justify-between items-center mb-3">
@@ -207,8 +198,6 @@ let activePost=null;
 
 const feed=document.getElementById("feed");
 
-/* AUTH */
-
 onAuthStateChanged(auth, async(user)=>{
 
 if(!user){
@@ -233,8 +222,6 @@ loadPosts();
 
 });
 
-/* POSTS */
-
 function loadPosts(){
 
 const q=query(collection(db,"posts"),orderBy("createdAt","desc"));
@@ -247,6 +234,19 @@ snapshot.forEach(docSnap=>{
 
 const p=docSnap.data();
 const id=docSnap.id;
+
+const date=p.createdAt?.toDate();
+
+const formattedDate=date
+?date.toLocaleString("en-IN",{
+day:"2-digit",
+month:"short",
+year:"numeric",
+hour:"numeric",
+minute:"2-digit",
+hour12:true
+})
+:"";
 
 feed.innerHTML+=`
 
@@ -262,7 +262,7 @@ ${(p.authorName||"M").charAt(0).toUpperCase()}
 
 <div>
 <h3 class="font-semibold text-sm">${p.authorName||"Member"}</h3>
-<p class="text-xs text-gray-500">${p.createdAt?.toDate().toLocaleString()||""}</p>
+<p class="text-xs text-gray-500">${formattedDate}</p>
 </div>
 
 </div>
@@ -316,8 +316,6 @@ Report
 
 }
 
-/* LIKE */
-
 window.likePost=async(postId,count)=>{
 
 const likeQuery=query(
@@ -353,8 +351,6 @@ likeCount:count-1
 
 };
 
-/* IMAGE */
-
 window.openImage=(src)=>{
 document.getElementById("viewerImg").src=src;
 document.getElementById("imageViewer").style.display="flex";
@@ -363,8 +359,6 @@ document.getElementById("imageViewer").style.display="flex";
 window.closeImage=()=>{
 document.getElementById("imageViewer").style.display="none";
 };
-
-/* COMMENTS */
 
 window.openComments=(postId)=>{
 activePost=postId;
@@ -384,16 +378,13 @@ if(!text) return;
 await addDoc(collection(db,"comments"),{
 postId:activePost,
 uid:currentUser.uid,
-authorName:currentUser.email,
+authorName:currentUser.displayName||currentUser.email,
 text:text,
 createdAt:serverTimestamp()
 });
 
 document.getElementById("commentInput").value="";
-
 };
-
-/* SHARE */
 
 window.sharePost=(postId)=>{
 
@@ -404,8 +395,6 @@ navigator.clipboard.writeText(url);
 alert("Link copied");
 
 };
-
-/* REPORT */
 
 window.reportPost=async(postId)=>{
 
@@ -422,8 +411,6 @@ createdAt:serverTimestamp()
 alert("Reported to admin");
 
 };
-
-/* LOGOUT */
 
 window.logout=async()=>{
 await signOut(auth);
