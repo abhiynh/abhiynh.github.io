@@ -40,6 +40,14 @@ box-shadow:0 4px 14px rgba(0,0,0,.06);
 overflow:hidden;
 }
 
+.announcement-card{
+background:#fff7ed;
+border:1px solid #fdba74;
+border-radius:16px;
+box-shadow:0 4px 14px rgba(0,0,0,.06);
+overflow:hidden;
+}
+
 .author-avatar{
 width:40px;
 height:40px;
@@ -218,17 +226,73 @@ return;
 
 document.getElementById("authLoader").style.display="none";
 
+loadAnnouncements();
 loadPosts();
 
 });
+
+/* ANNOUNCEMENTS */
+
+function loadAnnouncements(){
+
+const q=query(collection(db,"announcements"),orderBy("createdAt","desc"));
+
+onSnapshot(q,(snapshot)=>{
+
+snapshot.forEach(docSnap=>{
+
+const a=docSnap.data();
+
+const date=a.createdAt?.toDate();
+
+const formatted=date?date.toLocaleString("en-IN",{
+day:"2-digit",
+month:"short",
+year:"numeric",
+hour:"numeric",
+minute:"2-digit",
+hour12:true
+}):"";
+
+feed.innerHTML+=`
+
+<div class="announcement-card">
+
+<div class="p-4">
+
+<div class="flex items-center gap-2 mb-2">
+
+<span class="material-symbols-outlined text-orange-600">campaign</span>
+
+<h3 class="font-bold text-orange-700 text-sm">Village Announcement</h3>
+
+</div>
+
+<h4 class="font-semibold text-sm mb-1">${a.title||""}</h4>
+
+<p class="text-sm text-gray-700">${a.message||""}</p>
+
+<p class="text-xs text-gray-500 mt-2">${formatted}</p>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+});
+
+}
+
+/* POSTS */
 
 function loadPosts(){
 
 const q=query(collection(db,"posts"),orderBy("createdAt","desc"));
 
 onSnapshot(q,(snapshot)=>{
-
-feed.innerHTML="";
 
 snapshot.forEach(docSnap=>{
 
