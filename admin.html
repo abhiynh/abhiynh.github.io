@@ -24,10 +24,55 @@ animation:fade .25s ease;
 from{opacity:0;transform:scale(.95)}
 to{opacity:1;transform:scale(1)}
 }
+
+/* COLORFUL LOADER */
+
+.loaderBox{
+position:fixed;
+inset:0;
+background:linear-gradient(135deg,#2563eb,#9333ea,#06b6d4);
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:60;
+}
+
+.loaderCard{
+background:white;
+padding:30px;
+border-radius:16px;
+text-align:center;
+width:90%;
+max-width:360px;
+box-shadow:0 20px 50px rgba(0,0,0,.25);
+}
+
+.loaderSpin{
+width:60px;
+height:60px;
+border-radius:50%;
+border:6px solid #e5e7eb;
+border-top:6px solid #2563eb;
+animation:spin 1s linear infinite;
+margin:auto;
+}
+
+@keyframes spin{
+to{transform:rotate(360deg)}
+}
 </style>
 </head>
 
 <body class="min-h-screen flex">
+
+<!-- DATA LOADER -->
+<div id="dataLoader" class="loaderBox">
+<div class="loaderCard fade">
+<div class="loaderSpin"></div>
+<h3 class="font-bold text-lg mt-4 text-gray-800">Loading Dashboard</h3>
+<p class="text-gray-500 text-sm mt-1">Fetching community data...</p>
+</div>
+</div>
 
 <div id="processBox" class="fixed inset-0 hidden items-center justify-center bg-black/40 z-50">
 <div class="bg-white p-8 rounded-xl shadow-xl text-center w-[90%] max-w-sm fade">
@@ -259,6 +304,10 @@ const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const db=getFirestore(app);
 
+function hideLoader(){
+document.getElementById("dataLoader").style.display="none";
+}
+
 function showProcess(t,m){
 document.getElementById("processTitle").innerText=t;
 document.getElementById("processText").innerText=m;
@@ -309,6 +358,8 @@ const docSnap=await getDoc(doc(db,"users",user.uid));
 if(!docSnap.exists() || docSnap.data().role!=="admin"){
 window.location="feed.html";
 }
+
+hideLoader();
 
 });
 
