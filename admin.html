@@ -25,34 +25,33 @@ from{opacity:0;transform:scale(.95)}
 to{opacity:1;transform:scale(1)}
 }
 
-/* COLORFUL LOADER */
-
 .loaderBox{
 position:fixed;
 inset:0;
-background:linear-gradient(135deg,#2563eb,#9333ea,#06b6d4);
+background:rgba(255,255,255,.85);
 display:flex;
 align-items:center;
 justify-content:center;
 z-index:60;
+backdrop-filter:blur(3px);
 }
 
 .loaderCard{
 background:white;
-padding:30px;
-border-radius:16px;
+padding:28px;
+border-radius:14px;
 text-align:center;
 width:90%;
-max-width:360px;
-box-shadow:0 20px 50px rgba(0,0,0,.25);
+max-width:320px;
+box-shadow:0 12px 35px rgba(0,0,0,.15);
 }
 
 .loaderSpin{
-width:60px;
-height:60px;
+width:56px;
+height:56px;
 border-radius:50%;
-border:6px solid #e5e7eb;
-border-top:6px solid #2563eb;
+border:5px solid #e5e7eb;
+border-top:5px solid #2563eb;
 animation:spin 1s linear infinite;
 margin:auto;
 }
@@ -70,7 +69,7 @@ to{transform:rotate(360deg)}
 <div class="loaderCard fade">
 <div class="loaderSpin"></div>
 <h3 class="font-bold text-lg mt-4 text-gray-800">Loading Dashboard</h3>
-<p class="text-gray-500 text-sm mt-1">Fetching community data...</p>
+<p class="text-gray-500 text-sm mt-1">Please wait...</p>
 </div>
 </div>
 
@@ -308,44 +307,6 @@ function hideLoader(){
 document.getElementById("dataLoader").style.display="none";
 }
 
-function showProcess(t,m){
-document.getElementById("processTitle").innerText=t;
-document.getElementById("processText").innerText=m;
-document.getElementById("processBox").classList.remove("hidden");
-document.getElementById("processBox").classList.add("flex");
-}
-
-function hideProcess(){
-document.getElementById("processBox").classList.add("hidden");
-}
-
-function showResult(type,title,msg){
-
-const box=document.getElementById("resultBox");
-const icon=document.getElementById("resultIcon");
-
-document.getElementById("resultTitle").innerText=title;
-document.getElementById("resultText").innerText=msg;
-
-if(type==="success"){
-icon.className="w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-3";
-icon.innerHTML='<span class="material-symbols-outlined">check_circle</span>';
-}
-
-if(type==="error"){
-icon.className="w-14 h-14 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-3";
-icon.innerHTML='<span class="material-symbols-outlined">error</span>';
-}
-
-box.classList.remove("hidden");
-box.classList.add("flex");
-
-}
-
-window.closeResult=()=>{
-document.getElementById("resultBox").classList.add("hidden");
-};
-
 onAuthStateChanged(auth,async(user)=>{
 
 if(!user){
@@ -376,254 +337,6 @@ document.getElementById("totalReports").innerText=reports.size;
 }
 
 loadStats();
-
-const table=document.getElementById("memberTable");
-
-const q=query(collection(db,"users"),where("approved","==",false));
-
-onSnapshot(q,(snapshot)=>{
-
-table.innerHTML="";
-
-document.getElementById("totalPending").innerText=snapshot.size;
-
-snapshot.forEach(docSnap=>{
-
-const u=docSnap.data();
-const uid=docSnap.id;
-
-table.innerHTML+=`
-
-<tr class="border-t">
-
-<td class="p-4">${u.name||"Member"}</td>
-
-<td class="p-4">${u.email}</td>
-
-<td class="p-4 flex gap-2">
-
-<button onclick="approveUser('${uid}')"
-class="bg-green-500 text-white px-3 py-1 rounded flex items-center gap-1">
-
-<span class="material-symbols-outlined text-sm">check</span>
-Approve
-
-</button>
-
-<button onclick="rejectUser('${uid}')"
-class="bg-red-500 text-white px-3 py-1 rounded flex items-center gap-1">
-
-<span class="material-symbols-outlined text-sm">close</span>
-Reject
-
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-});
-
-});
-
-window.approveUser=async(uid)=>{
-
-try{
-
-showProcess("Approving Member","Updating membership status...");
-
-await updateDoc(doc(db,"users",uid),{
-approved:true
-});
-
-hideProcess();
-
-showResult(
-"success",
-"Member Approved",
-"User has been successfully approved."
-);
-
-}catch(e){
-
-hideProcess();
-
-showResult(
-"error",
-"Approval Failed",
-"Unable to approve the member."
-);
-
-}
-
-};
-
-window.rejectUser=async(uid)=>{
-
-try{
-
-showProcess("Rejecting Member","Removing membership request...");
-
-await deleteDoc(doc(db,"users",uid));
-
-hideProcess();
-
-showResult(
-"success",
-"Member Rejected",
-"User request has been removed."
-);
-
-}catch(e){
-
-hideProcess();
-
-showResult(
-"error",
-"Rejection Failed",
-"Unable to remove member."
-);
-
-}
-
-};
-
-document.getElementById("publishBtn").onclick=async()=>{
-
-const title=document.getElementById("announceTitle").value;
-const msg=document.getElementById("announceMsg").value;
-
-if(!title||!msg){
-showResult("error","Missing Data","Please enter title and message.");
-return;
-}
-
-try{
-
-showProcess("Publishing","Sending announcement to community...");
-
-await addDoc(collection(db,"announcements"),{
-title:title,
-message:msg,
-createdAt:serverTimestamp()
-});
-
-hideProcess();
-
-showResult(
-"success",
-"Announcement Published",
-"Community announcement sent successfully."
-);
-
-document.getElementById("announceTitle").value="";
-document.getElementById("announceMsg").value="";
-
-}catch(e){
-
-hideProcess();
-
-showResult(
-"error",
-"Publish Failed",
-"Unable to publish announcement."
-);
-
-}
-
-};
-
-const announceTable=document.getElementById("announcementTable");
-
-const announceQuery=query(collection(db,"announcements"),orderBy("createdAt","desc"));
-
-onSnapshot(announceQuery,(snapshot)=>{
-
-announceTable.innerHTML="";
-
-snapshot.forEach(docSnap=>{
-
-const a=docSnap.data();
-const id=docSnap.id;
-
-announceTable.innerHTML+=`
-
-<tr class="border-t">
-
-<td class="p-4">${a.title}</td>
-
-<td class="p-4">${a.message}</td>
-
-<td class="p-4">
-
-<button onclick="deleteAnnouncement('${id}')"
-class="bg-red-500 text-white px-3 py-1 rounded flex items-center gap-1">
-
-<span class="material-symbols-outlined text-sm">delete</span>
-Delete
-
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-});
-
-});
-
-window.deleteAnnouncement=async(id)=>{
-
-try{
-
-showProcess("Deleting","Removing announcement...");
-
-await deleteDoc(doc(db,"announcements",id));
-
-hideProcess();
-
-showResult(
-"success",
-"Announcement Deleted",
-"Announcement removed successfully."
-);
-
-}catch(e){
-
-hideProcess();
-
-showResult(
-"error",
-"Delete Failed",
-"Unable to delete announcement."
-);
-
-}
-
-};
-
-document.getElementById("logoutBtn").onclick=()=>{
-signOut(auth);
-window.location="citizen_login.html";
-};
-
-const menuBtn=document.getElementById("menuBtn");
-const sidebar=document.getElementById("sidebar");
-const overlay=document.getElementById("overlay");
-
-menuBtn.onclick=()=>{
-sidebar.classList.toggle("-translate-x-full");
-overlay.classList.toggle("hidden");
-};
-
-overlay.onclick=()=>{
-sidebar.classList.add("-translate-x-full");
-overlay.classList.add("hidden");
-};
 
 </script>
 
