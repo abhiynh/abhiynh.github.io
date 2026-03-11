@@ -29,11 +29,11 @@ to{opacity:1;transform:scale(1)}
 
 <body class="min-h-screen flex">
 
-<!-- Dashboard Loader -->
-<div id="dashboardLoader" class="fixed inset-0 flex items-center justify-center bg-white z-50">
+<!-- DASHBOARD LOADER -->
+<div id="dashboardLoader" class="fixed inset-0 bg-white flex items-center justify-center z-50">
 <div class="text-center">
-<div class="animate-spin rounded-full h-14 w-14 border-4 border-blue-500 border-t-transparent mx-auto"></div>
-<p class="mt-4 text-gray-600 font-semibold">Loading Dashboard...</p>
+<div class="animate-spin rounded-full h-14 w-14 border-4 border-blue-500 border-t-transparent mx-auto mb-4"></div>
+<p class="text-gray-600 font-semibold">Loading Dashboard...</p>
 </div>
 </div>
 
@@ -128,33 +128,25 @@ Admin Dashboard
 <div class="bg-white rounded-xl p-5 shadow">
 <span class="material-symbols-outlined text-blue-600 text-3xl">group</span>
 <p class="text-gray-500 text-xs mt-2">Members</p>
-<h3 id="totalMembers" class="text-xl font-bold">
-<div class="animate-pulse bg-gray-200 h-5 w-10 rounded"></div>
-</h3>
+<h3 id="totalMembers" class="text-xl font-bold">0</h3>
 </div>
 
 <div class="bg-white rounded-xl p-5 shadow">
 <span class="material-symbols-outlined text-green-600 text-3xl">article</span>
 <p class="text-gray-500 text-xs mt-2">Posts</p>
-<h3 id="totalPosts" class="text-xl font-bold">
-<div class="animate-pulse bg-gray-200 h-5 w-10 rounded"></div>
-</h3>
+<h3 id="totalPosts" class="text-xl font-bold">0</h3>
 </div>
 
 <div class="bg-white rounded-xl p-5 shadow">
 <span class="material-symbols-outlined text-yellow-500 text-3xl">pending</span>
 <p class="text-gray-500 text-xs mt-2">Pending</p>
-<h3 id="totalPending" class="text-xl font-bold">
-<div class="animate-pulse bg-gray-200 h-5 w-10 rounded"></div>
-</h3>
+<h3 id="totalPending" class="text-xl font-bold">0</h3>
 </div>
 
 <div class="bg-white rounded-xl p-5 shadow">
 <span class="material-symbols-outlined text-red-500 text-3xl">flag</span>
 <p class="text-gray-500 text-xs mt-2">Reports</p>
-<h3 id="totalReports" class="text-xl font-bold">
-<div class="animate-pulse bg-gray-200 h-5 w-10 rounded"></div>
-</h3>
+<h3 id="totalReports" class="text-xl font-bold">0</h3>
 </div>
 
 </div>
@@ -177,11 +169,7 @@ Pending Membership Requests
 </tr>
 </thead>
 
-<tbody id="memberTable">
-<tr>
-<td colspan="3" class="p-6 text-center text-gray-400">Loading members...</td>
-</tr>
-</tbody>
+<tbody id="memberTable"></tbody>
 
 </table>
 
@@ -230,11 +218,7 @@ Manage Announcements
 </tr>
 </thead>
 
-<tbody id="announcementTable">
-<tr>
-<td colspan="3" class="p-6 text-center text-gray-400">Loading announcements...</td>
-</tr>
-</tbody>
+<tbody id="announcementTable"></tbody>
 
 </table>
 
@@ -247,8 +231,28 @@ Manage Announcements
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { getAuth,onAuthStateChanged,signOut } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
-import { getFirestore,collection,doc,getDoc,getDocs,query,where,updateDoc,deleteDoc,onSnapshot,addDoc,serverTimestamp,orderBy } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+import {
+getAuth,
+onAuthStateChanged,
+signOut
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+
+import {
+getFirestore,
+collection,
+doc,
+getDoc,
+getDocs,
+query,
+where,
+updateDoc,
+deleteDoc,
+onSnapshot,
+addDoc,
+serverTimestamp,
+orderBy
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
 const firebaseConfig={
 apiKey:"AIzaSyCpNAu49OymCjNuRl7aRBRYQm0P6M0db0s",
@@ -266,6 +270,44 @@ const db=getFirestore(app);
 function hideLoader(){
 document.getElementById("dashboardLoader").style.display="none";
 }
+
+function showProcess(t,m){
+document.getElementById("processTitle").innerText=t;
+document.getElementById("processText").innerText=m;
+document.getElementById("processBox").classList.remove("hidden");
+document.getElementById("processBox").classList.add("flex");
+}
+
+function hideProcess(){
+document.getElementById("processBox").classList.add("hidden");
+}
+
+function showResult(type,title,msg){
+
+const box=document.getElementById("resultBox");
+const icon=document.getElementById("resultIcon");
+
+document.getElementById("resultTitle").innerText=title;
+document.getElementById("resultText").innerText=msg;
+
+if(type==="success"){
+icon.className="w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-3";
+icon.innerHTML='<span class="material-symbols-outlined">check_circle</span>';
+}
+
+if(type==="error"){
+icon.className="w-14 h-14 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-3";
+icon.innerHTML='<span class="material-symbols-outlined">error</span>';
+}
+
+box.classList.remove("hidden");
+box.classList.add("flex");
+
+}
+
+window.closeResult=()=>{
+document.getElementById("resultBox").classList.add("hidden");
+};
 
 onAuthStateChanged(auth,async(user)=>{
 
@@ -291,9 +333,9 @@ const users=await getDocs(collection(db,"users"));
 const posts=await getDocs(collection(db,"posts"));
 const reports=await getDocs(collection(db,"reports"));
 
-document.getElementById("totalMembers").innerHTML=users.size;
-document.getElementById("totalPosts").innerHTML=posts.size;
-document.getElementById("totalReports").innerHTML=reports.size;
+document.getElementById("totalMembers").innerText=users.size;
+document.getElementById("totalPosts").innerText=posts.size;
+document.getElementById("totalReports").innerText=reports.size;
 
 }
 
