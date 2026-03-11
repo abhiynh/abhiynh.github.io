@@ -1,16 +1,9 @@
-<!DOCTYPE html>  
-<html lang="en">  
+<!DOCTYPE html>  <html lang="en">  
 <head>  
 <meta charset="UTF-8">  
 <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-<title>Y N Hosakote Admin Panel</title>  
-  
-<script src="https://cdn.tailwindcss.com"></script>  
-  
-<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">  
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">  
-  
-<style>  
+<title>Y N Hosakote Admin Panel</title>  <script src="https://cdn.tailwindcss.com"></script>  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">  
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">  <style>  
 body{  
 font-family:'Lexend',sans-serif;  
 background:#f4f7fc;  
@@ -24,212 +17,108 @@ animation:fade .25s ease;
 from{opacity:0;transform:scale(.95)}  
 to{opacity:1;transform:scale(1)}  
 }  
-</style>  
-</head>  
-  
-<body class="min-h-screen flex">  
-
-<!-- DASHBOARD LOADER -->
-<div id="dashboardLoader" class="fixed inset-0 flex items-center justify-center bg-white/80 backdrop-blur-sm z-50">
-<div class="bg-white shadow-xl rounded-xl p-8 text-center fade w-[90%] max-w-sm">
-<div class="animate-spin rounded-full h-14 w-14 border-4 border-blue-500 border-t-transparent mx-auto mb-4"></div>
-<h3 class="font-bold text-lg text-gray-800">Loading Dashboard</h3>
-<p class="text-gray-500 text-sm mt-1">Fetching latest data...</p>
-</div>
-</div>
-  
-<div id="processBox" class="fixed inset-0 hidden items-center justify-center bg-black/40 z-50">  
+</style>  </head>  <body class="min-h-screen flex">  <div id="processBox" class="fixed inset-0 hidden items-center justify-center bg-black/40 z-50">  
 <div class="bg-white p-8 rounded-xl shadow-xl text-center w-[90%] max-w-sm fade">  
 <div class="animate-spin rounded-full h-14 w-14 border-4 border-blue-500 border-t-transparent mx-auto mb-4"></div>  
 <h3 id="processTitle" class="font-bold text-lg">Processing</h3>  
 <p id="processText" class="text-gray-500 text-sm mt-1">Please wait...</p>  
 </div>  
-</div>  
-  
-<div id="resultBox" class="fixed inset-0 hidden items-center justify-center bg-black/40 z-50">  
+</div>  <div id="resultBox" class="fixed inset-0 hidden items-center justify-center bg-black/40 z-50">  
 <div class="bg-white p-6 rounded-xl shadow-xl text-center w-[90%] max-w-sm fade">  
 <div id="resultIcon" class="w-14 h-14 rounded-full mx-auto flex items-center justify-center mb-3"></div>  
 <h3 id="resultTitle" class="font-bold text-lg"></h3>  
 <p id="resultText" class="text-gray-500 text-sm mt-1"></p>  
 <button onclick="closeResult()" class="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg">OK</button>  
 </div>  
-</div>  
-  
-<div id="overlay" class="fixed inset-0 bg-black/40 hidden lg:hidden z-30"></div>  
-  
-<aside id="sidebar"  
-class="fixed lg:static top-0 left-0 h-full w-64 bg-white border-r shadow-lg transform -translate-x-full lg:translate-x-0 transition-transform duration-300 z-40 flex flex-col">  
-  
-<div class="p-6 border-b flex items-center gap-3">  
+</div>  <div id="overlay" class="fixed inset-0 bg-black/40 hidden lg:hidden z-30"></div>  <aside id="sidebar"  
+class="fixed lg:static top-0 left-0 h-full w-64 bg-white border-r shadow-lg transform -translate-x-full lg:translate-x-0 transition-transform duration-300 z-40 flex flex-col">  <div class="p-6 border-b flex items-center gap-3">  
 <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">  
 <span class="material-symbols-outlined text-blue-700">location_city</span>  
-</div>  
-  
-<div>  
+</div>  <div>  
 <h1 class="font-bold text-gray-800">Admin Panel</h1>  
 <p class="text-xs text-gray-500">Y N Hosakote</p>  
 </div>  
-</div>  
-  
-<nav class="flex-1 p-4 space-y-2 text-sm">  
-  
-<button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">  
+</div>  <nav class="flex-1 p-4 space-y-2 text-sm">  <button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">  
 <span class="material-symbols-outlined text-blue-600">dashboard</span>  
 Dashboard  
-</button>  
-  
-<button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">  
+</button>  <button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">  
 <span class="material-symbols-outlined text-green-600">group</span>  
 Members  
-</button>  
-  
-<button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">  
+</button>  <button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">  
 <span class="material-symbols-outlined text-purple-600">article</span>  
 Posts  
-</button>  
-  
-<button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">  
+</button>  <button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">  
 <span class="material-symbols-outlined text-red-500">flag</span>  
 Reports  
-</button>  
-  
-<button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">  
+</button>  <button class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50">  
 <span class="material-symbols-outlined text-orange-500">campaign</span>  
 Announcements  
-</button>  
-  
-</nav>  
-  
-<div class="p-4 border-t">  
+</button>  </nav>  <div class="p-4 border-t">  
 <button id="logoutBtn"  
 class="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg flex items-center justify-center gap-2">  
 <span class="material-symbols-outlined">logout</span>  
 Logout  
 </button>  
-</div>  
-  
-</aside>  
-  
-<main class="flex-1 w-full">  
-  
-<div class="lg:hidden bg-white shadow flex items-center gap-3 p-4">  
+</div>  </aside>  <main class="flex-1 w-full">  <div class="lg:hidden bg-white shadow flex items-center gap-3 p-4">  
 <button id="menuBtn" class="bg-gray-100 p-2 rounded-lg">  
 <span class="material-symbols-outlined">menu</span>  
-</button>  
-  
-<h2 class="text-lg font-bold text-gray-800">  
+</button>  <h2 class="text-lg font-bold text-gray-800">  
 Admin Dashboard  
 </h2>  
-</div>  
-  
-<div class="p-6 lg:p-8 space-y-8">  
-  
-<div class="grid grid-cols-2 md:grid-cols-4 gap-4">  
-  
-<div class="bg-white rounded-xl p-5 shadow">  
+</div>  <div class="p-6 lg:p-8 space-y-8">  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">  <div class="bg-white rounded-xl p-5 shadow">  
 <span class="material-symbols-outlined text-blue-600 text-3xl">group</span>  
 <p class="text-gray-500 text-xs mt-2">Members</p>  
 <h3 id="totalMembers" class="text-xl font-bold">0</h3>  
-</div>  
-  
-<div class="bg-white rounded-xl p-5 shadow">  
+</div>  <div class="bg-white rounded-xl p-5 shadow">  
 <span class="material-symbols-outlined text-green-600 text-3xl">article</span>  
 <p class="text-gray-500 text-xs mt-2">Posts</p>  
 <h3 id="totalPosts" class="text-xl font-bold">0</h3>  
-</div>  
-  
-<div class="bg-white rounded-xl p-5 shadow">  
+</div>  <div class="bg-white rounded-xl p-5 shadow">  
 <span class="material-symbols-outlined text-yellow-500 text-3xl">pending</span>  
 <p class="text-gray-500 text-xs mt-2">Pending</p>  
 <h3 id="totalPending" class="text-xl font-bold">0</h3>  
-</div>  
-  
-<div class="bg-white rounded-xl p-5 shadow">  
+</div>  <div class="bg-white rounded-xl p-5 shadow">  
 <span class="material-symbols-outlined text-red-500 text-3xl">flag</span>  
 <p class="text-gray-500 text-xs mt-2">Reports</p>  
 <h3 id="totalReports" class="text-xl font-bold">0</h3>  
-</div>  
-  
-</div>  
-  
-<div class="bg-white rounded-xl shadow overflow-x-auto">  
-  
-<div class="p-5 border-b">  
+</div>  </div>  <div class="bg-white rounded-xl shadow overflow-x-auto">  <div class="p-5 border-b">  
 <h3 class="font-bold text-gray-800">  
 Pending Membership Requests  
 </h3>  
-</div>  
-  
-<table class="w-full text-sm">  
-  
-<thead class="bg-gray-50 text-gray-600">  
+</div>  <table class="w-full text-sm">  <thead class="bg-gray-50 text-gray-600">  
 <tr>  
 <th class="p-4 text-left">Name</th>  
 <th class="p-4 text-left">Email</th>  
 <th class="p-4 text-left">Action</th>  
 </tr>  
-</thead>  
-  
-<tbody id="memberTable"></tbody>  
-  
-</table>  
-  
-</div>  
-  
-<div class="bg-white rounded-xl shadow p-5 space-y-4">  
-  
-<h3 class="font-bold text-gray-800 flex items-center gap-2">  
+</thead>  <tbody id="memberTable"></tbody>  </table>  </div>  <div class="bg-white rounded-xl shadow p-5 space-y-4">  <h3 class="font-bold text-gray-800 flex items-center gap-2">  
 <span class="material-symbols-outlined text-blue-600">campaign</span>  
 Create Announcement  
-</h3>  
-  
-<input id="announceTitle"  
+</h3>  <input id="announceTitle"  
 type="text"  
 placeholder="Announcement Title"  
-class="w-full border p-3 rounded-lg">  
-  
+class="w-full border p-3 rounded-lg">
+
 <textarea id="announceMsg"  
 placeholder="Announcement Message"  
-class="w-full border p-3 rounded-lg"></textarea>  
-  
-<button id="publishBtn"  
-class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center gap-2">  
-<span class="material-symbols-outlined">send</span>  
-Publish Announcement  
-</button>  
-  
-</div>  
-  
-<div class="bg-white rounded-xl shadow overflow-x-auto">  
-  
-<div class="p-5 border-b">  
+class="w-full border p-3 rounded-lg"></textarea>  <button id="publishBtn"  
+class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center gap-2">
+<span class="material-symbols-outlined">send</span>
+Publish Announcement
+</button>
+
+</div>  <div class="bg-white rounded-xl shadow overflow-x-auto">  <div class="p-5 border-b">  
 <h3 class="font-bold text-gray-800 flex items-center gap-2">  
 <span class="material-symbols-outlined text-orange-500">campaign</span>  
 Manage Announcements  
 </h3>  
-</div>  
-  
-<table class="w-full text-sm">  
-  
-<thead class="bg-gray-50 text-gray-600">  
+</div>  <table class="w-full text-sm">  <thead class="bg-gray-50 text-gray-600">  
 <tr>  
 <th class="p-4 text-left">Title</th>  
 <th class="p-4 text-left">Message</th>  
 <th class="p-4 text-left">Action</th>  
 </tr>  
-</thead>  
-  
-<tbody id="announcementTable"></tbody>  
-  
-</table>  
-  
-</div>  
-  
-</div>  
-  
-</main>  
-  
-<script type="module">  
+</thead>  <tbody id="announcementTable"></tbody>  </table>  </div>  </div>  </main>  <script type="module">  
   
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";  
   
@@ -267,12 +156,44 @@ appId:"1:1053474727552:web:9ed2d6523ef935fd666865"
 const app=initializeApp(firebaseConfig);  
 const auth=getAuth(app);  
 const db=getFirestore(app);  
-
-const loader=document.getElementById("dashboardLoader");
-
-function hideLoader(){
-loader.style.display="none";
-}
+  
+function showProcess(t,m){  
+document.getElementById("processTitle").innerText=t;  
+document.getElementById("processText").innerText=m;  
+document.getElementById("processBox").classList.remove("hidden");  
+document.getElementById("processBox").classList.add("flex");  
+}  
+  
+function hideProcess(){  
+document.getElementById("processBox").classList.add("hidden");  
+}  
+  
+function showResult(type,title,msg){  
+  
+const box=document.getElementById("resultBox");  
+const icon=document.getElementById("resultIcon");  
+  
+document.getElementById("resultTitle").innerText=title;  
+document.getElementById("resultText").innerText=msg;  
+  
+if(type==="success"){  
+icon.className="w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-3";  
+icon.innerHTML='<span class="material-symbols-outlined">check_circle</span>';  
+}  
+  
+if(type==="error"){  
+icon.className="w-14 h-14 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-3";  
+icon.innerHTML='<span class="material-symbols-outlined">error</span>';  
+}  
+  
+box.classList.remove("hidden");  
+box.classList.add("flex");  
+  
+}  
+  
+window.closeResult=()=>{  
+document.getElementById("resultBox").classList.add("hidden");  
+};  
   
 onAuthStateChanged(auth,async(user)=>{  
   
@@ -285,11 +206,8 @@ const docSnap=await getDoc(doc(db,"users",user.uid));
   
 if(!docSnap.exists() || docSnap.data().role!=="admin"){  
 window.location="feed.html";  
-return;
-}
-
-hideLoader();
-
+}  
+  
 });  
   
 async function loadStats(){  
@@ -306,7 +224,253 @@ document.getElementById("totalReports").innerText=reports.size;
   
 loadStats();  
   
-</script>  
+const table=document.getElementById("memberTable");  
   
-</body>  
+const q=query(collection(db,"users"),where("approved","==",false));  
+  
+onSnapshot(q,(snapshot)=>{  
+  
+table.innerHTML="";  
+  
+document.getElementById("totalPending").innerText=snapshot.size;  
+  
+snapshot.forEach(docSnap=>{  
+  
+const u=docSnap.data();  
+const uid=docSnap.id;  
+  
+table.innerHTML+=`  
+  
+<tr class="border-t">  
+  
+<td class="p-4">${u.name||"Member"}</td>  
+  
+<td class="p-4">${u.email}</td>  
+  
+<td class="p-4 flex gap-2">  
+  
+<button onclick="approveUser('${uid}')"  
+class="bg-green-500 text-white px-3 py-1 rounded flex items-center gap-1">  
+  
+<span class="material-symbols-outlined text-sm">check</span>  
+Approve  
+  
+</button>  
+  
+<button onclick="rejectUser('${uid}')"  
+class="bg-red-500 text-white px-3 py-1 rounded flex items-center gap-1">  
+  
+<span class="material-symbols-outlined text-sm">close</span>  
+Reject  
+  
+</button>  
+  
+</td>  
+  
+</tr>  
+  
+`;  
+  
+});  
+  
+});  
+  
+window.approveUser=async(uid)=>{  
+  
+try{  
+  
+showProcess("Approving Member","Updating membership status...");  
+  
+await updateDoc(doc(db,"users",uid),{  
+approved:true  
+});  
+  
+hideProcess();  
+  
+showResult(  
+"success",  
+"Member Approved",  
+"User has been successfully approved."  
+);  
+  
+}catch(e){  
+  
+hideProcess();  
+  
+showResult(  
+"error",  
+"Approval Failed",  
+"Unable to approve the member."  
+);  
+  
+}  
+  
+};  
+  
+window.rejectUser=async(uid)=>{  
+  
+try{  
+  
+showProcess("Rejecting Member","Removing membership request...");  
+  
+await deleteDoc(doc(db,"users",uid));  
+  
+hideProcess();  
+  
+showResult(  
+"success",  
+"Member Rejected",  
+"User request has been removed."  
+);  
+  
+}catch(e){  
+  
+hideProcess();  
+  
+showResult(  
+"error",  
+"Rejection Failed",  
+"Unable to remove member."  
+);  
+  
+}  
+  
+};  
+  
+document.getElementById("publishBtn").onclick=async()=>{  
+  
+const title=document.getElementById("announceTitle").value;  
+const msg=document.getElementById("announceMsg").value;  
+  
+if(!title||!msg){  
+showResult("error","Missing Data","Please enter title and message.");  
+return;  
+}  
+  
+try{  
+  
+showProcess("Publishing","Sending announcement to community...");  
+  
+await addDoc(collection(db,"announcements"),{  
+title:title,  
+message:msg,  
+createdAt:serverTimestamp()  
+});  
+  
+hideProcess();  
+  
+showResult(  
+"success",  
+"Announcement Published",  
+"Community announcement sent successfully."  
+);  
+  
+document.getElementById("announceTitle").value="";  
+document.getElementById("announceMsg").value="";  
+  
+}catch(e){  
+  
+hideProcess();  
+  
+showResult(  
+"error",  
+"Publish Failed",  
+"Unable to publish announcement."  
+);  
+  
+}  
+  
+};  
+  
+const announceTable=document.getElementById("announcementTable");  
+  
+const announceQuery=query(collection(db,"announcements"),orderBy("createdAt","desc"));  
+  
+onSnapshot(announceQuery,(snapshot)=>{  
+  
+announceTable.innerHTML="";  
+  
+snapshot.forEach(docSnap=>{  
+  
+const a=docSnap.data();  
+const id=docSnap.id;  
+  
+announceTable.innerHTML+=`  
+  
+<tr class="border-t">  
+  
+<td class="p-4">${a.title}</td>  
+  
+<td class="p-4">${a.message}</td>  
+  
+<td class="p-4">  
+  
+<button onclick="deleteAnnouncement('${id}')"  
+class="bg-red-500 text-white px-3 py-1 rounded flex items-center gap-1">  
+  
+<span class="material-symbols-outlined text-sm">delete</span>  
+Delete  
+  
+</button>  
+  
+</td>  
+  
+</tr>  
+  
+`;  
+  
+});  
+  
+});  
+  
+window.deleteAnnouncement=async(id)=>{  
+  
+try{  
+  
+showProcess("Deleting","Removing announcement...");  
+  
+await deleteDoc(doc(db,"announcements",id));  
+  
+hideProcess();  
+  
+showResult(  
+"success",  
+"Announcement Deleted",  
+"Announcement removed successfully."  
+);  
+  
+}catch(e){  
+  
+hideProcess();  
+  
+showResult(  
+"error",  
+"Delete Failed",  
+"Unable to delete announcement."  
+);  
+  
+}  
+  
+};  
+  
+document.getElementById("logoutBtn").onclick=()=>{  
+signOut(auth);  
+window.location="citizen_login.html";  
+};  
+  
+const menuBtn=document.getElementById("menuBtn");  
+const sidebar=document.getElementById("sidebar");  
+const overlay=document.getElementById("overlay");  
+  
+menuBtn.onclick=()=>{  
+sidebar.classList.toggle("-translate-x-full");  
+overlay.classList.toggle("hidden");  
+};  
+  
+overlay.onclick=()=>{  
+sidebar.classList.add("-translate-x-full");  
+overlay.classList.add("hidden");  
+};  
+  
+</script>  </body>  
 </html>
