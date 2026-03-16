@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-fixed": "#ffdeab",
+                        "surface-container-low": "#f3f3f3",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-primary-fixed": "#101b31",
+                        "tertiary-container": "#1f1b14",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#79849f",
+                        "secondary-fixed-dim": "#e7c185",
+                        "error": "#ba1a1a",
+                        "inverse-surface": "#2f3131",
+                        "surface-dim": "#dadada",
+                        "surface-variant": "#e2e2e2",
+                        "surface-bright": "#f9f9f9",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed-dim": "#cec5ba",
+                        "primary": "#000000",
+                        "surface-tint": "#545e78",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed-variant": "#4c463e",
+                        "on-primary": "#ffffff",
+                        "on-background": "#1a1c1c",
+                        "on-secondary": "#ffffff",
+                        "outline-variant": "#c6c6ce",
+                        "secondary": "#765a27",
+                        "on-surface": "#1a1c1c",
+                        "inverse-primary": "#bcc6e4",
+                        "surface-container-high": "#e8e8e8",
+                        "inverse-on-surface": "#f0f1f1",
+                        "primary-fixed": "#d9e2ff",
+                        "on-primary-fixed-variant": "#3c465f",
+                        "tertiary-fixed": "#ebe1d6",
+                        "on-surface-variant": "#45464d",
+                        "on-secondary-fixed-variant": "#5c4212",
+                        "outline": "#76777e",
+                        "background": "#f9f9f9",
+                        "primary-container": "#101b31",
+                        "surface": "#f9f9f9",
+                        "on-tertiary-fixed": "#1f1b14",
+                        "primary-fixed-dim": "#bcc6e4",
+                        "on-secondary-fixed": "#271900",
+                        "on-tertiary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#fed799",
+                        "on-tertiary-container": "#8a8379",
+                        "on-secondary-container": "#795c2a",
+                        "tertiary": "#000000",
+                        "surface-container": "#eeeeee"
+                    },
+                    fontFamily: {
+                        "headline": ["Noto Serif"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #f9f9f9;
+            color: #1a1c1c;
+            scroll-behavior: smooth;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Noto Serif', serif;
+        }
+        .luxury-gradient {
+            background: linear-gradient(135deg, #101b31 0%, #000000 100%);
+        }
+        .glass-nav {
+            background: rgba(249, 249, 249, 0.8);
+            backdrop-filter: blur(20px);
+        }
+        .hero-vignette {
+            background: linear-gradient(to top, rgba(16, 27, 49, 0.7) 0%, transparent 60%);
+        }
+    </style>
+</head>
+<body class="bg-surface">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 glass-nav border-b border-outline-variant/10">
+<div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="text-xl font-headline font-bold tracking-tight text-primary-container">Bengaluru Private Guide</span>
+</div>
+<div class="hidden md:flex items-center gap-10">
+<a class="text-sm font-label uppercase tracking-widest text-on-surface hover:text-secondary transition-colors" href="#services">Services</a>
+<a class="text-sm font-label uppercase tracking-widest text-on-surface hover:text-secondary transition-colors" href="#packages">Packages</a>
+<a class="text-sm font-label uppercase tracking-widest text-on-surface hover:text-secondary transition-colors" href="#experiences">Experiences</a>
+<a class="text-sm font-label uppercase tracking-widest text-on-surface hover:text-secondary transition-colors" href="#about">About</a>
+</div>
+<button class="bg-primary-container text-on-primary px-8 py-3 text-sm font-label uppercase tracking-widest hover:bg-black transition-all rounded-sm">
+                Book Now
+            </button>
+</div>
+</nav>
+<!-- Luxury Hero -->
+<section class="relative h-screen w-full overflow-hidden flex items-end pb-24">
+<div class="absolute inset-0 z-0">
+<img alt="Bengaluru Skyline" class="w-full h-full object-cover" data-alt="Panoramic cinematic view of Bengaluru skyline at twilight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNr7c0jxQdMPLjouNY0uQ1MqQmg8Y76wIetzMLTRkEywximHn5-gXQqHLDBvvQ3oorXaf9Ln0KbUcReaAYGeCxFq2db-v2X6IvjboBKNnOzA8t9bA8gVANjrQkXeu2SumbVG1fWg61K9lTpqAA8MDXT8LflAKwgkiWkO1VCuTmvybyyt-hcNUZiW_6O8ni412i1P-94_1dO-Ju-xjMxd1nGGrGxksEBd9ASKlbvGQq1k6KsPSskESCWbVhElW5LCtJQYep7RbuOOM"/>
+<div class="absolute inset-0 hero-vignette"></div>
+</div>
+<div class="relative z-10 max-w-7xl mx-auto px-6 w-full">
+<div class="max-w-3xl">
+<h1 class="text-6xl md:text-8xl text-white mb-6 leading-[1.1]">Your Private Local Concierge in Bengaluru.</h1>
+<p class="text-xl text-white/80 mb-10 font-body leading-relaxed max-w-xl">
+                    Trusted local support for international travelers, executives and digital nomads visiting India. Experience the Silicon Valley of India with seamless luxury.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4">
+<button class="bg-secondary text-on-secondary px-10 py-5 text-sm font-label uppercase tracking-widest hover:bg-on-secondary-container transition-all rounded-sm flex items-center justify-center gap-2">
+                        Book a Private Guide
+                    </button>
+<button class="border border-white/30 backdrop-blur-md text-white px-10 py-5 text-sm font-label uppercase tracking-widest hover:bg-white/10 transition-all rounded-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">chat</span>
+                        WhatsApp Concierge
+                    </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Services Grid -->
+<section class="py-32 bg-surface" id="services">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+<div class="max-w-2xl">
+<span class="text-secondary font-label uppercase tracking-[0.2em] text-sm mb-4 block">Our Expertise</span>
+<h2 class="text-5xl text-on-surface leading-tight">Tailored Services for the Discerning Traveler.</h2>
+</div>
+<p class="text-on-surface-variant font-body max-w-sm mb-2">
+                    Every journey is unique. We provide a spectrum of services designed to eliminate friction and elevate your stay in Bengaluru.
+                </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
+<!-- Card 1 -->
+<div class="group p-12 bg-surface-container-lowest border border-outline-variant/10 hover:bg-primary-container transition-all duration-500">
+<span class="material-symbols-outlined text-4xl text-secondary mb-8 group-hover:text-secondary-fixed transition-colors">flight_land</span>
+<h3 class="text-2xl mb-4 group-hover:text-white transition-colors">Airport Arrival</h3>
+<p class="text-on-surface-variant group-hover:text-on-primary-container transition-colors leading-relaxed">Seamless airport transfers and VIP meet-and-greet services to start your journey with ease.</p>
+</div>
+<!-- Card 2 -->
+<div class="group p-12 bg-surface-container-lowest border border-outline-variant/10 hover:bg-primary-container transition-all duration-500">
+<span class="material-symbols-outlined text-4xl text-secondary mb-8 group-hover:text-secondary-fixed transition-colors">map</span>
+<h3 class="text-2xl mb-4 group-hover:text-white transition-colors">Private City Experiences</h3>
+<h4 class="sr-only">Private City Experiences</h4>
+<p class="text-on-surface-variant group-hover:text-on-primary-container transition-colors leading-relaxed">Curated tours focusing on heritage, modern architecture, and the vibrant local culture of Bengaluru.</p>
+</div>
+<!-- Card 3 -->
+<div class="group p-12 bg-surface-container-lowest border border-outline-variant/10 hover:bg-primary-container transition-all duration-500">
+<span class="material-symbols-outlined text-4xl text-secondary mb-8 group-hover:text-secondary-fixed transition-colors">business_center</span>
+<h3 class="text-2xl mb-4 group-hover:text-white transition-colors">Business Travel Support</h3>
+<p class="text-on-surface-variant group-hover:text-on-primary-container transition-colors leading-relaxed">Executive assistance, translation, and logistics for your high-stakes corporate visits.</p>
+</div>
+<!-- Card 4 -->
+<div class="group p-12 bg-surface-container-lowest border border-outline-variant/10 hover:bg-primary-container transition-all duration-500">
+<span class="material-symbols-outlined text-4xl text-secondary mb-8 group-hover:text-secondary-fixed transition-colors">shopping_bag</span>
+<h3 class="text-2xl mb-4 group-hover:text-white transition-colors">Luxury Shopping</h3>
+<p class="text-on-surface-variant group-hover:text-on-primary-container transition-colors leading-relaxed">Guided access to exclusive boutiques, silk markets, and premium artisanal jewelry designers.</p>
+</div>
+<!-- Card 5 -->
+<div class="group p-12 bg-surface-container-lowest border border-outline-variant/10 hover:bg-primary-container transition-all duration-500">
+<span class="material-symbols-outlined text-4xl text-secondary mb-8 group-hover:text-secondary-fixed transition-colors">restaurant</span>
+<h3 class="text-2xl mb-4 group-hover:text-white transition-colors">Cultural &amp; Food</h3>
+<p class="text-on-surface-variant group-hover:text-on-primary-container transition-colors leading-relaxed">Discover the city's gastronomic secrets, from traditional breakfast spots to avant-garde dining.</p>
+</div>
+<!-- Card 6 -->
+<div class="group p-12 bg-surface-container-lowest border border-outline-variant/10 hover:bg-primary-container transition-all duration-500">
+<span class="material-symbols-outlined text-4xl text-secondary mb-8 group-hover:text-secondary-fixed transition-colors">support_agent</span>
+<h3 class="text-2xl mb-4 group-hover:text-white transition-colors">Emergency Support</h3>
+<p class="text-on-surface-variant group-hover:text-on-primary-container transition-colors leading-relaxed">24/7 on-call local assistance for medical, legal, or logistical emergencies during your visit.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Why Choose Us -->
+<section class="py-32 bg-surface-container-low">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+<div class="relative">
+<img alt="Luxury Car Service" class="w-full h-[600px] object-cover rounded-sm" data-alt="High-end luxury sedan parked in front of a modern Bengaluru hotel" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDs8Nrshb2Pwn2k4Zd2CIxIVDI6_Ga09p3PrGBuHx_vhU2ThQiZp4AnMaA6cG73bBt03z9T9PnN0Z3fGKtTGwkT7aSxynWr1ymbO8nm3x-BIRs_Gpuu0GAdQ2023cNNvV4rNR2WRZV-lAI4WT2OxGHQPMnnC_71PZvdtPjrSqAt9yhNzVkbxsb_qGbiKn8tSX_6v_8xcbX1FtcOV329cNe5h7VrZe7xczKNWBfTIlJx5f9VvX6nVrK5sVvDoP2unKPPYN2nlIlfNoM"/>
+<div class="absolute -bottom-12 -right-12 w-64 h-64 bg-secondary flex flex-col items-center justify-center p-8 text-center hidden md:flex">
+<span class="text-5xl font-headline text-white mb-2">10+</span>
+<span class="text-sm font-label uppercase tracking-widest text-white/80">Years of Local Expertise</span>
+</div>
+</div>
+<div>
+<h2 class="text-5xl mb-12">The Gold Standard of Local Support.</h2>
+<div class="space-y-10">
+<div class="flex gap-6">
+<span class="material-symbols-outlined text-3xl text-secondary">verified_user</span>
+<div>
+<h4 class="text-xl mb-2">Trusted &amp; Safe</h4>
+<p class="text-on-surface-variant leading-relaxed">Fully verified backgrounds and a reputation built on years of service to high-profile international clients.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<span class="material-symbols-outlined text-3xl text-secondary">speed</span>
+<div>
+<h4 class="text-xl mb-2">Rapid Response</h4>
+<p class="text-on-surface-variant leading-relaxed">We value your time. Our concierge team responds to requests within minutes, ensuring your plans stay on track.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<span class="material-symbols-outlined text-3xl text-secondary">person_pin</span>
+<div>
+<h4 class="text-xl mb-2">Highly Personalized</h4>
+<p class="text-on-surface-variant leading-relaxed">No cookie-cutter itineraries. Every experience is crafted based on your specific interests and preferences.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Experience Gallery (Bento Style) -->
+<section class="py-32 bg-surface" id="experiences">
+<div class="max-w-7xl mx-auto px-6 mb-20">
+<h2 class="text-5xl text-center">Moments Captured.</h2>
+</div>
+<div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-4 h-[800px]">
+<div class="md:col-span-2 md:row-span-2 overflow-hidden">
+<img class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" data-alt="The grand architecture of Vidhana Soudha, Bengaluru" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvu4XpYkkFyaRXXbYHj1bXZpo5o27Fnxc-xRHk5J5eZBX_8Nt2NZY4_cyfRoYnYtS9KDZYzVmnvewAnCFnPm6kKtCrbMAMqPpe6L40JSqsZDHX-1GSL53I4zHPnO-af_x7xKl8Cif7O7XeZfhtmRiqDjnvrhTVEFQFYY37Xg_nUFOvnvB2a-60LXiLQJ8iyH6mSGwZyq1opctMgbnMJZEyoAGKGNrqPiiFpi5Bcj70O8rtodb0MTCTtZUdkhOY9Lt451JVPaUyIic"/>
+</div>
+<div class="md:col-span-1 md:row-span-1 overflow-hidden">
+<img class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" data-alt="Luxury hotel rooftop pool overlooking the city" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKo0IYcNqlrsRVdlHEMoAnrYnMkmL9YMmryPu0Jwbxi4FtCTjVFbeN2CelntGEoJhOec2UAStDtMkkjmOisSGuRVWqP0-7XQO2EcioE5TaMJO0cU_WUjMckWIhGgUTTXFiY4c6qJ3R2k0pWuq5h8219lG0ufJNJcIAtYmJnDIL3IuZY6kXDfNifVae7Z5FgRprE1xSxCY8rac7tUCXERa6D9FvGXJwhxdU9gqk_WetU_SnlFQvomppyZs7omMCIqMMs3EQSHrLUJk"/>
+</div>
+<div class="md:col-span-1 md:row-span-2 overflow-hidden">
+<img class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" data-alt="Vibrant traditional flower market scene" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuxvui2u0mLU3zBizeQJVHLVNHWag0wCkn4dfVsQO1C_pQXejqdWLGq_Wq3pAnNq4Fz93khQeNg1fZMuDmpmc5nRQ34zCftKXFa6m6hDfeKX_09R-NuNZOh0xxlybR4VRj_Q36BoMevR72ElRFTKsEDwxbc5gvAsKVSppuUU-uAcweOTg805mvocq71cKw6LGXif2XH8rVo1Lm8IYQ9XpKvJjHIpiTlM4GG5MHZtP5Bl3_toI1oIgq_J6XOa7cfulzDuepjgZV9mU"/>
+</div>
+<div class="md:col-span-1 md:row-span-1 overflow-hidden">
+<img class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" data-alt="Traditional South Indian temple carvings" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcF9jwyFzm0LVJz72tl1mP0MY4oM-kXGemx9tt2H6uR3TaG3MJMJDI7u9WlHpR_cGJH8lHWWB386DY1fIaw0lELYPVLz-Th6KUo8hnNQeNUbIt1fgHHo7L3UROzr_b-cPC0N96YI8UZ5k0tanYfKvNAII1ealv4GlW-RyZwjzfg2SFWn0UD_EsiEswAroH5EYdrXBikxaypH2ulwhwXLDnGLwugrTMQVgywXrnNe3a_U-BDyU1gtlG309UvVeE0zyobaBKaEEG1yk"/>
+</div>
+</div>
+</section>
+<!-- Concierge Packages -->
+<section class="py-32 bg-primary-container text-white" id="packages">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center mb-24">
+<span class="text-secondary-fixed font-label uppercase tracking-[0.2em] text-sm mb-4 block">Pricing &amp; Tiers</span>
+<h2 class="text-5xl">Curated Service Packages.</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Package 1 -->
+<div class="p-12 border border-white/10 flex flex-col h-full bg-white/5 backdrop-blur-sm">
+<h3 class="text-2xl mb-2">Arrival Concierge</h3>
+<div class="text-3xl font-headline text-secondary-fixed mb-8">₹5,000</div>
+<ul class="space-y-4 mb-12 flex-grow">
+<li class="flex items-center gap-3 text-white/70"><span class="material-symbols-outlined text-secondary-fixed text-sm">check</span> Airport Pickup</li>
+<li class="flex items-center gap-3 text-white/70"><span class="material-symbols-outlined text-secondary-fixed text-sm">check</span> SIM Card Setup</li>
+<li class="flex items-center gap-3 text-white/70"><span class="material-symbols-outlined text-secondary-fixed text-sm">check</span> Hotel Check-in Support</li>
+</ul>
+<button class="w-full py-4 border border-white/20 hover:bg-white/10 transition-colors uppercase font-label tracking-widest text-xs">Select Package</button>
+</div>
+<!-- Package 2 - Featured -->
+<div class="p-12 border-2 border-secondary flex flex-col h-full bg-white/10 relative scale-105 z-10">
+<div class="absolute top-0 right-0 bg-secondary text-white px-4 py-1 text-[10px] uppercase font-label tracking-widest">Most Popular</div>
+<h3 class="text-2xl mb-2">Private City Guide</h3>
+<div class="text-3xl font-headline text-secondary-fixed mb-8">₹8,000 <span class="text-sm font-body text-white/50">/ 8 Hours</span></div>
+<ul class="space-y-4 mb-12 flex-grow">
+<li class="flex items-center gap-3"><span class="material-symbols-outlined text-secondary-fixed text-sm">check</span> Full-day Custom Tour</li>
+<li class="flex items-center gap-3"><span class="material-symbols-outlined text-secondary-fixed text-sm">check</span> Private Transport</li>
+<li class="flex items-center gap-3"><span class="material-symbols-outlined text-secondary-fixed text-sm">check</span> Dining Reservations</li>
+<li class="flex items-center gap-3"><span class="material-symbols-outlined text-secondary-fixed text-sm">check</span> Professional Photography</li>
+</ul>
+<button class="w-full py-4 bg-secondary text-on-secondary hover:bg-secondary/90 transition-colors uppercase font-label tracking-widest text-xs">Book Experience</button>
+</div>
+<!-- Package 3 -->
+<div class="p-12 border border-white/10 flex flex-col h-full bg-white/5 backdrop-blur-sm">
+<h3 class="text-2xl mb-2">Executive Support</h3>
+<div class="text-3xl font-headline text-secondary-fixed mb-8">₹10,000 <span class="text-sm font-body text-white/50">/ Day</span></div>
+<ul class="space-y-4 mb-12 flex-grow">
+<li class="flex items-center gap-3 text-white/70"><span class="material-symbols-outlined text-secondary-fixed text-sm">check</span> 24/7 Priority Support</li>
+<li class="flex items-center gap-3 text-white/70"><span class="material-symbols-outlined text-secondary-fixed text-sm">check</span> Business Meeting Logistics</li>
+<li class="flex items-center gap-3 text-white/70"><span class="material-symbols-outlined text-secondar
