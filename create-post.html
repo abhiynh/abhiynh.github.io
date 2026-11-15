@@ -7,6 +7,7 @@
 
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
 
 <style>
 body{font-family:'Lexend',sans-serif;background:#eef2f7;}
@@ -18,23 +19,45 @@ body{font-family:'Lexend',sans-serif;background:#eef2f7;}
 <!-- HEADER -->
 <header class="bg-white shadow p-4 flex justify-between items-center">
 <h1 class="font-bold text-lg">Create Post</h1>
-<a href="feed.html" class="text-blue-600 font-semibold">Back</a>
+<a href="feeds.html" class="text-blue-600 font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-lg">arrow_back</span>Back to feed
+</a>
 </header>
 
 <!-- FORM -->
-<div class="max-w-xl mx-auto mt-8 bg-white rounded-2xl shadow-lg p-6">
+<div class="max-w-xl mx-auto mt-8 mb-10 bg-white rounded-2xl shadow-lg p-6">
 
-<textarea id="postText"
+<p id="authorLine" class="text-xs text-gray-500 mb-3">Posting as…</p>
+
+<textarea id="postText" maxlength="1000"
 class="w-full border rounded-xl p-4 h-32 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
 placeholder="What's happening in Y N Hosakote?"></textarea>
 
-<input type="file" id="imageInput" accept="image/*"
-class="mt-4 w-full">
+<div class="flex justify-between items-center mt-1">
+<label for="postCategory" class="text-xs text-gray-500">Category</label>
+<span id="charCount" class="text-xs text-gray-400">0 / 1000</span>
+</div>
 
-<img id="preview" class="hidden mt-4 rounded-xl max-h-80 object-cover"/>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-1">
+<select id="postCategory" class="w-full border rounded-lg px-3 py-2 text-sm bg-white">
+<option value="general">General</option>
+<option value="event">Event</option>
+<option value="help">Help Needed</option>
+<option value="lost">Lost &amp; Found</option>
+</select>
+
+<input id="postLocation" type="text" maxlength="80"
+placeholder="Location (optional, e.g. Near temple)"
+class="w-full border rounded-lg px-3 py-2 text-sm"/>
+</div>
+
+<input type="file" id="imageInput" accept="image/*"
+class="mt-4 w-full text-sm">
+
+<img id="preview" alt="Selected photo preview" class="hidden mt-4 rounded-xl max-h-80 object-cover"/>
 
 <button id="postBtn"
-class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-bold transition">
+class="mt-6 w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed text-white py-3 rounded-xl font-bold transition">
 Post Now
 </button>
 
@@ -47,7 +70,7 @@ Post Now
 /* ================= FIREBASE ================= */
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
 import {
   getFirestore,
   addDoc,
@@ -73,10 +96,23 @@ const db = getFirestore(app);
 
 /* ================= AUTH GUARD ================= */
 
+const postBtn = document.getElementById("postBtn");
+const statusEl = document.getElementById("status");
+const textArea = document.getElementById("postText");
+const charCount = document.getElementById("charCount");
+const imageInput = document.getElementById("imageInput");
+const preview = document.getElementById("preview");
+const categorySelect = document.getElementById("postCategory");
+const locationInput = document.getElementById("postLocation");
+
 let currentUser = null;
 let authorName = "Village Member";
+let authReady = false;
+
+postBtn.disabled = true;
 
 onAuthStateChanged(auth, async (user)=>{
+
   if(!user){
     window.location = "citizen_login.html";
     return;
@@ -85,57 +121,85 @@ onAuthStateChanged(auth, async (user)=>{
   currentUser = user;
 
   try{
-    const userRef = doc(db,"members",user.uid);
-    const userDoc = await getDoc(userRef);
+    /* Approved members live in the users collection, written by register.html */
+    const userDoc = await getDoc(doc(db,"users",user.uid));
 
-    if(userDoc.exists()){
-      authorName = userDoc.data().name || user.email;
-    }else{
-      authorName = user.email;
+    if(!userDoc.exists() || userDoc.data().approved !== true){
+      await signOut(auth);
+      alert("Your account is waiting for admin approval.");
+      window.location = "citizen_login.html";
+      return;
     }
-  }catch{
-    authorName = user.email;
+
+    const data = userDoc.data();
+    authorName = data.name || user.displayName || user.email || "Village Member";
+
+  }catch(err){
+    console.error("Account check failed",err);
+    statusEl.innerText = "Could not verify your account. Please reload and login again.";
+    return;
   }
+
+  document.getElementById("authorLine").innerText = "Posting as " + authorName;
+  authReady = true;
+  postBtn.disabled = false;
 });
+
+/* ================= TEXT COUNTER ================= */
+
+function updateCounter(){
+  charCount.innerText = textArea.value.length + " / 1000";
+}
+
+textArea.addEventListener("input",updateCounter);
+updateCounter();
 
 /* ================= IMAGE PREVIEW ================= */
 
-const imageInput = document.getElementById("imageInput");
-const preview = document.getElementById("preview");
-
 imageInput.addEventListener("change", ()=>{
   const file = imageInput.files[0];
-  if(!file) return;
+
+  if(!file){
+    preview.classList.add("hidden");
+    preview.removeAttribute("src");
+    return;
+  }
+
   preview.src = URL.createObjectURL(file);
   preview.classList.remove("hidden");
 });
 
 /* ================= CREATE POST ================= */
 
-document.getElementById("postBtn").addEventListener("click", async ()=>{
+postBtn.addEventListener("click", async ()=>{
 
-  const text = document.getElementById("postText").value.trim();
+  const text = textArea.value.trim();
   const file = imageInput.files[0];
-  const status = document.getElementById("status");
+
+  statusEl.classList.remove("text-red-500");
 
   if(!text && !file){
-    status.innerText="Write something or select an image.";
+    statusEl.innerText = "Write something or select an image.";
+    statusEl.classList.add("text-red-500");
     return;
   }
 
-  if(!currentUser){
-    status.innerText="You must login first.";
+  if(!currentUser || !authReady){
+    statusEl.innerText = "You must login first.";
+    statusEl.classList.add("text-red-500");
     return;
   }
 
   let imageUrl = "";
+
+  postBtn.disabled = true;
 
   try{
 
     /* UPLOAD IMAGE (Cloudinary Free Storage) */
     if(file){
 
-      status.innerText="Uploading image...";
+      statusEl.innerText = "Uploading image...";
 
       const formData = new FormData();
       formData.append("file",file);
@@ -156,22 +220,26 @@ document.getElementById("postBtn").addEventListener("click", async ()=>{
     }
 
     /* SAVE POST */
-    status.innerText="Publishing post...";
+    statusEl.innerText = "Publishing post...";
 
     await addDoc(collection(db,"posts"),{
       text:text,
       imageUrl:imageUrl,
       authorName:authorName,
       uid:currentUser.uid,
+      category:categorySelect.value || "general",
+      location:locationInput.value.trim(),
       likeCount:0,
       createdAt:serverTimestamp()
     });
 
-    status.innerText="Posted successfully!";
-    setTimeout(()=>window.location="feed.html",1200);
+    statusEl.innerText = "Posted successfully!";
+    setTimeout(()=>window.location = "feeds.html",900);
 
   }catch(err){
-    status.innerText="Upload failed. Check internet or storage settings.";
+    statusEl.innerText = "Could not publish your post. Check your internet or image settings.";
+    statusEl.classList.add("text-red-500");
+    postBtn.disabled = false;
     console.error(err);
   }
 
