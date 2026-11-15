@@ -58,6 +58,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 font-weight:600;
+font-size:14px;
 }
 
 .post-btn{
@@ -73,6 +74,39 @@ transition:.2s;
 }
 
 .post-btn:hover{background:#f3f4f6}
+
+.chip{
+display:inline-flex;
+align-items:center;
+gap:4px;
+padding:6px 14px;
+border-radius:999px;
+border:1px solid #e5e7eb;
+background:white;
+font-size:13px;
+font-weight:600;
+color:#475569;
+transition:.2s;
+}
+
+.chip:hover{background:#f8fafc}
+
+.chip-active{
+background:#0f49bd;
+border-color:#0f49bd;
+color:white;
+}
+
+.post-highlight{
+animation:highlightPulse 2s ease-out 1;
+outline:3px solid #0f49bd;
+outline-offset:2px;
+}
+
+@keyframes highlightPulse{
+0%{box-shadow:0 0 0 0 rgba(15,73,189,.45);}
+100%{box-shadow:0 0 0 18px rgba(15,73,189,0);}
+}
 
 .image-viewer{
 position:fixed;
@@ -109,6 +143,24 @@ z-index:60;
 .comment-modal.show{
 transform:translateY(0);
 }
+
+#toast{
+position:fixed;
+left:50%;
+bottom:96px;
+transform:translate(-50%,20px);
+background:#0f172a;
+color:white;
+padding:10px 18px;
+border-radius:999px;
+font-size:13px;
+opacity:0;
+pointer-events:none;
+transition:.25s;
+z-index:70;
+}
+
+#toast.show{opacity:1;transform:translate(-50%,0);}
 </style>
 </head>
 
@@ -123,53 +175,111 @@ transform:translateY(0);
 
 <header class="sticky top-0 z-40 bg-white shadow-sm border-b px-4 py-3 flex justify-between items-center">
 
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary text-2xl">groups</span>
-<h1 class="font-bold text-primary text-lg">Y N Hosakote Feed</h1>
+<div class="flex items-center gap-3 min-w-0">
+<a href="index.html" class="text-gray-500 hover:text-primary" aria-label="Back to village home">
+<span class="material-symbols-outlined">home</span>
+</a>
+<div class="min-w-0">
+<h1 class="font-bold text-primary text-lg leading-tight truncate">Y N Hosakote Feed</h1>
+<p id="currentUser" class="text-xs text-gray-500 truncate">Checking account…</p>
+</div>
 </div>
 
-<button onclick="logout()" class="flex items-center gap-1 text-sm text-red-500 font-semibold">
+<button data-action="logout" class="flex items-center gap-1 text-sm text-red-500 font-semibold shrink-0">
 <span class="material-symbols-outlined text-sm">logout</span>
 Logout
 </button>
 
 </header>
 
+<!-- SEARCH + FILTERS -->
+<section class="feed-container px-4 pt-4">
+<div class="bg-white rounded-2xl border shadow-sm p-3 space-y-3">
+
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-gray-400 text-lg">search</span>
+<input id="searchInput" type="search" autocomplete="off"
+placeholder="Search posts, announcements, people…"
+class="w-full pl-10 pr-3 py-2 rounded-xl border text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"/>
+</div>
+
+<div class="flex flex-wrap items-center gap-2">
+<button class="chip chip-active" data-type="all">All</button>
+<button class="chip" data-type="post">Posts</button>
+<button class="chip" data-type="announcement">Announcements</button>
+<button class="chip" data-action="toggle-mine">My posts</button>
+</div>
+
+<div class="flex flex-wrap items-center gap-2">
+<select id="categoryFilter" class="flex-1 min-w-[140px] border rounded-lg px-3 py-2 text-sm bg-white">
+<option value="all">All categories</option>
+</select>
+
+<select id="sortSelect" class="flex-1 min-w-[140px] border rounded-lg px-3 py-2 text-sm bg-white">
+<option value="newest">Newest first</option>
+<option value="oldest">Oldest first</option>
+<option value="popular">Most liked</option>
+</select>
+</div>
+
+<p id="resultCount" class="text-xs text-gray-500"></p>
+
+</div>
+</section>
+
 <main id="feed" class="feed-container p-4 space-y-5"></main>
 
-<button onclick="window.location='create-post.html'"
+<button data-action="compose"
 class="fixed bottom-24 right-4 z-50 h-16 w-16 bg-secondary text-white rounded-full shadow-xl flex items-center justify-center hover:scale-105 transition">
 <span class="material-symbols-outlined text-3xl">add</span>
 </button>
 
-<div id="imageViewer" class="image-viewer" onclick="closeImage()">
-<img id="viewerImg">
+<div id="imageViewer" class="image-viewer" data-action="close-image">
+<img id="viewerImg" alt="Shared photo enlarged">
 </div>
 
 <div id="commentModal" class="comment-modal p-4">
 
-<div class="flex justify-between items-center mb-3">
+<div class="flex justify-between items-center mb-1">
 <h3 class="font-semibold">Comments</h3>
-<button onclick="closeComments()">✕</button>
+<button data-action="close-comments" class="text-gray-500 hover:text-gray-900" aria-label="Close comments">✕</button>
 </div>
+
+<p id="commentCountLabel" class="text-xs text-gray-500 mb-3"></p>
 
 <div id="commentList" class="space-y-2 text-sm mb-4"></div>
 
+<p id="commentError" class="text-xs text-red-500 mb-2"></p>
+
 <div class="flex gap-2">
-<input id="commentInput" class="flex-1 border rounded-lg px-3 py-2 text-sm" placeholder="Write a comment"/>
-<button onclick="submitComment()" class="bg-primary text-white px-4 rounded-lg text-sm">Send</button>
+<input id="commentInput" class="flex-1 border rounded-lg px-3 py-2 text-sm" placeholder="Write a comment" autocomplete="off"/>
+<button id="commentSend" data-action="send-comment" class="bg-primary text-white px-4 rounded-lg text-sm font-semibold">Send</button>
 </div>
 
 </div>
+
+<div id="toast" role="status" aria-live="polite"></div>
 
 <script type="module">
 
+import {
+escapeHtml,
+categoryMeta,
+CATEGORY_META,
+initials,
+formatDateTime,
+toMillis,
+buildShareUrl,
+filterFeed,
+sortFeed
+} from "./js/community.js";
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
 
-import { 
-getAuth, 
-onAuthStateChanged, 
-signOut 
+import {
+getAuth,
+onAuthStateChanged,
+signOut
 } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
 
 import {
@@ -185,7 +295,8 @@ serverTimestamp,
 where,
 getDocs,
 deleteDoc,
-getDoc
+getDoc,
+increment
 } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
 const firebaseConfig={
@@ -201,37 +312,85 @@ const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const db=getFirestore(app);
 
-let currentUser;
+const feedEl=document.getElementById("feed");
+const searchInput=document.getElementById("searchInput");
+const categoryFilter=document.getElementById("categoryFilter");
+const sortSelect=document.getElementById("sortSelect");
+const resultCount=document.getElementById("resultCount");
+const typeButtons=Array.from(document.querySelectorAll("[data-type]"));
+const mineButton=document.querySelector('[data-action="toggle-mine"]');
+
+let currentUser=null;
+let myName="Village Member";
+let isAdmin=false;
+let posts=[];
+let announcements=[];
+let myLikes=new Set();
+let commentCounts=new Map();
 let activePost=null;
+let commentUnsub=null;
+let postsLoaded=false;
+let announcementsLoaded=false;
+let deepLinkHandled=false;
+let toastTimer=null;
 
-const feed=document.getElementById("feed");
+const deepLinkPost=new URLSearchParams(location.search).get("post");
 
-onAuthStateChanged(auth, async(user)=>{
+const view={type:"all",search:"",category:"all",sort:"newest",onlyMine:false};
+
+/* Fill the category dropdown from the shared category table */
+for(const [key,meta] of Object.entries(CATEGORY_META)){
+const option=document.createElement("option");
+option.value=key;
+option.textContent=meta.label;
+categoryFilter.appendChild(option);
+}
+
+/* ===== AUTH GUARD ===== */
+
+onAuthStateChanged(auth,async(user)=>{
 
 if(!user){
-window.location="citizen_login.html";
+location.replace("citizen_login.html");
 return;
 }
 
 currentUser=user;
 
+try{
+
 const userDoc=await getDoc(doc(db,"users",user.uid));
 
 if(!userDoc.exists() || userDoc.data().approved!==true){
 await signOut(auth);
-alert("Account not approved");
-window.location="citizen_login.html";
+alert("Your account is waiting for admin approval.");
+location.replace("citizen_login.html");
 return;
 }
 
+const data=userDoc.data();
+myName=data.name || user.displayName || user.email || "Village Member";
+isAdmin=data.role==="admin";
+
+}catch(err){
+console.error("Account check failed",err);
+await signOut(auth);
+alert("Could not verify your account. Please login again.");
+location.replace("citizen_login.html");
+return;
+}
+
+document.getElementById("currentUser").textContent=myName+(isAdmin?" · Admin":"");
 document.getElementById("authLoader").style.display="none";
 
 loadAnnouncements();
 loadPosts();
+loadMyLikes();
+loadCommentCounts();
 
 });
 
-/* ANNOUNCEMENTS */
+/* ===== LIVE DATA ===== */
 
 function loadAnnouncements(){
 
@@ -239,54 +398,32 @@ const q=query(collection(db,"announcements"),orderBy("createdAt","desc"));
 
 onSnapshot(q,(snapshot)=>{
 
-snapshot.forEach(docSnap=>{
-
+announcements=snapshot.docs.map((docSnap)=>{
 const a=docSnap.data();
-
-const date=a.createdAt?.toDate();
-
-const formatted=date?date.toLocaleString("en-IN",{
-day:"2-digit",
-month:"short",
-year:"numeric",
-hour:"numeric",
-minute:"2-digit",
-hour12:true
-}):"";
-
-feed.innerHTML+=`
-
-<div class="announcement-card">
-
-<div class="p-4">
-
-<div class="flex items-center gap-2 mb-2">
-
-<span class="material-symbols-outlined text-orange-600">campaign</span>
-
-<h3 class="font-bold text-orange-700 text-sm">Village Announcement</h3>
-
-</div>
-
-<h4 class="font-semibold text-sm mb-1">${a.title||""}</h4>
-
-<p class="text-sm text-gray-700">${a.message||""}</p>
-
-<p class="text-xs text-gray-500 mt-2">${formatted}</p>
-
-</div>
-
-</div>
-
-`;
-
+return {
+id:docSnap.id,
+type:"announcement",
+title:a.title||"Village announcement",
+message:a.message||"",
+authorName:a.authorName||"Village Office",
+category:"notice",
+uid:a.uid||"",
+likeCount:0,
+createdAt:a.createdAt||null
+};
 });
 
+announcementsLoaded=true;
+renderFeed();
+
+},(err)=>{
+console.error("Announcements failed",err);
+announcementsLoaded=true;
+announcements=[];
+renderFeed();
 });
 
 }
-
-/* POSTS */
 
 function loadPosts(){
 
@@ -294,93 +431,318 @@ const q=query(collection(db,"posts"),orderBy("createdAt","desc"));
 
 onSnapshot(q,(snapshot)=>{
 
-snapshot.forEach(docSnap=>{
-
+posts=snapshot.docs.map((docSnap)=>{
 const p=docSnap.data();
-const id=docSnap.id;
+return {
+id:docSnap.id,
+type:"post",
+text:p.text||"",
+imageUrl:p.imageUrl||"",
+authorName:p.authorName||"Member",
+uid:p.uid||"",
+category:p.category||"general",
+location:p.location||"",
+likeCount:p.likeCount||0,
+createdAt:p.createdAt||null
+};
+});
 
-const date=p.createdAt?.toDate();
+postsLoaded=true;
+renderFeed();
 
-const formattedDate=date
-?date.toLocaleString("en-IN",{
-day:"2-digit",
-month:"short",
-year:"numeric",
-hour:"numeric",
-minute:"2-digit",
-hour12:true
-})
-:"";
+},(err)=>{
+console.error("Posts failed",err);
+postsLoaded=true;
+posts=[];
+renderFeed();
+});
 
-feed.innerHTML+=`
+}
 
-<article class="post-card">
+function loadMyLikes(){
+
+const q=query(collection(db,"likes"),where("uid","==",currentUser.uid));
+
+onSnapshot(q,(snapshot)=>{
+myLikes=new Set(snapshot.docs.map((d)=>d.data().postId).filter(Boolean));
+renderFeed();
+},(err)=>console.error("Likes failed",err));
+
+}
+
+function loadCommentCounts(){
+
+onSnapshot(collection(db,"comments"),(snapshot)=>{
+
+const counts=new Map();
+
+snapshot.forEach((d)=>{
+const postId=d.data().postId;
+if(postId) counts.set(postId,(counts.get(postId)||0)+1);
+});
+
+commentCounts=counts;
+renderFeed();
+
+},(err)=>console.error("Comment counts failed",err));
+
+}
+
+/* ===== RENDER ===== */
+
+function renderFeed(){
+
+const items=[...announcements,...posts];
+
+const visible=sortFeed(
+filterFeed(items,{...view,uid:currentUser?currentUser.uid:""}),
+view.sort
+);
+
+if(!items.length){
+feedEl.innerHTML=`
+<div class="post-card p-10 text-center">
+<span class="material-symbols-outlined text-4xl text-gray-300">forum</span>
+<p class="mt-2 text-sm text-gray-500">${postsLoaded&&announcementsLoaded?"No posts yet. Be the first to share something with the village.":"Loading the feed…"}</p>
+</div>`;
+resultCount.textContent="";
+return;
+}
+
+if(!visible.length){
+feedEl.innerHTML=`
+<div class="post-card p-10 text-center">
+<span class="material-symbols-outlined text-4xl text-gray-300">search_off</span>
+<p class="mt-2 text-sm text-gray-600 font-semibold">No updates match your filters</p>
+<p class="text-xs text-gray-500 mt-1">Try a different search word or category.</p>
+<button data-action="reset-filters" class="chip chip-active mt-4">Clear filters</button>
+</div>`;
+resultCount.textContent=`0 of ${items.length} updates`;
+return;
+}
+
+feedEl.innerHTML=visible
+.map((item)=>item.type==="announcement"?announcementCard(item):postCard(item))
+.join("");
+
+resultCount.textContent=`${visible.length} of ${items.length} updates`;
+
+highlightDeepLink();
+
+}
+
+function announcementCard(a){
+
+const formatted=escapeHtml(formatDateTime(a.createdAt));
+
+return `
+<article class="announcement-card" id="post-${a.id}" data-post="${a.id}">
+<div class="p-4">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-orange-600">campaign</span>
+<h3 class="font-bold text-orange-700 text-sm">Village Announcement</h3>
+</div>
+<h4 class="font-semibold text-sm mb-1 break-words">${escapeHtml(a.title)}</h4>
+<p class="text-sm text-gray-700 whitespace-pre-line break-words">${escapeHtml(a.message)}</p>
+<p class="text-xs text-gray-500 mt-2">${formatted}</p>
+</div>
+</article>`;
+}
+
+function postCard(p){
+
+const meta=categoryMeta(p.category);
+const mine=currentUser && p.uid===currentUser.uid;
+const canDelete=mine||isAdmin;
+const liked=myLikes.has(p.id);
+const likeCount=Math.max(0,p.likeCount||0);
+const comments=commentCounts.get(p.id)||0;
+const formatted=escapeHtml(formatDateTime(p.createdAt));
+const author=escapeHtml(p.authorName||"Member");
+
+return `
+<article class="post-card" id="post-${p.id}" data-post="${p.id}">
 
 <div class="p-4">
 
-<div class="flex items-center gap-3">
+<div class="flex items-start gap-3">
 
-<div class="author-avatar">
-${(p.authorName||"M").charAt(0).toUpperCase()}
+<div class="author-avatar shrink-0">${escapeHtml(initials(p.authorName))}</div>
+
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 flex-wrap">
+<h3 class="font-semibold text-sm truncate">${author}</h3>
+${mine?`<span class="text-[10px] font-semibold uppercase tracking-wide bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded">You</span>`:""}
+<span class="text-[10px] font-semibold px-1.5 py-0.5 rounded ${meta.badge}">${escapeHtml(meta.label)}</span>
+</div>
+<p class="text-xs text-gray-500">${formatted}${p.location?` · ${escapeHtml(p.location)}`:""}</p>
 </div>
 
-<div>
-<h3 class="font-semibold text-sm">${p.authorName||"Member"}</h3>
-<p class="text-xs text-gray-500">${formattedDate}</p>
-</div>
+${canDelete?`
+<button data-action="delete-post" data-id="${p.id}" class="text-gray-400 hover:text-red-500 p-1 shrink-0" aria-label="Delete post">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>`:""}
 
 </div>
 
-<p class="mt-3 text-gray-800 text-sm">${p.text||""}</p>
+<p class="mt-3 text-gray-800 text-sm whitespace-pre-line break-words">${escapeHtml(p.text)}</p>
 
-${p.imageUrl?`<img src="${p.imageUrl}" onclick="openImage('${p.imageUrl}')" class="mt-3 rounded-xl w-full cursor-pointer">`:""}
+${p.imageUrl?`<img src="${escapeHtml(p.imageUrl)}" data-action="view-image" data-src="${escapeHtml(p.imageUrl)}" loading="lazy" alt="Photo shared by ${author}" class="mt-3 rounded-xl w-full cursor-pointer"/>`:""}
 
 </div>
 
 <div class="px-4 py-2 border-t text-xs text-gray-500 flex justify-between">
-
 <span class="flex items-center gap-1">
 <span class="material-symbols-outlined text-sm text-pink-500">favorite</span>
-${p.likeCount||0} Likes
+${likeCount} ${likeCount===1?"like":"likes"}
 </span>
-
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-green-600">chat_bubble</span>
+${comments} ${comments===1?"comment":"comments"}
+</span>
 </div>
 
 <div class="flex border-t">
 
-<button onclick="likePost('${id}',${p.likeCount||0})" class="post-btn">
-<span class="material-symbols-outlined text-blue-600">thumb_up</span>
-Like
+<button data-action="like" data-id="${p.id}" class="post-btn ${liked?"text-primary":""}">
+<span class="material-symbols-outlined ${liked?"text-primary":"text-blue-600"}"${liked?' style="font-variation-settings:\'FILL\' 1;"':""}>thumb_up</span>
+${liked?"Liked":"Like"}
 </button>
 
-<button onclick="openComments('${id}')" class="post-btn">
+<button data-action="comment" data-id="${p.id}" class="post-btn">
 <span class="material-symbols-outlined text-green-600">chat_bubble</span>
 Comment
 </button>
 
-<button onclick="sharePost('${id}')" class="post-btn">
+<button data-action="share" data-id="${p.id}" class="post-btn">
 <span class="material-symbols-outlined">share</span>
 Share
 </button>
 
-<button onclick="reportPost('${id}')" class="post-btn text-red-500">
+<button data-action="report" data-id="${p.id}" class="post-btn text-red-500">
 <span class="material-symbols-outlined">flag</span>
 Report
 </button>
 
 </div>
 
-</article>
-
-`;
-
-});
-
-});
+</article>`;
 
 }
 
-window.likePost=async(postId,count)=>{
+function highlightDeepLink(){
+
+if(deepLinkHandled || !deepLinkPost) return;
+
+const target=document.getElementById(`post-${deepLinkPost}`);
+
+if(!target) return;
+
+deepLinkHandled=true;
+target.classList.add("post-highlight");
+target.scrollIntoView({behavior:"smooth",block:"center"});
+
+}
+
+/* ===== FILTER CONTROLS ===== */
+
+searchInput.addEventListener("input",()=>{
+view.search=searchInput.value;
+renderFeed();
+});
+
+categoryFilter.addEventListener("change",()=>{
+view.category=categoryFilter.value;
+renderFeed();
+});
+
+sortSelect.addEventListener("change",()=>{
+view.sort=sortSelect.value;
+renderFeed();
+});
+
+typeButtons.forEach((button)=>{
+button.addEventListener("click",()=>{
+view.type=button.dataset.type;
+typeButtons.forEach((b)=>b.classList.toggle("chip-active",b===button));
+renderFeed();
+});
+});
+
+function resetFilters(){
+
+view.type="all";
+view.search="";
+view.category="all";
+view.sort="newest";
+view.onlyMine=false;
+
+searchInput.value="";
+categoryFilter.value="all";
+sortSelect.value="newest";
+typeButtons.forEach((b)=>b.classList.toggle("chip-active",b.dataset.type==="all"));
+mineButton.classList.remove("chip-active");
+
+renderFeed();
+
+}
+
+/* ===== ACTIONS ===== */
+
+feedEl.addEventListener("click",async(event)=>{
+
+const trigger=event.target.closest("[data-action]");
+if(!trigger) return;
+
+const action=trigger.dataset.action;
+const id=trigger.dataset.id;
+
+if(action==="view-image"){ openImage(trigger.dataset.src); return; }
+if(action==="reset-filters"){ resetFilters(); return; }
+if(!id) return;
+
+if(action==="like") await toggleLike(id);
+else if(action==="comment") openComments(id);
+else if(action==="share") await sharePost(id);
+else if(action==="report") await reportPost(id);
+else if(action==="delete-post") await deletePost(id);
+
+});
+
+document.addEventListener("click",async(event)=>{
+
+const trigger=event.target.closest("[data-action]");
+if(!trigger) return;
+
+const action=trigger.dataset.action;
+
+if(action==="logout"){
+await signOut(auth);
+location.replace("citizen_login.html");
+}
+else if(action==="compose"){
+location.href="create-post.html";
+}
+else if(action==="close-image"){
+closeImage();
+}
+else if(action==="close-comments"){
+closeComments();
+}
+else if(action==="send-comment"){
+await submitComment();
+}
+else if(action==="toggle-mine"){
+view.onlyMine=!view.onlyMine;
+trigger.classList.toggle("chip-active",view.onlyMine);
+renderFeed();
+}
+
+});
+
+/* ===== LIKE ===== */
+
+async function toggleLike(postId){
 
 const likeQuery=query(
 collection(db,"likes"),
@@ -388,98 +750,284 @@ where("postId","==",postId),
 where("uid","==",currentUser.uid)
 );
 
+try{
+
 const likeSnap=await getDocs(likeQuery);
 
 if(likeSnap.empty){
 
 await addDoc(collection(db,"likes"),{
 postId:postId,
-uid:currentUser.uid
+uid:currentUser.uid,
+createdAt:serverTimestamp()
 });
 
-await updateDoc(doc(db,"posts",postId),{
-likeCount:count+1
-});
+await updateDoc(doc(db,"posts",postId),{likeCount:increment(1)});
+myLikes.add(postId);
 
 }else{
 
-likeSnap.forEach(async(d)=>{
-await deleteDoc(doc(db,"likes",d.id));
-});
+for(const likeDoc of likeSnap.docs){
+await deleteDoc(doc(db,"likes",likeDoc.id));
+}
 
-await updateDoc(doc(db,"posts",postId),{
-likeCount:count-1
+await updateDoc(doc(db,"posts",postId),{likeCount:increment(-1)});
+myLikes.delete(postId);
+
+}
+
+renderFeed();
+
+}catch(err){
+console.error("Like failed",err);
+showToast("Could not update your like. Please retry.");
+}
+
+}
+
+/* ===== COMMENTS ===== */
+
+function openComments(postId){
+
+activePost=postId;
+
+const modal=document.getElementById("commentModal");
+const listEl=document.getElementById("commentList");
+
+modal.classList.add("show");
+document.getElementById("commentError").textContent="";
+document.getElementById("commentInput").value="";
+listEl.innerHTML=`<p class="text-center text-gray-500 py-6">Loading comments…</p>`;
+
+if(commentUnsub) commentUnsub();
+
+const q=query(collection(db,"comments"),where("postId","==",postId));
+
+commentUnsub=onSnapshot(q,(snapshot)=>{
+
+const comments=snapshot.docs
+.map((d)=>({id:d.id,...d.data()}))
+.sort((a,b)=>toMillis(a.createdAt)-toMillis(b.createdAt));
+
+renderComments(comments);
+
+},(err)=>{
+console.error("Comments failed",err);
+listEl.innerHTML=`<p class="text-center text-red-500 py-6 text-sm">Could not load comments.</p>`;
 });
 
 }
 
-};
+function renderComments(comments){
 
-window.openImage=(src)=>{
-document.getElementById("viewerImg").src=src;
-document.getElementById("imageViewer").style.display="flex";
-};
+const listEl=document.getElementById("commentList");
+const label=document.getElementById("commentCountLabel");
 
-window.closeImage=()=>{
-document.getElementById("imageViewer").style.display="none";
-};
+label.textContent=comments.length?`${comments.length} ${comments.length===1?"comment":"comments"}`:"";
 
-window.openComments=(postId)=>{
-activePost=postId;
-document.getElementById("commentModal").classList.add("show");
-};
+if(!comments.length){
+listEl.innerHTML=`<p class="text-center text-gray-500 py-6 text-sm">No comments yet. Start the conversation.</p>`;
+return;
+}
 
-window.closeComments=()=>{
-document.getElementById("commentModal").classList.remove("show");
-};
+listEl.innerHTML=comments.map((c)=>{
 
-window.submitComment=async()=>{
+const own=currentUser && c.uid===currentUser.uid;
 
-const text=document.getElementById("commentInput").value;
+return `
+<div class="flex items-start gap-2 border-b pb-2">
+<div class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center text-xs font-semibold shrink-0">${escapeHtml(initials(c.authorName))}</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 flex-wrap">
+<p class="font-semibold text-xs">${escapeHtml(c.authorName||"Member")}</p>
+<p class="text-[10px] text-gray-400">${escapeHtml(formatDateTime(c.createdAt))}</p>
+</div>
+<p class="text-sm text-gray-700 whitespace-pre-line break-words">${escapeHtml(c.text)}</p>
+</div>
+${own||isAdmin?`<button data-comment-delete="${c.id}" class="text-gray-400 hover:text-red-500 p-1 shrink-0" aria-label="Delete comment"><span class="material-symbols-outlined text-base">delete</span></button>`:""}
+</div>`;
 
-if(!text) return;
+}).join("");
+
+}
+
+document.getElementById("commentList").addEventListener("click",async(event)=>{
+
+const trigger=event.target.closest("[data-comment-delete]");
+if(!trigger) return;
+
+if(!confirm("Delete this comment?")) return;
+
+try{
+await deleteDoc(doc(db,"comments",trigger.dataset.commentDelete));
+}catch(err){
+console.error(err);
+showToast("Could not delete the comment.");
+}
+
+});
+
+async function submitComment(){
+
+const input=document.getElementById("commentInput");
+const sendButton=document.getElementById("commentSend");
+const errorEl=document.getElementById("commentError");
+
+const text=input.value.trim();
+
+if(!text){
+errorEl.textContent="Write something before sending.";
+return;
+}
+
+if(!activePost) return;
+
+errorEl.textContent="";
+sendButton.disabled=true;
+
+try{
 
 await addDoc(collection(db,"comments"),{
 postId:activePost,
 uid:currentUser.uid,
-authorName:currentUser.displayName||currentUser.email,
+authorName:myName,
 text:text,
 createdAt:serverTimestamp()
 });
 
-document.getElementById("commentInput").value="";
-};
+input.value="";
 
-window.sharePost=(postId)=>{
+}catch(err){
+console.error("Comment failed",err);
+errorEl.textContent="Could not send your comment. Please retry.";
+}finally{
+sendButton.disabled=false;
+}
 
-const url=location.origin+"/post/"+postId;
+}
 
-navigator.clipboard.writeText(url);
+function closeComments(){
 
-alert("Link copied");
+const modal=document.getElementById("commentModal");
+modal.classList.remove("show");
 
-};
+if(commentUnsub){
+commentUnsub();
+commentUnsub=null;
+}
 
-window.reportPost=async(postId)=>{
+activePost=null;
 
-const reason=prompt("Report reason?");
-if(!reason) return;
+}
 
+document.getElementById("commentInput").addEventListener("keydown",(event)=>{
+if(event.key==="Enter"){
+event.preventDefault();
+submitComment();
+}
+});
+
+document.addEventListener("keydown",(event)=>{
+if(event.key==="Escape"){
+closeImage();
+closeComments();
+}
+});
+
+/* ===== SHARE ===== */
+
+async function sharePost(postId){
+
+const url=buildShareUrl(location,postId);
+
+if(navigator.share){
+try{
+await navigator.share({title:"Y N Hosakote community post",text:"Check this update from our village",url:url});
+return;
+}catch(err){
+if(err && err.name==="AbortError") return;
+}
+}
+
+try{
+await navigator.clipboard.writeText(url);
+showToast("Link copied to clipboard");
+}catch{
+window.prompt("Copy this link:",url);
+}
+
+}
+
+/* ===== REPORT ===== */
+
+async function reportPost(postId){
+
+const reason=window.prompt("Why are you reporting this post?");
+if(!reason || !reason.trim()) return;
+
+try{
 await addDoc(collection(db,"reports"),{
 postId:postId,
 reporterUid:currentUser.uid,
-reason:reason,
+reason:reason.trim(),
 createdAt:serverTimestamp()
 });
+showToast("Reported to the village admin");
+}catch(err){
+console.error(err);
+showToast("Could not send the report.");
+}
 
-alert("Reported to admin");
+}
 
-};
+/* ===== DELETE OWN POST ===== */
 
-window.logout=async()=>{
-await signOut(auth);
-window.location="citizen_login.html";
-};
+async function deletePost(postId){
+
+if(!confirm("Delete this post permanently? Comments and likes will be removed too.")) return;
+
+try{
+
+const [commentsSnap,likesSnap]=await Promise.all([
+getDocs(query(collection(db,"comments"),where("postId","==",postId))),
+getDocs(query(collection(db,"likes"),where("postId","==",postId)))
+]);
+
+await Promise.all([
+...commentsSnap.docs.map((d)=>deleteDoc(doc(db,"comments",d.id))),
+...likesSnap.docs.map((d)=>deleteDoc(doc(db,"likes",d.id)))
+]);
+
+await deleteDoc(doc(db,"posts",postId));
+
+showToast("Post deleted");
+
+}catch(err){
+console.error("Delete failed",err);
+showToast("Could not delete the post.");
+}
+
+}
+
+/* ===== IMAGE VIEWER / TOAST ===== */
+
+function openImage(src){
+if(!src) return;
+document.getElementById("viewerImg").src=src;
+document.getElementById("imageViewer").style.display="flex";
+}
+
+function closeImage(){
+document.getElementById("imageViewer").style.display="none";
+}
+
+function showToast(message){
+const el=document.getElementById("toast");
+el.textContent=message;
+el.classList.add("show");
+clearTimeout(toastTimer);
+toastTimer=setTimeout(()=>el.classList.remove("show"),2600);
+}
 
 </script>
 
